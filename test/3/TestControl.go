@@ -78,43 +78,41 @@ func returnState() {
 //             psggConverterLib.dll converted from psgg-file:TestControl.psgg
 
 /*
-   S_END
+    S_END
 */
-func sEND(bFirst bool) {
-	// end of state machine
+func sEND( bFirst  bool ) {
+     // end of state machine
+}
+/*
+    S_HELLOWORLD
+*/
+func sHELLOWORLD( bFirst  bool ) {
+    if bFirst {
+        fmt.Println("Hello World.")
+    }
+    if !hasNextState() {
+        gotoState("S_NEWERA");
+    }
+}
+/*
+    S_NEWERA
+*/
+func sNEWERA( bFirst  bool ) {
+    if bFirst {
+        fmt.Println("We are in the visual programming era.")
+    }
+    if !hasNextState() {
+        gotoState("S_END");
+    }
+}
+/*
+    S_START
+*/
+func sSTART( bFirst  bool ) {
+    gotoState("S_HELLOWORLD")
+    noWait()
 }
 
-/*
-   S_HELLOWORLD
-*/
-func sHELLOWORLD(bFirst bool) {
-	if bFirst {
-		fmt.Println("Hello World.")
-	}
-	if !hasNextState() {
-		gotoState("S_NEWERA")
-	}
-}
-
-/*
-   S_NEWERA
-*/
-func sNEWERA(bFirst bool) {
-	if bFirst {
-		fmt.Println("We are in the visual programming era.")
-	}
-	if !hasNextState() {
-		gotoState("S_END")
-	}
-}
-
-/*
-   S_START
-*/
-func sSTART(bFirst bool) {
-	gotoState("S_HELLOWORLD")
-	noWait()
-}
 
 //[STATEGO OUTPUT END]
 

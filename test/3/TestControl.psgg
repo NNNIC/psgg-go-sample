@@ -118,8 +118,8 @@ n018=100004
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/08 13:53:23
-; * pssgEditor version : 0.67.610.5e9bd00bd140bff251fa382ae64c923e1b3b4250
+; The setting was created automatically. 2020/11/08 14:19:12
+; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 TestControl.psgg
 @@@
@@ -136,7 +136,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+init,Initilized
 @@@
 target_pathdir=@@@
 /
@@ -151,7 +151,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1193,"y":92}},{"Key":"S_HELLOWORLD","Value":{"x":206,"y":20}},{"Key":"S_GSB000","Value":{"x":22,"y":278}},{"Key":"S_SBS000","Value":{"x":135,"y":749}},{"Key":"S_RET000","Value":{"x":604,"y":749}},{"Key":"S_SUBROUTINE","Value":{"x":318,"y":749}},{"Key":"S_SUBROUTINE1","Value":{"x":409,"y":395}},{"Key":"S_LOP000","Value":{"x":150,"y":278}},{"Key":"S_SBS001","Value":{"x":253,"y":395}},{"Key":"S_RET001","Value":{"x":1033,"y":445}},{"Key":"S_HELLOWORLD2","Value":{"x":628,"y":325}},{"Key":"S_HELLOWORLD3","Value":{"x":628,"y":420}},{"Key":"S_HELLOWORLD4","Value":{"x":628,"y":511}},{"Key":"S_HELLOWORLD5","Value":{"x":628,"y":605}},{"Key":"S_NEWERA","Value":{"x":483,"y":21}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1193,"y":92}},{"Key":"S_HELLOWORLD","Value":{"x":206,"y":20}},{"Key":"S_NEWERA","Value":{"x":483,"y":21}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
