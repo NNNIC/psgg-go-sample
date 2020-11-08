@@ -12,10 +12,10 @@ check_excel_writable=no
 ------#======*<Guid(D13821FE-FA27-4B04-834C-CEC1E5670F48)>*======#------
 
 sheet=state-chart
-nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,n015,,n016,n017,n018,,,,
-stateid_list=,,,,s0001,s0002,s0004,s0003,,,,,,,,,,,,,
+nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
+stateid_list=,,,,s0001,s0002,s0004,s0003,s0015,s0016,s0017,,,,,,,,,,,,s0014
 max_name_id=30
-max_state_id=19
+max_state_id=23
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -37,7 +37,6 @@ n011=post_wait-cmt
 n012=branch
 n013=branch-cmt
 n014=brcond
-n015=nowait
 n016=!dir
 n017=!pos
 n018=!uuid
@@ -54,6 +53,10 @@ s0001=S_START
 s0002=S_END
 s0003=S_HELLOWORLD
 s0004=S_NEWERA
+s0014=S_0001
+s0015=S_0003
+s0016=S_0002
+s0017=S_0004
 
 
 [s0001]
@@ -92,12 +95,12 @@ n016=@@@
 The root
 @@@
 
-n017=206,20
+n017=78,150
 n018=100003
 
 [s0004]
 n002=S_NEWERA
-n005=S_END
+n005=S_0001
 n009=@@@
 fmt.Println("We are in the visual programming era.")
 @@@
@@ -108,8 +111,78 @@ n016=@@@
 The root
 @@@
 
-n017=483,21
+n017=61,269
 n018=100004
+
+[s0014]
+n002=S_0001
+n005=
+n008=var n = 2
+n012=@@@
+brifc(S_0004);
+brelseifc(S_0002);
+brelseif(S_0003);
+@@@
+
+n013=@@@
+?
+?
+?
+@@@
+
+n014=@@@
+n==0
+n==1
+n==2
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=314,272
+n018=100005
+
+[s0015]
+n002=S_0003
+n005=S_END
+n009=fmt.Println("2")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=559,384
+n018=100008
+
+[s0016]
+n002=S_0002
+n005=S_END
+n009=fmt.Println("1")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=561,306
+n018=100007
+
+[s0017]
+n002=S_0004
+n005=S_END
+n009=fmt.Println("0")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=564,239
+n018=100009
 
 
 
@@ -118,7 +191,7 @@ n018=100004
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/08 14:19:12
+; The setting was created automatically. 2020/11/08 22:16:16
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 TestControl.psgg
@@ -136,7 +209,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Initilized
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /
@@ -151,7 +224,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1193,"y":92}},{"Key":"S_HELLOWORLD","Value":{"x":206,"y":20}},{"Key":"S_NEWERA","Value":{"x":483,"y":21}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1193,"y":92}},{"Key":"S_HELLOWORLD","Value":{"x":78,"y":150}},{"Key":"S_NEWERA","Value":{"x":61,"y":269}},{"Key":"S_0001","Value":{"x":314,"y":272}},{"Key":"S_0002","Value":{"x":561,"y":306}},{"Key":"S_HELLOWORLD1","Value":{"x":562.2222,"y":242.777771}},{"Key":"S_0003","Value":{"x":559,"y":384}},{"Key":"S_0004","Value":{"x":564,"y":239}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -236,58 +309,52 @@ eof>>>
 eof>>>
 
 <<<?state-typ/^start$/
-func [[state>>lc]]( bFirst  bool ) {
+var [[state>>lc]] = func( bFirst  bool ) {
     gotoState("[[nextstate]]")
-    noWait()
 }
 eof>>>
 
 <<<?state-typ/^end$/
-func [[state>>lc]]( bFirst  bool ) {
+var [[state>>lc]] = func ( bFirst  bool ) {
      // end of state machine
 }
 eof>>>
 
 <<<?state-typ/^gosub$/
-func [[state>>lc]]( bFirst bool ) {
+var [[state>>lc]] = func ( bFirst bool ) {
     goSubState("[[gosubstate]]", "[[nextstate]]")
-    noWait()
 }
 eof>>>
 
 <<<?state-typ/^subreturn$/
-func [[state>>lc]]( bFirst bool ) {
+var [[state>>lc]] = func ( bFirst bool ) {
     returnState()
-    noWait()
 }
 eof>>>
 
 <<<?state-typ/^loop$/
 [[members]]
-func [[state>>lc]]( bFirst bool ) {
+var [[state>>lc]] = func ( bFirst bool ) {
     [[loop_init]]
-    gotoState("[[state]]LoopCheckAndGosub")
-    noWait()
+    gotoState("[[state]]_LoopCheckAndGosub____")
 }
-func [[state]]LoopCheckAndGosub( bFirst bool ) {
+var [[state>>lc]]LoopCheckAndGosub = func ( bFirst bool ) {
     if [[loop_cond]] {
-        goSubState("[[gosubstate]]", "[[state]]LoopNext")
+        goSubState("[[gosubstate]]", "[[state]]_LoopNext____")
     }
     else {
         gotoState("[[nextstate]]")
     }
-    noWait()
 }
-func [[state>>lc]]LoopNext(bFirst bool ) {
+var [[state>>lc]]LoopNext____ = func(bFirst bool ) {
     [[loop_next]]
     gotoState("[[state]]LoopCheckAndGosub")
-    noWait()
 }
 eof>>>
 
 
 [[members]]
-func [[state>>lc]]( bFirst  bool ) {
+var [[state>>lc]] = func( bFirst  bool ) {
 
     [[vars]]
 
@@ -300,7 +367,9 @@ func [[state>>lc]]( bFirst  bool ) {
     [[update]]
 
     <<<?wait
-    if [[wait]] { return; }
+    if [[wait]] {
+         return
+    }
     >>>
 
     [[post_wait]]
@@ -309,13 +378,7 @@ func [[state>>lc]]( bFirst  bool ) {
 
     <<<?nextstate
     if !hasNextState() {
-        gotoState("[[nextstate]]");
-    }
-    >>>
-
-    <<<?nowait
-    if hasNextState() {
-        noWait();
+        gotoState("[[nextstate]]")
     }
     >>>
 }
