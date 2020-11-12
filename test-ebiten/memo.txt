@@ -1,0 +1,9 @@
+モージュール管理について
+
+フォルダを作った際にモジュールとして初期化
+
+md hoge
+cd hoge
+go mod init github.com/NNNIC/psgg-go-sample/test-ebiten/hoge
+
+参考 https://qiita.com/uchiko/items/64fb3020dd64cf211d4e
