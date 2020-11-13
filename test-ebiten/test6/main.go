@@ -11,7 +11,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
-    "./sm"
+    "github.com/NNNIC/psgg-go-sample/test-ebiten/test6/sm"
 )
 
 const (
@@ -51,7 +51,7 @@ func (g *Game) Update(screen *ebiten.Image) error {
 
 			screen.DrawImage(gophersImage, op)
 		}
-		TestControl()
+		sm.TestControl()
 
 	}
 
