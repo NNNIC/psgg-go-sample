@@ -10,12 +10,13 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
 
+	"github.com/NNNIC/psgg-go-sample/test-ebiten/test9/pg"
 	"github.com/NNNIC/psgg-go-sample/test-ebiten/test9/sm"
 )
 
-const (
-	screenWidth  = 320
-	screenHeight = 240
+var (
+	screenWidth  = pg.ScreenWidth
+	screenHeight = pg.ScreenHeight
 )
 
 var (
@@ -27,60 +28,28 @@ type Game struct {
 }
 
 /*
-	GLOBALS
-*/
-var Screen *ebiten.Image
-
-/*
-	State Machine Control Update
-*/
-var updateList []func(bool) bool
-var updateNum = 0
-
-// AddUpdateList ... Add control function into map. Reture handle
-func AddUpdateList(cf func(bool) bool) int {
-	hundle := len(updateList)
-	updateList = append(updateList, cf)
-	return hundle
-}
-
-/*
-	Draw List
-*/
-var DrawBgList []func()
-var DrawStageList []func()
-var DrawFeList []func()
-
-/*
 	Init
 */
 var bInitDone = false
 
 func (g *Game) Update(screen *ebiten.Image) error {
+	pg.Screen = screen
 	if bInitDone == false {
 		bInitDone = true
 		maincontrol := sm.MainControl()
-		AddUpdateList(maincontrol)
+		maincontrol(true)
+		pg.AddUpdateList(maincontrol)
 	}
-	Screen = screen
-
-	for i := 0; i < len(updateList); i++ {
-		(updateList[i])(false)
-	}
+	pg.PlayUpdate()
 	g.count++
+	pg.Count = g.count
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	for i := 0; i < len(DrawBgList); i++ {
-		(DrawBgList[i])()
-	}
-	for i := 0; i < len(DrawStageList); i++ {
-		(DrawBgList[i])()
-	}
-	for i := 0; i < len(DrawFeList); i++ {
-		(DrawBgList[i])()
-	}
+	pg.Screen = screen
+
+	pg.DoDraw()
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -102,10 +71,12 @@ func main() {
 		log.Fatal(err)
 	}
 	gophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+	pg.GophersImage = gophersImage
 
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Rotate (Ebiten Demo)")
 	if err := ebiten.RunGame(&Game{}); err != nil {
 		log.Fatal(err)
 	}
+
 }

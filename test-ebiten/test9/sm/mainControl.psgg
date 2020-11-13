@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
-stateid_list=,,,,s0001,s0002,,,,,,,,,,,,,,,,,,,s0023
+stateid_list=,,,,s0001,s0002,s0025,,,,,,,,,,,,,,,,,,,s0024
 max_name_id=30
-max_state_id=35
+max_state_id=37
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -51,13 +51,14 @@ n01e=basestate
 [id_state_dic]
 s0001=S_START
 s0002=S_END
-s0023=S_0000
+s0024=S_0000
+s0025=S_INIT
 
 
 [s0001]
 n002=S_START
 n019=start
-n005=S_0000
+n005=S_INIT
 n016=@@@
 /
 (100,100)
@@ -79,24 +80,29 @@ The root
 n017=1342,49
 n018=100002
 
-[s0023]
+[s0024]
 n002=S_0000
 n005=S_END
 n009=@@@
 drawfunc := func() {
-	w, h := gophersImage.Size()
+	w, h := pg.GophersImage.Size()
 	op := &ebiten.DrawImageOptions{}
+
 	// Move the image's center to the screen's upper-left corner.
 	// This is a preparation for rotating. When geometry matrices are applied,
 	// the origin point is the upper-left corner.
 	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+
 	// Rotate the image. As a result, the anchor point of this rotate is
 	// the center of the image.
-	op.GeoM.Rotate(float64(g.count%360) * 2 * math.Pi / 360)
+	op.GeoM.Rotate(float64(pg.Count%360) * 2 * math.Pi / 360)
+
 	// Move the image to the screen's center.
-	op.GeoM.Translate(screenWidth/2, screenHeight/2)
-	screen.DrawImage(gophersImage, op)
+	op.GeoM.Translate(float64(pg.ScreenWidth/2), float64(pg.ScreenHeight/2))
+
+	pg.Screen.DrawImage(pg.GophersImage, op)
 }
+pg.AppendDrawStage(drawfunc)
 @@@
 
 n016=@@@
@@ -105,8 +111,22 @@ n016=@@@
 
 @@@
 
-n017=245,171
+n017=576,96
 n018=100003
+
+[s0025]
+n001=(bitmap)
+n002=S_INIT
+n005=S_0000
+n009=fmt.Println("!!")
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=149,29
+n018=100004
 
 
 
@@ -115,7 +135,7 @@ n018=100003
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/13 22:55:29
+; The setting was created automatically. 2020/11/13 23:42:12
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -148,7 +168,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1342,"y":49}},{"Key":"S_HELLOWORLD","Value":{"x":78,"y":150}},{"Key":"S_NEWERA","Value":{"x":61,"y":269}},{"Key":"S_0001","Value":{"x":314,"y":192}},{"Key":"S_0004","Value":{"x":558,"y":121}},{"Key":"S_0002","Value":{"x":558,"y":188}},{"Key":"S_0003","Value":{"x":558,"y":266}},{"Key":"S_GSB000","Value":{"x":151,"y":552}},{"Key":"S_PAS000","Value":{"x":813,"y":384}},{"Key":"S_SBS000","Value":{"x":308,"y":608}},{"Key":"S_RET000","Value":{"x":765,"y":608}},{"Key":"S_0005","Value":{"x":466,"y":608}},{"Key":"S_PAS001","Value":{"x":1117,"y":554}},{"Key":"S_LOP000","Value":{"x":151,"y":951}},{"Key":"S_0006","Value":{"x":461,"y":1066}},{"Key":"S_SBS001","Value":{"x":338,"y":1067}},{"Key":"S_RET001","Value":{"x":795,"y":1063}},{"Key":"S_0007","Value":{"x":558,"y":342}},{"Key":"S_0000","Value":{"x":245,"y":171}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1342,"y":49}},{"Key":"S_HELLOWORLD","Value":{"x":78,"y":150}},{"Key":"S_NEWERA","Value":{"x":61,"y":269}},{"Key":"S_0001","Value":{"x":314,"y":192}},{"Key":"S_0004","Value":{"x":558,"y":121}},{"Key":"S_0002","Value":{"x":558,"y":188}},{"Key":"S_0003","Value":{"x":558,"y":266}},{"Key":"S_GSB000","Value":{"x":151,"y":552}},{"Key":"S_PAS000","Value":{"x":813,"y":384}},{"Key":"S_SBS000","Value":{"x":308,"y":608}},{"Key":"S_RET000","Value":{"x":765,"y":608}},{"Key":"S_0005","Value":{"x":466,"y":608}},{"Key":"S_PAS001","Value":{"x":1117,"y":554}},{"Key":"S_LOP000","Value":{"x":151,"y":951}},{"Key":"S_0006","Value":{"x":461,"y":1066}},{"Key":"S_SBS001","Value":{"x":338,"y":1067}},{"Key":"S_RET001","Value":{"x":795,"y":1063}},{"Key":"S_0007","Value":{"x":558,"y":342}},{"Key":"S_0000","Value":{"x":576,"y":96}},{"Key":"S_INIT","Value":{"x":149,"y":29}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -198,7 +218,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-
+[{"Key":"init","Value":{"height":656,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym

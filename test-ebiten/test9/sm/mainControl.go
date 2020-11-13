@@ -1,10 +1,12 @@
 ﻿package sm
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"time"
 
+	"github.com/NNNIC/psgg-go-sample/test-ebiten/test9/pg"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -54,6 +56,8 @@ func MainControl() func(bool) bool {
 	id++
 	funcIdsEND := id
 	id++
+	funcIdsINIT := id
+	id++
 	funcIdsSTART := id
 	id++
 
@@ -77,8 +81,9 @@ func MainControl() func(bool) bool {
 	*/
 	s0000 := func(bFirst bool) {
 		if bFirst {
+			fmt.Println("S000 now")
 			drawfunc := func() {
-				w, h := gophersImage.Size()
+				w, h := pg.GophersImage.Size()
 				op := &ebiten.DrawImageOptions{}
 				// Move the image's center to the screen's upper-left corner.
 				// This is a preparation for rotating. When geometry matrices are applied,
@@ -86,12 +91,12 @@ func MainControl() func(bool) bool {
 				op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
 				// Rotate the image. As a result, the anchor point of this rotate is
 				// the center of the image.
-				op.GeoM.Rotate(float64(g.count%360) * 2 * math.Pi / 360)
+				op.GeoM.Rotate(float64(pg.Count%360) * 2 * math.Pi / 360)
 				// Move the image to the screen's center.
-				op.GeoM.Translate(screenWidth/2, screenHeight/2)
-				screen.DrawImage(gophersImage, op)
+				op.GeoM.Translate(float64(pg.ScreenWidth/2), float64(pg.ScreenHeight/2))
+				pg.Screen.DrawImage(pg.GophersImage, op)
 			}
-
+			pg.AppendDrawStage(drawfunc)
 		}
 		if !hasNextState() {
 			gotoState(funcIdsEND)
@@ -104,10 +109,21 @@ func MainControl() func(bool) bool {
 		// end of state machine
 	}
 	/*
+	   S_INIT
+	*/
+	sINIT := func(bFirst bool) {
+		if bFirst {
+			fmt.Println("!!")
+		}
+		if !hasNextState() {
+			gotoState(funcIds0000)
+		}
+	}
+	/*
 	   S_START
 	*/
 	sSTART := func(bFirst bool) {
-		gotoState(funcIds0000)
+		gotoState(funcIdsINIT)
 	}
 
 	//[STATEGO OUTPUT END]
@@ -119,6 +135,7 @@ func MainControl() func(bool) bool {
 
 		s0000,
 		sEND,
+		sINIT,
 		sSTART,
 
 		//[STATEGO OUTPUT END]
@@ -142,8 +159,14 @@ func MainControl() func(bool) bool {
 		return true
 	}
 
+	// for avoiding "declared but not used"
+	_ = hasNextState()
+	gosubState(funcIdsSTART, funcIdsEND)
+	returnState()
+
 	return func(bFirst bool) bool {
 		if bFirst {
+			curfunc = -1
 			nextfunc = funcIdsSTART
 		}
 		return update()
