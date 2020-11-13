@@ -11,7 +11,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
-    "github.com/NNNIC/psgg-go-sample/test-ebiten/test6/sm"
+    "./sm"
 )
 
 const (
