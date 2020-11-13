@@ -10,7 +10,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
 
-	"github.com/NNNIC/psgg-go-sample/test-ebiten/test8/sm"
+	"github.com/NNNIC/psgg-go-sample/test-ebiten/test9/sm"
 )
 
 const (
@@ -47,9 +47,9 @@ func AddUpdateList(cf func(bool) bool) int {
 /*
 	Draw List
 */
-var drawBgList []func()
-var drawStageList []func()
-var drawFeList []func()
+var DrawBgList []func()
+var DrawStageList []func()
+var DrawFeList []func()
 
 /*
 	Init
@@ -59,7 +59,7 @@ var bInitDone = false
 func (g *Game) Update(screen *ebiten.Image) error {
 	if bInitDone == false {
 		bInitDone = true
-		maincontrol := sm.TestControl()
+		maincontrol := sm.MainControl()
 		AddUpdateList(maincontrol)
 	}
 	Screen = screen
@@ -72,14 +72,14 @@ func (g *Game) Update(screen *ebiten.Image) error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	for i := 0; i < len(drawBgList); i++ {
-		(drawBgList[i])()
+	for i := 0; i < len(DrawBgList); i++ {
+		(DrawBgList[i])()
 	}
-	for i := 0; i < len(drawStageList); i++ {
-		(drawBgList[i])()
+	for i := 0; i < len(DrawStageList); i++ {
+		(DrawBgList[i])()
 	}
-	for i := 0; i < len(drawFeList); i++ {
-		(drawBgList[i])()
+	for i := 0; i < len(DrawFeList); i++ {
+		(DrawBgList[i])()
 	}
 }
 

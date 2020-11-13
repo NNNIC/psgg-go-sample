@@ -4,15 +4,12 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
-
-	"github.com/hajimehoshi/ebiten"
 )
 
-func TestControl() func(bool, *ebiten.Image) bool {
+func TestControl() func(bool) bool {
 
 	rand.Seed(time.Now().Unix())
 
-	var screen *ebiten.Image
 	curfunc := -1
 	nextfunc := -1
 
@@ -344,8 +341,7 @@ func TestControl() func(bool, *ebiten.Image) bool {
 		return true
 	}
 
-	return func(bFirst bool, iscreen *ebiten.Image) bool {
-		screen = iscreen
+	return func(bFirst bool) bool {
 		if bFirst {
 			nextfunc = funcIdsSTART
 		}

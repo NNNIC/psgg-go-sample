@@ -1,4 +1,4 @@
-module github.com/NNNIC/psgg-go-sample/test-ebiten/test7
+module github.com/NNNIC/psgg-go-sample/test-ebiten/test9
 
 go 1.15
 
