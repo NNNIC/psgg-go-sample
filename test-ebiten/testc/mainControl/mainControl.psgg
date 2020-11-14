@@ -136,7 +136,7 @@ n018=100004
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/14 10:24:40
+; The setting was created automatically. 2020/11/14 14:12:08
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -154,7 +154,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Edited a state.
+init,Initilized
 @@@
 target_pathdir=@@@
 /

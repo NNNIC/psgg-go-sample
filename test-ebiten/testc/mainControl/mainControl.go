@@ -1,9 +1,10 @@
-﻿package game
+﻿package mainControl
 
 import (
 	"bytes"
 	"fmt"
 	"image"
+	_ "image/jpeg"
 	"log"
 	"math"
 	"math/rand"
@@ -68,21 +69,24 @@ func MainControl() func(bool) bool {
 	// #
 	id := 0
 	//[STATEGO OUTPUT START] indent(4) $/^S_./->#setids$
-	//             psggConverterLib.dll converted from psgg-file:mainControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
-	funcIds0000 := id
-	id++
-	funcIdsEND := id
-	id++
-	funcIdsINIT := id
-	id++
-	funcIdsSTART := id
-	id++
+    funcIds0000 := id
+    id++
+    funcIdsEND := id
+    id++
+    funcIdsINIT := id
+    id++
+    funcIdsSTART := id
+    id++
+
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
-	//             psggConverterLib.dll converted from psgg-file:mainControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
+
+
 
 	//[STATEGO OUTPUT END]
 
@@ -92,73 +96,75 @@ func MainControl() func(bool) bool {
 	var endofFuncList = func(bFirst bool) { // for end of function list
 	}
 	//[STATEGO OUTPUT START] indent(4) $/./$
-	//             psggConverterLib.dll converted from psgg-file:mainControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
-	/*
-	   S_0000
-	*/
-	s0000 := func(bFirst bool) {
-		if bFirst {
-			img, _, err := image.Decode(bytes.NewReader(images.Gophers_jpg))
-			if err != nil {
-				log.Fatal(err)
-			}
-			g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
-			drawfunc := func() {
-				w, h := g.GophersImage.Size()
-				op := &ebiten.DrawImageOptions{}
-				// Move the image's center to the screen's upper-left corner.
-				// This is a preparation for rotating. When geometry matrices are applied,
-				// the origin point is the upper-left corner.
-				op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
-				// Rotate the image. As a result, the anchor point of this rotate is
-				// the center of the image.
-				op.GeoM.Rotate(float64(g.Count%360) * 2 * math.Pi / 360)
-				// Move the image to the screen's center.
-				op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
-				g.Screen.DrawImage(g.gophersImage, op)
-			}
-			g.AppendDrawStage(drawfunc)
-		}
-		if !hasNextState() {
-			gotoState(funcIdsEND)
-		}
-	}
-	/*
-	   S_END
-	*/
-	sEND := func(bFirst bool) {
-		// end of state machine
-	}
-	/*
-	   S_INIT
-	*/
-	sINIT := func(bFirst bool) {
-		if bFirst {
-			fmt.Println("!!")
-		}
-		if !hasNextState() {
-			gotoState(funcIds0000)
-		}
-	}
-	/*
-	   S_START
-	*/
-	sSTART := func(bFirst bool) {
-		gotoState(funcIdsINIT)
-	}
+    /*
+        S_0000
+    */
+    s0000 := func( bFirst  bool ) {
+        if bFirst {
+            img, _, err := image.Decode(bytes.NewReader(images.Gophers_jpg))
+            if err != nil {
+            	log.Fatal(err)
+            }
+            g.gophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+            drawfunc := func() {
+            	w, h := g.GophersImage.Size()
+            	op := &ebiten.DrawImageOptions{}
+            	// Move the image's center to the screen's upper-left corner.
+            	// This is a preparation for rotating. When geometry matrices are applied,
+            	// the origin point is the upper-left corner.
+            	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+            	// Rotate the image. As a result, the anchor point of this rotate is
+            	// the center of the image.
+            	op.GeoM.Rotate(float64(g.Count%360) * 2 * math.Pi / 360)
+            	// Move the image to the screen's center.
+            	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+            	g.Screen.DrawImage(g.gophersImage, op)
+            }
+            g.AppendDrawStage(drawfunc)
+        }
+        if !hasNextState() {
+            gotoState(funcIdsEND)
+        }
+    }
+    /*
+        S_END
+    */
+    sEND := func ( bFirst  bool ) {
+         // end of state machine
+    }
+    /*
+        S_INIT
+    */
+    sINIT := func( bFirst  bool ) {
+        if bFirst {
+            fmt.Println("!!")
+        }
+        if !hasNextState() {
+            gotoState(funcIds0000)
+        }
+    }
+    /*
+        S_START
+    */
+    sSTART := func( bFirst  bool ) {
+        gotoState(funcIdsINIT)
+    }
+
 
 	//[STATEGO OUTPUT END]
 
 	var funclist = [...]func(bool){
 
 		//[STATEGO OUTPUT START] indent(8) $/^S_./->#funclist$
-		//             psggConverterLib.dll converted from psgg-file:mainControl.psgg
+        //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
-		s0000,
-		sEND,
-		sINIT,
-		sSTART,
+        s0000,
+        sEND,
+        sINIT,
+        sSTART,
+
 
 		//[STATEGO OUTPUT END]
 		endofFuncList}
