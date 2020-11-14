@@ -89,7 +89,12 @@ func (g *Game) DoDraw() {
 	if len(g.DrawTermFunc) > 0 {
 		g.DrawTermFunc[0]()
 	}
-
+}
+func (g *Game) ClearAll() {
+	g.ClrDrawBg()
+	g.ClrDrawStage()
+	g.ClrDrawFe()
+	g.TermClear()
 }
 
 /*

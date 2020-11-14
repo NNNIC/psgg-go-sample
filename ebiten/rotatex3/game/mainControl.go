@@ -71,13 +71,19 @@ func MainControl() func(bool, *Game) bool {
     id++
     funcIds3rdRotation := id
     id++
+    funcIdsBACKTOMENU := id
+    id++
     funcIdsCHANGEBG := id
+    id++
+    funcIdsCLEARALL := id
     id++
     funcIdsCLEARTERM := id
     id++
     funcIdsCOUNT := id
     id++
     funcIdsEND := id
+    id++
+    funcIdsMENU := id
     id++
     funcIdsRotationOverRay := id
     id++
@@ -151,11 +157,13 @@ func MainControl() func(bool, *Game) bool {
     */
     s1stRotation := func( bFirst  bool ) {
         if bFirst {
-            img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
-            if err != nil {
+            if g.GophersImage == nil {
+                img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
+                if err != nil {
             	log.Fatal(err)
+                }
+                g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
             }
-            g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
             drawfunc := func() {
             	w, h := g.GophersImage.Size()
             	op := &ebiten.DrawImageOptions{}
@@ -225,7 +233,15 @@ func MainControl() func(bool, *Game) bool {
             g.AddDrawStage(drawfunc)
         }
         if !hasNextState() {
-            gotoState(funcIdsEND)
+            gotoState(funcIdsBACKTOMENU)
+        }
+    }
+    /*
+        S_BACKTO_MENU
+    */
+    sBACKTOMENU := func( bFirst  bool ) {
+        if !hasNextState() {
+            gotoState(funcIdsMENU)
         }
     }
     /*
@@ -237,6 +253,17 @@ func MainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsWAIT7)
+        }
+    }
+    /*
+        S_CLEARALL
+    */
+    sCLEARALL := func( bFirst  bool ) {
+        if bFirst {
+            g.ClearAll()
+        }
+        if !hasNextState() {
+            gotoState(funcIdsBACKTOMENU)
         }
     }
     /*
@@ -271,6 +298,30 @@ func MainControl() func(bool, *Game) bool {
     */
     sEND := func ( bFirst  bool ) {
          // end of state machine
+    }
+    /*
+        S_MENU
+    */
+    sMENU := func( bFirst  bool ) {
+        if bFirst {
+            g.TermPrint("==== TEST =====");
+            g.TermPrint("Push 1 ... Termainal Test");
+            g.TermPrint("Push 2 ... Background Color Change Test");
+            g.TermPrint("Push 3 ... Rotaion Overlay Demo");
+            g.TermPrint("")
+            g.TermPrint("Push C ... Cear all");
+            g.TermPrint("")
+            g.TermPrint("PLEASE PUSH KEY!")
+        }
+        if ebiten.IsKeyPressed(ebiten.Key1) {
+            gotoState( funcIdsTERMINAL )
+        } else if ebiten.IsKeyPressed(ebiten.Key2) {
+            gotoState( funcIdsCHANGEBG )
+        } else if ebiten.IsKeyPressed(ebiten.Key3) {
+            gotoState( funcIdsRotationOverRay )
+        } else if ebiten.IsKeyPressed(ebiten.KeyC) {
+            gotoState( funcIdsCLEARALL )
+        }
     }
     /*
         S_RotationOverRay
@@ -329,7 +380,7 @@ func MainControl() func(bool, *Game) bool {
         S_START
     */
     sSTART := func( bFirst  bool ) {
-        gotoState(funcIdsTERMINAL)
+        gotoState(funcIdsMENU)
     }
     /*
         S_TERMINAL
@@ -392,7 +443,7 @@ func MainControl() func(bool, *Game) bool {
              return
         }
         if !hasNextState() {
-            gotoState(funcIdsRotationOverRay)
+            gotoState(funcIdsBACKTOMENU)
         }
     }
     /*
@@ -420,7 +471,7 @@ func MainControl() func(bool, *Game) bool {
              return
         }
         if !hasNextState() {
-            gotoState(funcIdsCHANGEBG)
+            gotoState(funcIdsBACKTOMENU)
         }
     }
     /*
@@ -519,10 +570,13 @@ func MainControl() func(bool, *Game) bool {
         s1stRotation,
         s2ndRotation,
         s3rdRotation,
+        sBACKTOMENU,
         sCHANGEBG,
+        sCLEARALL,
         sCLEARTERM,
         sCOUNT,
         sEND,
+        sMENU,
         sRotationOverRay,
         sSETBGBLUE,
         sSETBGGREEN,

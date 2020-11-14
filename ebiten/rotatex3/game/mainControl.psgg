@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e
 max_name_id=30
-max_state_id=59
+max_state_id=62
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -74,19 +74,22 @@ s0038=S_WAIT9
 s0039=S_SETBGBLUE
 s003a=S_WAIT10
 s003b=S_SETBGGREEN
+s003c=S_MENU
+s003d=S_BACKTO_MENU
+s003e=S_CLEARALL
 
 
 [s0001]
 n002=S_START
 n019=start
-n005=S_TERMINAL
+n005=S_MENU
 n016=@@@
 /
 (100,100)
 The root
 @@@
 
-n017=13,16
+n017=73,84
 n018=100001
 
 [s0002]
@@ -98,18 +101,20 @@ n016=@@@
 The root
 @@@
 
-n017=1401,672
+n017=2325,1212
 n018=100002
 
 [s0024]
 n002=S_1stRotation
 n005=S_WAIT
 n009=@@@
-img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
-if err != nil {
+if g.GophersImage == nil {
+    img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
+    if err != nil {
 	log.Fatal(err)
+    }
+    g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
 }
-g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
 drawfunc := func() {
 	w, h := g.GophersImage.Size()
 	op := &ebiten.DrawImageOptions{}
@@ -133,7 +138,7 @@ n016=@@@
 The root
 @@@
 
-n017=420,672
+n017=802,780
 n018=100003
 
 [s0025]
@@ -155,7 +160,7 @@ n016=@@@
 The root
 @@@
 
-n017=871,12
+n017=1238,188
 n018=100004
 
 [s0026]
@@ -186,12 +191,12 @@ n016=@@@
 The root
 @@@
 
-n017=803,672
+n017=1185,780
 n018=100005
 
 [s0027]
 n002=S_3rdRotation
-n005=S_END
+n005=S_BACKTO_MENU
 n009=@@@
 drawfunc := func() {
 	w, h := g.GophersImage.Size()
@@ -217,7 +222,7 @@ n016=@@@
 The root
 @@@
 
-n017=1191,672
+n017=1573,780
 n018=100006
 
 [s0028]
@@ -232,7 +237,7 @@ n016=@@@
 The root
 @@@
 
-n017=610,672
+n017=992,780
 n018=100007
 
 [s0029]
@@ -247,7 +252,7 @@ n016=@@@
 The root
 @@@
 
-n017=991,672
+n017=1373,780
 n018=100008
 
 [s002b]
@@ -261,7 +266,7 @@ n016=@@@
 The root
 @@@
 
-n017=130,16
+n017=497,192
 n018=100009
 
 [s002c]
@@ -277,7 +282,7 @@ n016=@@@
 The root
 @@@
 
-n017=317,17
+n017=684,193
 n018=100010
 
 [s002d]
@@ -290,7 +295,7 @@ n016=@@@
 The root
 @@@
 
-n017=504,19
+n017=871,195
 n018=100011
 
 [s002e]
@@ -305,12 +310,12 @@ n016=@@@
 The root
 @@@
 
-n017=688,15
+n017=1055,191
 n018=100012
 
 [s002f]
 n002=S_WAIT3
-n005=S_CHANGEBG
+n005=S_BACKTO_MENU
 n007=var time[[state>>lc]] int64
 n009=time[[state>>lc]] = g.TimeNowMs() + 1500
 n00e=time[[state>>lc]] > g.TimeNowMs()
@@ -320,7 +325,7 @@ n016=@@@
 The root
 @@@
 
-n017=1486,11
+n017=1853,187
 n018=100013
 
 [s0030]
@@ -333,7 +338,7 @@ n016=@@@
 The root
 @@@
 
-n017=1286,13
+n017=1653,189
 n018=100014
 
 [s0031]
@@ -348,7 +353,7 @@ n016=@@@
 The root
 @@@
 
-n017=1081,12
+n017=1448,188
 n018=100015
 
 [s0032]
@@ -361,7 +366,7 @@ n016=@@@
 The root
 @@@
 
-n017=48,672
+n017=430,780
 n018=100016
 
 [s0033]
@@ -376,7 +381,7 @@ n016=@@@
 The root
 @@@
 
-n017=232,672
+n017=614,780
 n018=100017
 
 [s0034]
@@ -392,7 +397,7 @@ n016=@@@
 The root
 @@@
 
-n017=118,341
+n017=440,507
 n018=100018
 
 [s0035]
@@ -407,7 +412,7 @@ n016=@@@
 The root
 @@@
 
-n017=346,341
+n017=668,507
 n018=100019
 
 [s0036]
@@ -427,7 +432,7 @@ n016=@@@
 The root
 @@@
 
-n017=576,341
+n017=898,507
 n018=100020
 
 [s0037]
@@ -442,7 +447,7 @@ n016=@@@
 The root
 @@@
 
-n017=788,341
+n017=1110,507
 n018=100021
 
 [s0038]
@@ -457,7 +462,7 @@ n016=@@@
 The root
 @@@
 
-n017=1229,341
+n017=1551,507
 n018=100022
 
 [s0039]
@@ -477,12 +482,12 @@ n016=@@@
 The root
 @@@
 
-n017=1017,341
+n017=1339,507
 n018=100023
 
 [s003a]
 n002=S_WAIT10
-n005=S_RotationOverRay
+n005=S_BACKTO_MENU
 n007=var time[[state>>lc]] int64
 n009=time[[state>>lc]] = g.TimeNowMs() + 500
 n00e=time[[state>>lc]] > g.TimeNowMs()
@@ -492,7 +497,7 @@ n016=@@@
 The root
 @@@
 
-n017=1682,341
+n017=2004,507
 n018=100024
 
 [s003b]
@@ -512,8 +517,78 @@ n016=@@@
 The root
 @@@
 
-n017=1470,341
+n017=1792,507
 n018=100025
+
+[s003c]
+n002=S_MENU
+n009=@@@
+g.TermPrint("==== TEST =====");
+g.TermPrint("Push 1 ... Termainal Test");
+g.TermPrint("Push 2 ... Background Color Change Test");
+g.TermPrint("Push 3 ... Rotaion Overlay Demo");
+g.TermPrint("")
+g.TermPrint("Push C ... Cear all");
+g.TermPrint("")
+g.TermPrint("PLEASE PUSH KEY!")
+@@@
+
+n00c=
+n00e=
+n012=@@@
+brifc(S_TERMINAL);
+brelseifc(S_CHANGEBG);
+brelseifc(S_RotationOverRay);
+brelseif(S_CLEARALL);
+@@@
+
+n013=@@@
+1
+2
+3
+C
+@@@
+
+n014=@@@
+ebiten.IsKeyPressed(ebiten.Key1)
+ebiten.IsKeyPressed(ebiten.Key2)
+ebiten.IsKeyPressed(ebiten.Key3)
+ebiten.IsKeyPressed(ebiten.KeyC)
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=46,221
+n018=100026
+
+[s003d]
+n002=S_BACKTO_MENU
+n005=S_MENU
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=285,25
+n018=100027
+
+[s003e]
+n002=S_CLEARALL
+n005=S_BACKTO_MENU
+n009=g.ClearAll()
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=434,1023
+n018=100028
 
 
 
@@ -522,7 +597,7 @@ n018=100025
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/15 0:16:37
+; The setting was created automatically. 2020/11/15 8:55:10
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -549,13 +624,13 @@ state_location_list=@@@
 
 @@@
 nodegroup_comment_list=@@@
-[{"Key":"\/","Value":""}]
+[{"Key":"\/","Value":"The root"}]
 @@@
 nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":13,"y":16}},{"Key":"S_END","Value":{"x":1401,"y":672}},{"Key":"S_0000","Value":{"x":574,"y":359}},{"Key":"S_INIT","Value":{"x":871,"y":12}},{"Key":"S_0001","Value":{"x":966,"y":369}},{"Key":"S_0002","Value":{"x":1345,"y":369}},{"Key":"S_0003","Value":{"x":571,"y":263}},{"Key":"S_0004","Value":{"x":1145,"y":369}},{"Key":"S_0005","Value":{"x":174,"y":274}},{"Key":"S_TERMINAL","Value":{"x":130,"y":16}},{"Key":"S_WAIT","Value":{"x":610,"y":672}},{"Key":"S_WAIT1","Value":{"x":317,"y":17}},{"Key":"S_TERMINAL1","Value":{"x":504,"y":19}},{"Key":"S_WAIT2","Value":{"x":688,"y":15}},{"Key":"S_WAIT3","Value":{"x":1486,"y":11}},{"Key":"S_COUNT","Value":{"x":871,"y":12}},{"Key":"S_WAIT4","Value":{"x":1081,"y":12}},{"Key":"S_CLEARTERM","Value":{"x":1286,"y":13}},{"Key":"S_TERMINAL2","Value":{"x":48,"y":672}},{"Key":"S_WAIT5","Value":{"x":232,"y":672}},{"Key":"S_1stRotation","Value":{"x":420,"y":672}},{"Key":"S_2ndRotation","Value":{"x":803,"y":672}},{"Key":"S_WAIT6","Value":{"x":991,"y":672}},{"Key":"S_3rdRotation","Value":{"x":1191,"y":672}},{"Key":"S_COUNT1","Value":{"x":118,"y":341}},{"Key":"S_CHANGEBG","Value":{"x":118,"y":341}},{"Key":"S_WAIT7","Value":{"x":346,"y":341}},{"Key":"S_WAIT8","Value":{"x":788,"y":341}},{"Key":"S_BGRED","Value":{"x":576,"y":336}},{"Key":"S_CREATEBG","Value":{"x":576,"y":336}},{"Key":"S_SETBGRED","Value":{"x":576,"y":341}},{"Key":"S_WAIT9","Value":{"x":1229,"y":341}},{"Key":"S_SETBGRED1","Value":{"x":1017,"y":325}},{"Key":"S_SETBGBLUE","Value":{"x":1017,"y":341}},{"Key":"S_WAIT10","Value":{"x":1682,"y":341}},{"Key":"S_SETBGBLUE1","Value":{"x":1470,"y":330}},{"Key":"S_SETBGGREEN","Value":{"x":1470,"y":341}},{"Key":"S_RotationOverRay","Value":{"x":48,"y":672}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":73,"y":84}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_TERMINAL2","Value":{"x":124,"y":31}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_MENU1","Value":{"x":434.4737,"y":1022.579}},{"Key":"S_BACKTO_MENU","Value":{"x":285,"y":25}},{"Key":"S_CLEARALL","Value":{"x":434,"y":1023}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
