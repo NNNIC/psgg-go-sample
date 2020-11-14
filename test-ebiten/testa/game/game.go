@@ -7,6 +7,11 @@ import (
 	"github.com/hajimehoshi/ebiten"
 )
 
+const (
+	screenWidth  = 320
+	screenHeight = 240
+)
+
 type Game struct {
 	UpdateList []func(bool, *Game) bool // UpdateList ... contains statego controllers
 
@@ -42,6 +47,18 @@ func (g *Game) AddDrawStage(df func()) {
 }
 func (g *Game) AddDrawFe(df func()) {
 	g.DrawFeList = append(g.DrawFeList, df)
+}
+func (g *Game) DoDraw() {
+	for i := 0; i < len(g.DrawBgList); i++ {
+		(g.DrawBgList[i])()
+	}
+	for i := 0; i < len(g.DrawStageList); i++ {
+		(g.DrawStageList[i])()
+	}
+	for i := 0; i < len(g.DrawFeList); i++ {
+		(g.DrawFeList[i])()
+	}
+
 }
 
 /*
