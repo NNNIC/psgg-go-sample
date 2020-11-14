@@ -3,6 +3,7 @@ package game
 
 import (
 	_ "image/jpeg"
+	"time"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
@@ -97,4 +98,9 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 
 func (g *Game) Gophers_jpg() []byte {
 	return images.Gophers_jpg
+}
+
+func (g *Game) TimeNowMs() int64 {
+	nowUTC := time.Now().UTC()
+	return nowUTC.UnixNano() / int64(time.Millisecond)
 }

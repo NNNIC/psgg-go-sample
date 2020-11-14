@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
-stateid_list=,,,,s0001,s0002,s0025,,,,,,,,,,,,,,,,,,,s0024
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002a,,,,,,,,,,,,,,s0024
 max_name_id=30
-max_state_id=37
+max_state_id=42
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -53,6 +53,11 @@ s0001=S_START
 s0002=S_END
 s0024=S_0000
 s0025=S_INIT
+s0026=S_0001
+s0027=S_0002
+s0028=S_0003
+s0029=S_0004
+s002a=S_0005
 
 
 [s0001]
@@ -82,13 +87,13 @@ n018=100002
 
 [s0024]
 n002=S_0000
-n005=S_END
+n005=S_0003
 n009=@@@
-img, _, err := image.Decode(bytes.NewReader(images.Gophers_jpg))
+img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
 if err != nil {
 	log.Fatal(err)
 }
-g.gophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
 drawfunc := func() {
 	w, h := g.GophersImage.Size()
 	op := &ebiten.DrawImageOptions{}
@@ -98,12 +103,12 @@ drawfunc := func() {
 	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
 	// Rotate the image. As a result, the anchor point of this rotate is
 	// the center of the image.
-	op.GeoM.Rotate(float64(g.Count%360) * 2 * math.Pi / 360)
+	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
 	// Move the image to the screen's center.
 	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
-	g.Screen.DrawImage(g.gophersImage, op)
+	g.Screen.DrawImage(g.GophersImage, op)
 }
-g.AppendDrawStage(drawfunc)
+g.AddDrawStage(drawfunc)
 @@@
 
 n016=@@@
@@ -112,14 +117,14 @@ n016=@@@
 
 @@@
 
-n017=558,94
+n017=360,74
 n018=100003
 
 [s0025]
 n001=(bitmap)
 n002=S_INIT
-n005=S_0000
-n009=fmt.Println("!!")
+n005=S_0005
+n009=fmt.Println("START")
 n016=@@@
 /
 (100,100)
@@ -129,6 +134,117 @@ n016=@@@
 n017=149,29
 n018=100004
 
+[s0026]
+n002=S_0001
+n005=S_0004
+n009=@@@
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64((g.Count*3)%360) * 2 * math.Pi / 360)
+	op.GeoM.Scale(0.5, 0.5)
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=757,83
+n018=100005
+
+[s0027]
+n002=S_0002
+n005=S_END
+n009=@@@
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64((g.Count*6)%360) * 2 * math.Pi / 360)
+	op.GeoM.Scale(0.2, 0.2)
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1136,83
+n018=100006
+
+[s0028]
+n002=S_0003
+n005=S_0001
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1000
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=568,80
+n018=100007
+
+[s0029]
+n002=S_0004
+n005=S_0002
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1000
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=936,83
+n018=100008
+
+[s002a]
+n002=S_0005
+n005=S_0000
+n007=var time[[state>>lc]] int64
+n009=@@@
+time[[state>>lc]] = g.TimeNowMs() + 10000
+
+@@@
+
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=116,131
+n018=100009
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -136,7 +252,7 @@ n018=100004
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/14 10:24:40
+; The setting was created automatically. 2020/11/14 20:53:30
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -163,13 +279,13 @@ state_location_list=@@@
 
 @@@
 nodegroup_comment_list=@@@
-[{"Key":"\/","Value":"The root"}]
+[{"Key":"\/","Value":""}]
 @@@
 nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1342,"y":49}},{"Key":"S_0000","Value":{"x":558,"y":94}},{"Key":"S_INIT","Value":{"x":149,"y":29}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1342,"y":49}},{"Key":"S_0000","Value":{"x":360,"y":74}},{"Key":"S_INIT","Value":{"x":149,"y":29}},{"Key":"S_0001","Value":{"x":757,"y":83}},{"Key":"C_0001","Value":{"x":627,"y":264}},{"Key":"S_0002","Value":{"x":1136,"y":83}},{"Key":"S_0003","Value":{"x":568,"y":80}},{"Key":"S_0004","Value":{"x":936,"y":83}},{"Key":"S_0005","Value":{"x":116,"y":131}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
