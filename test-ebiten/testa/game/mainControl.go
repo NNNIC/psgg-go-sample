@@ -1,4 +1,4 @@
-﻿package sm
+﻿package game
 
 import (
 	"bytes"
@@ -8,8 +8,6 @@ import (
 	"math"
 	"math/rand"
 	"time"
-
-	"game"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
@@ -24,14 +22,14 @@ const (
 func Gamemain() {
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Rotate (StateGo Ebiten Demo)")
-	if err := ebiten.RunGame(&game.Game{}); err != nil {
+	if err := ebiten.RunGame(&Game{}); err != nil {
 		log.Fatal(err)
 	}
 }
 
 // MainControl ... main flow
 func MainControl() func(bool) bool {
-	var g *game.Game
+	var g *Game
 
 	rand.Seed(time.Now().Unix())
 
@@ -188,7 +186,7 @@ func MainControl() func(bool) bool {
 	gosubState(funcIdsSTART, funcIdsEND)
 	returnState()
 
-	return func(bFirst bool, ig *game.Game) bool {
+	return func(bFirst bool, ig *Game) bool {
 		g = ig
 		if bFirst {
 			curfunc = -1
