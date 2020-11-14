@@ -98,12 +98,12 @@ drawfunc := func() {
 	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
 	// Rotate the image. As a result, the anchor point of this rotate is
 	// the center of the image.
-	op.GeoM.Rotate(float64(g.count%360) * 2 * math.Pi / 360)
+	op.GeoM.Rotate(float64(g.Count%360) * 2 * math.Pi / 360)
 	// Move the image to the screen's center.
-	op.GeoM.Translate(float64(g.screenWidth/2), float64(g.screenHeight/2))
-	pg.Screen.DrawImage(g.gophersImage, op)
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.gophersImage, op)
 }
-pg.AppendDrawStage(drawfunc)
+g.AppendDrawStage(drawfunc)
 @@@
 
 n016=@@@
@@ -136,7 +136,7 @@ n018=100004
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/14 10:00:54
+; The setting was created automatically. 2020/11/14 10:24:40
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -154,7 +154,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /
