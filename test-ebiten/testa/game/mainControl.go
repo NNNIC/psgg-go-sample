@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/examples/resources/images"
 )
 
 // Gamemain ... invoke game
@@ -23,7 +22,7 @@ func Gamemain() {
 }
 
 // MainControl ... main flow
-func MainControl() func(bool,*Game) bool {
+func MainControl() func(bool, *Game) bool {
 	var g *Game
 
 	rand.Seed(time.Now().Unix())
@@ -94,7 +93,7 @@ func MainControl() func(bool,*Game) bool {
 	*/
 	s0000 := func(bFirst bool) {
 		if bFirst {
-			img, _, err := image.Decode(bytes.NewReader(images.Gophers_jpg))
+			img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -181,6 +180,11 @@ func MainControl() func(bool,*Game) bool {
 	gosubState(funcIdsSTART, funcIdsEND)
 	returnState()
 
+	// initialize
+	curfunc = -1
+	nextfunc = funcIdsSTART
+
+	// return update function     set true -- from start  set flase -- update
 	return func(bFirst bool, ig *Game) bool {
 		g = ig
 		if bFirst {

@@ -70,6 +70,13 @@ func (g *Game) DoDraw() {
 var bInitDone = false
 
 func (g *Game) Update(screen *ebiten.Image) error {
+	if bInitDone == false {
+		bInitDone = true
+		maincontrol := MainControl()
+		//maincontrol(true, g)
+		g.AddUpdate(maincontrol)
+	}
+
 	g.Screen = screen
 	g.PlayUpdate()
 	g.Count++
