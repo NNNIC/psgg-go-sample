@@ -5,6 +5,7 @@ import (
 	_ "image/jpeg"
 
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/examples/resources/images"
 )
 
 const (
@@ -85,4 +86,8 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	g.ScreenWidth = screenWidth
 	g.ScreenHeight = screenHeight
 	return screenWidth, screenHeight
+}
+
+func (g *Game) Gophers_jpg() []byte {
+	return images.Gophers_jpg
 }
