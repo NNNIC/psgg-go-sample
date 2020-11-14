@@ -9,7 +9,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/NNNIC/psgg-go-sample/test-ebiten/testa/game"
+	"game"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
@@ -20,7 +20,7 @@ const (
 	screenHeight = 240
 )
 
-// Gamemain ... invke game
+// Gamemain ... invoke game
 func Gamemain() {
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Rotate (StateGo Ebiten Demo)")
