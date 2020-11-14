@@ -13,11 +13,6 @@ import (
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
 )
 
-const (
-	screenWidth  = 320
-	screenHeight = 240
-)
-
 // Gamemain ... invoke game
 func Gamemain() {
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
@@ -28,7 +23,7 @@ func Gamemain() {
 }
 
 // MainControl ... main flow
-func MainControl() func(bool) bool {
+func MainControl() func(bool,*Game) bool {
 	var g *Game
 
 	rand.Seed(time.Now().Unix())
@@ -116,9 +111,9 @@ func MainControl() func(bool) bool {
 				op.GeoM.Rotate(float64(g.Count%360) * 2 * math.Pi / 360)
 				// Move the image to the screen's center.
 				op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
-				g.Screen.DrawImage(g.gophersImage, op)
+				g.Screen.DrawImage(g.GophersImage, op)
 			}
-			g.AppendDrawStage(drawfunc)
+			g.AddDrawStage(drawfunc)
 		}
 		if !hasNextState() {
 			gotoState(funcIdsEND)

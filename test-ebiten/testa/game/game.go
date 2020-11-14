@@ -27,6 +27,8 @@ type Game struct {
 	ScreenWidth  int
 	ScreenHeight int
 	Count        int
+
+	GophersImage *ebiten.Image
 }
 
 func (g *Game) AddUpdate(cf func(bool, *Game) bool) int {
