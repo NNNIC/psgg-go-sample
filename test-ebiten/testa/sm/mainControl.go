@@ -15,6 +15,20 @@ import (
 	"github.com/NNNIC/psgg-go-sample/test-ebiten/testa/game"
 )
 
+const (
+	screenWidth  = 320
+	screenHeight = 240
+)
+
+// Gamemain ... invke game
+func Gamemain() {
+	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
+	ebiten.SetWindowTitle("Rotate (StateGo Ebiten Demo)")
+	if err := ebiten.RunGame(&game.Game{}); err != nil {
+		log.Fatal(err)
+	}
+}
+
 // MainControl ... main flow
 func MainControl() func(bool) bool {
 	var g *game.Game
