@@ -19,3 +19,5 @@ go run main.go
 
 To view StateGo file (*.psgg) download and install ./statego/StateGo_0.67.20953.exe 
 
+Play by clicking
+<a href="https://github.com/NNNIC/psgg-go-sample/raw/main/wiki/rotatex3.gif"><img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/rotatex3.png" /></a>
