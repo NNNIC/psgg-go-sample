@@ -17,3 +17,5 @@ cd ebiten/rotatex3
 go run main.go 
 </pre>
 
+To view StateGo file (*.psgg) download and install ./statego/StateGo_0.67.20953.exe 
+
