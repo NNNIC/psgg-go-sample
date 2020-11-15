@@ -1,3 +1,3 @@
-module github.com/psgg-go-sample/ebiten/resources/sgimg
+module github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg
 
 go 1.15
