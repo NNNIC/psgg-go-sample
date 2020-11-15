@@ -15,7 +15,7 @@ import (
 
 // Gamemain ... invoke game
 func Gamemain() {
-	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
+	ebiten.SetWindowSize(screenWidth, screenHeight)
 	ebiten.SetWindowTitle("Rotate (StateGo Ebiten Demo)")
 	if err := ebiten.RunGame(&Game{}); err != nil {
 		log.Fatal(err)
@@ -77,17 +77,45 @@ func MainControl() func(bool, *Game) bool {
     id++
     funcIdsCLEARALL := id
     id++
+    funcIdsCLEARALL1 := id
+    id++
     funcIdsCLEARTERM := id
     id++
     funcIdsCOUNT := id
+    id++
+    funcIdsDrawMascot := id
     id++
     funcIdsEND := id
     id++
     funcIdsLOADSHOW := id
     id++
+    funcIdsLOP000 := id
+    id++
+    funcIdsLOP000LoopCheck := id
+    id++
+    funcIdsLOP000LoopNext := id
+    id++
+    funcIdsLOP001 := id
+    id++
+    funcIdsLOP001LoopCheck := id
+    id++
+    funcIdsLOP001LoopNext := id
+    id++
     funcIdsMENU := id
     id++
+    funcIdsPAS000 := id
+    id++
+    funcIdsRET000 := id
+    id++
+    funcIdsRET001 := id
+    id++
     funcIdsRotationOverRay := id
+    id++
+    funcIdsSBS000 := id
+    id++
+    funcIdsSBS001 := id
+    id++
+    funcIdsSETBG := id
     id++
     funcIdsSETBGBLUE := id
     id++
@@ -135,6 +163,8 @@ func MainControl() func(bool, *Game) bool {
     //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
     var cntsCOUNT int
+    var loop1 = 0
+    var loop2 = 0
     var timesWAIT int64
     var timesWAIT1 int64
     var timesWAIT10 int64
@@ -274,6 +304,17 @@ func MainControl() func(bool, *Game) bool {
         }
     }
     /*
+        S_CLEARALL1
+    */
+    sCLEARALL1 := func( bFirst  bool ) {
+        if bFirst {
+            g.ClearAll()
+        }
+        if !hasNextState() {
+            gotoState(funcIdsSETBG)
+        }
+    }
+    /*
         S_CLEARTERM
     */
     sCLEARTERM := func( bFirst  bool ) {
@@ -301,6 +342,22 @@ func MainControl() func(bool, *Game) bool {
         }
     }
     /*
+        S_DrawMascot
+    */
+    sDrawMascot := func( bFirst  bool ) {
+        if bFirst {
+            x := loop1
+            y := loop2
+            drawfunc := func() {
+                g.DrawImage(g.MascotImage, float64(x*64+32),float64(y*64+32),0,1)
+            }
+            g.AddDrawStage(drawfunc)
+        }
+        if !hasNextState() {
+            gotoState(funcIdsRET001)
+        }
+    }
+    /*
         S_END
     */
     sEND := func ( bFirst  bool ) {
@@ -312,31 +369,56 @@ func MainControl() func(bool, *Game) bool {
     sLOADSHOW := func( bFirst  bool ) {
         if bFirst {
             if g.MascotImage == nil {
-                img, _, err := image.Decode(bytes.NewReader(g.Mascot_png()))
+                img, _, err := image.Decode(bytes.NewReader(g.Mascot64_png()))
                 if err != nil {
             	log.Fatal(err)
                 }
                 g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
             }
             drawfunc := func() {
-            	w, h := g.GophersImage.Size()
-            	op := &ebiten.DrawImageOptions{}
-            	// Move the image's center to the screen's upper-left corner.
-            	// This is a preparation for rotating. When geometry matrices are applied,
-            	// the origin point is the upper-left corner.
-            	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
-            	// Rotate the image. As a result, the anchor point of this rotate is
-            	// the center of the image.
-            	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
-            	// Move the image to the screen's center.
-            	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
-            	g.Screen.DrawImage(g.GophersImage, op)
+            	g.DrawImage(g.MascotImage,8,8,0,1)
             }
             g.AddDrawStage(drawfunc)
         }
         if !hasNextState() {
-            gotoState(funcIdsBACKTOMENU)
+            gotoState(funcIdsCLEARALL1)
         }
+    }
+    /*
+        S_LOP000
+    */
+    sLOP000 := func ( bFirst bool ) {
+        loop1 = 0
+        gotoState(funcIdsLOP000LoopCheck)
+    }
+    sLOP000LoopCheck := func ( bFirst bool ) {
+        if loop1 < (g.ScreenWidth / 64) {
+            gosubState(funcIdsSBS000, funcIdsLOP000LoopNext)
+        } else {
+            gotoState(funcIdsPAS000)
+        }
+    }
+    sLOP000LoopNext := func(bFirst bool ) {
+        loop1++
+        gotoState(funcIdsLOP000LoopCheck)
+    }
+    /*
+        S_LOP001
+    */
+    sLOP001 := func ( bFirst bool ) {
+        loop2 = 0
+        gotoState(funcIdsLOP001LoopCheck)
+    }
+    sLOP001LoopCheck := func ( bFirst bool ) {
+        if loop2 < (g.ScreenHeight / 64) {
+            gosubState(funcIdsSBS001, funcIdsLOP001LoopNext)
+        } else {
+            gotoState(funcIdsRET000)
+        }
+    }
+    sLOP001LoopNext := func(bFirst bool ) {
+        loop2++
+        gotoState(funcIdsLOP001LoopCheck)
     }
     /*
         S_MENU
@@ -366,6 +448,26 @@ func MainControl() func(bool, *Game) bool {
         }
     }
     /*
+        S_PAS000
+    */
+    sPAS000 := func( bFirst  bool ) {
+        if !hasNextState() {
+            gotoState(funcIdsBACKTOMENU)
+        }
+    }
+    /*
+        S_RET000
+    */
+    sRET000 := func ( bFirst bool ) {
+        returnState()
+    }
+    /*
+        S_RET001
+    */
+    sRET001 := func ( bFirst bool ) {
+        returnState()
+    }
+    /*
         S_RotationOverRay
     */
     sRotationOverRay := func( bFirst  bool ) {
@@ -374,6 +476,36 @@ func MainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsWAIT5)
+        }
+    }
+    /*
+        S_SBS000
+    */
+    sSBS000 := func( bFirst  bool ) {
+        if !hasNextState() {
+            gotoState(funcIdsLOP001)
+        }
+    }
+    /*
+        S_SBS001
+    */
+    sSBS001 := func( bFirst  bool ) {
+        if !hasNextState() {
+            gotoState(funcIdsDrawMascot)
+        }
+    }
+    /*
+        S_SETBG
+    */
+    sSETBG := func( bFirst  bool ) {
+        if bFirst {
+            drawfunc := func() {
+                g.Screen.Fill(color.RGBA{0,56,133,0xff})
+            }
+            g.AddDrawBg(drawfunc)
+        }
+        if !hasNextState() {
+            gotoState(funcIdsLOP000)
         }
     }
     /*
@@ -640,12 +772,26 @@ func MainControl() func(bool, *Game) bool {
         sBACKTOMENU,
         sCHANGEBG,
         sCLEARALL,
+        sCLEARALL1,
         sCLEARTERM,
         sCOUNT,
+        sDrawMascot,
         sEND,
         sLOADSHOW,
+        sLOP000,
+        sLOP000LoopCheck,
+        sLOP000LoopNext,
+        sLOP001,
+        sLOP001LoopCheck,
+        sLOP001LoopNext,
         sMENU,
+        sPAS000,
+        sRET000,
+        sRET001,
         sRotationOverRay,
+        sSBS000,
+        sSBS001,
+        sSETBG,
         sSETBGBLUE,
         sSETBGGREEN,
         sSETBGRED,

@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c
 max_name_id=30
-max_state_id=65
+max_state_id=76
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -80,6 +80,17 @@ s003e=S_CLEARALL
 s003f=S_SHOWMASCOT
 s0040=S_WAIT11
 s0041=S_LOAD_SHOW
+s0042=C_LOAD_SHOW1
+s0043=S_CLEARALL1
+s0044=S_LOP000
+s0045=S_SBS000
+s0046=S_RET000
+s0047=S_PAS000
+s0048=S_LOP001
+s0049=S_SBS001
+s004a=S_RET001
+s004b=S_DrawMascot
+s004c=S_SETBG
 
 
 [s0001]
@@ -630,28 +641,17 @@ n018=100030
 
 [s0041]
 n002=S_LOAD_SHOW
-n005=S_BACKTO_MENU
+n005=S_CLEARALL1
 n009=@@@
 if g.MascotImage == nil {
-    img, _, err := image.Decode(bytes.NewReader(g.Mascot_png()))
+    img, _, err := image.Decode(bytes.NewReader(g.Mascot64_png()))
     if err != nil {
 	log.Fatal(err)
     }
     g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
 }
 drawfunc := func() {
-	w, h := g.GophersImage.Size()
-	op := &ebiten.DrawImageOptions{}
-	// Move the image's center to the screen's upper-left corner.
-	// This is a preparation for rotating. When geometry matrices are applied,
-	// the origin point is the upper-left corner.
-	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
-	// Rotate the image. As a result, the anchor point of this rotate is
-	// the center of the image.
-	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
-	// Move the image to the screen's center.
-	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
-	g.Screen.DrawImage(g.GophersImage, op)
+	g.DrawImage(g.MascotImage,8,8,0,1)
 }
 g.AddDrawStage(drawfunc)
 @@@
@@ -665,6 +665,196 @@ The root
 n017=838,1135
 n018=100031
 
+[s0042]
+n002=C_LOAD_SHOW1
+n009=@@@
+if g.MascotImage == nil {
+    img, _, err := image.Decode(bytes.NewReader(g.Mascot_png()))
+    if err != nil {
+	log.Fatal(err)
+    }
+    g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+}
+drawfunc := func() {
+	w, h := g.MascotImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.MascotImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=818,1447
+n018=100032
+
+[s0043]
+n002=S_CLEARALL1
+n005=S_SETBG
+n009=g.ClearAll()
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1044,1137
+n018=100033
+
+[s0044]
+n002=S_LOP000
+n019=loop
+n005=S_PAS000
+n01a=S_SBS000
+n007=var loop1 = 0
+n01b=loop1 = 0
+n01c=loop1 < (g.ScreenWidth / 64)
+n01d=loop1++
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1523,1205
+n018=100034
+
+[s0045]
+n002=S_SBS000
+n019=substart
+n005=S_LOP001
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1611,1396
+n018=100035
+
+[s0046]
+n002=S_RET000
+n019=subreturn
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=2166,1348
+n018=100036
+
+[s0047]
+n002=S_PAS000
+n019=pass
+n005=S_BACKTO_MENU
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1917,1176
+n018=100037
+
+[s0048]
+n002=S_LOP001
+n019=loop
+n005=S_RET000
+n01a=S_SBS001
+n007=var loop2 = 0
+n01b=loop2 = 0
+n01c=loop2 < (g.ScreenHeight / 64)
+n01d=loop2++
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1727,1396
+n018=100038
+
+[s0049]
+n002=S_SBS001
+n019=substart
+n005=S_DrawMascot
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1821,1497
+n018=100039
+
+[s004a]
+n002=S_RET001
+n019=subreturn
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=2143,1499
+n018=100040
+
+[s004b]
+n002=S_DrawMascot
+n005=S_RET001
+n009=@@@
+x := loop1
+y := loop2
+drawfunc := func() {
+    g.DrawImage(g.MascotImage, float64(x*64+32),float64(y*64+32),0,1)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1924,1498
+n018=100041
+
+[s004c]
+n001=(bitmap)
+n002=S_SETBG
+n005=S_LOP000
+n009=@@@
+drawfunc := func() {
+    g.Screen.Fill(color.RGBA{0,56,133,0xff})
+}
+g.AddDrawBg(drawfunc)
+
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1252,1135
+n018=100042
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -672,7 +862,7 @@ n018=100031
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/15 10:08:50
+; The setting was created automatically. 2020/11/15 13:10:03
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -690,7 +880,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-mov,S_LOAD_SHOW
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /
@@ -705,7 +895,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":73,"y":84}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_TERMINAL2","Value":{"x":124,"y":31}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_MENU1","Value":{"x":434.4737,"y":1022.579}},{"Key":"S_BACKTO_MENU","Value":{"x":285,"y":25}},{"Key":"S_CLEARALL","Value":{"x":437,"y":1587}},{"Key":"S_CLEARALL1","Value":{"x":439,"y":971}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_1stRotation1","Value":{"x":835.7619,"y":1127.42859}},{"Key":"S_LOAD_SHOW","Value":{"x":838,"y":1135}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":73,"y":84}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_TERMINAL2","Value":{"x":124,"y":31}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_MENU1","Value":{"x":434.4737,"y":1022.579}},{"Key":"S_BACKTO_MENU","Value":{"x":285,"y":25}},{"Key":"S_CLEARALL","Value":{"x":437,"y":1587}},{"Key":"S_CLEARALL1","Value":{"x":1044,"y":1137}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_1stRotation1","Value":{"x":835.7619,"y":1127.42859}},{"Key":"S_LOAD_SHOW","Value":{"x":838,"y":1135}},{"Key":"S_LOAD_SHOW1","Value":{"x":1172,"y":1306}},{"Key":"C_LOAD_SHOW1","Value":{"x":818,"y":1447}},{"Key":"S_LOP000","Value":{"x":1523,"y":1205}},{"Key":"S_SBS000","Value":{"x":1611,"y":1396}},{"Key":"S_RET000","Value":{"x":2166,"y":1348}},{"Key":"S_PAS000","Value":{"x":1917,"y":1176}},{"Key":"S_LOP001","Value":{"x":1727,"y":1396}},{"Key":"S_SBS001","Value":{"x":1821,"y":1497}},{"Key":"S_RET001","Value":{"x":2143,"y":1499}},{"Key":"S_RET002","Value":{"x":1689,"y":1511}},{"Key":"S_DrawMascot","Value":{"x":1924,"y":1498}},{"Key":"S_SETBGRED1","Value":{"x":1252,"y":1135}},{"Key":"S_SETBG","Value":{"x":1252,"y":1135}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

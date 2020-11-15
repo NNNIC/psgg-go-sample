@@ -1,4 +1,7 @@
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
+github.com/NNNIC/psgg-go-sample v0.0.0-20201115012505-30de9584acb1 h1:jYKptxq0N5NjLlRd593UOtXbFwmcRZJX93nI6BZyREM=
+github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201115014927-d8ecfbde415a h1:R2y6FBc9Ad+YVHNS7LiMJPagGHiilmPxEyrBp0d73DU=
+github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201115014927-d8ecfbde415a/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200707082815-5321531c36a2/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/gofrs/flock v0.8.0/go.mod h1:F1TvTiK9OcQqauNUHlbJvyl9Qa1QvF/gOUDKA14jxHU=
 github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0/go.mod h1:E/TSTwGwJL78qG/PmXZO1EjYhfJinVAhrmmHX6Z8B9k=

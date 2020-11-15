@@ -2,17 +2,18 @@ package game
 
 import (
 	_ "image/jpeg"
+	_ "image/png"
 	"time"
 
+	"github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
-	"github.com/psgg-go-sample/ebiten/resources/sgimg"
 )
 
 const (
-	screenWidth  = 320
-	screenHeight = 240
+	screenWidth  = 640
+	screenHeight = 480
 )
 
 type Game struct {
@@ -42,23 +43,44 @@ type Game struct {
 }
 
 func (g *Game) AddUpdate(cf func(bool, *Game) bool) int {
-	hundle := len(g.UpdateList)
+	handle := len(g.UpdateList)
 	g.UpdateList = append(g.UpdateList, cf)
-	return hundle
+	return handle
 }
 func (g *Game) PlayUpdate() {
 	for i := 0; i < len(g.UpdateList); i++ {
 		g.UpdateList[i](false, g)
 	}
 }
-func (g *Game) AddDrawBg(df func()) {
+
+// AddDrawBg ... Add Draw Function to DrawBgList
+func (g *Game) AddDrawBg(df func()) int {
+	handle := len(g.DrawBgList)
 	g.DrawBgList = append(g.DrawBgList, df)
+	return handle
 }
-func (g *Game) AddDrawStage(df func()) {
+func (g *Game) SetDrawBg(handle int, df func()) {
+	g.DrawBgList[handle] = df
+}
+
+// AddDrawStage ... Add Draw Function to DrawStageList
+func (g *Game) AddDrawStage(df func()) int {
+	handle := len(g.DrawStageList)
 	g.DrawStageList = append(g.DrawStageList, df)
+	return handle
 }
-func (g *Game) AddDrawFe(df func()) {
+func (g *Game) SetDrawStage(handle int, df func()) {
+	g.DrawStageList[handle] = df
+}
+
+// AddDrawFe ... Add Draw Function to DrawFeList
+func (g *Game) AddDrawFe(df func()) int {
+	handle := len(g.DrawFeList)
 	g.DrawFeList = append(g.DrawFeList, df)
+	return handle
+}
+func (g Game) SetDrawFe(handle int, df func()) {
+	g.DrawFeList[handle] = df
 }
 func (g *Game) SetDbgTerm(df func()) {
 	g.DrawTermFunc = g.DrawTermFunc[:0]
@@ -166,12 +188,29 @@ func (g *Game) TermClear() {
 	g.ClrDbgTerm()
 }
 
+// DrawImage ... simple draw image
+// * screen's origin is upper left
+func (g *Game) DrawImage(image *ebiten.Image, x, y, angle, scale float64) {
+	w, h := image.Size()
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	op.GeoM.Scale(scale, scale)
+	op.GeoM.Translate(x, y)
+	g.Screen.DrawImage(image, op)
+}
+
 /*
 	USER API's
 */
 func (g *Game) Gophers_jpg() []byte {
 	return images.Gophers_jpg
 }
-func (g *Game) Mascot_png() []byte {
+func (g *Game) Mascot64_png() []byte {
+	return sgimg.Mascot64_png
+}
+func (g *Game) Mascot32_png() []byte {
 	return sgimg.Mascot32_png
+}
+func (g *Game) Mascot16_png() []byte {
+	return sgimg.Mascot16_png
 }
