@@ -31,6 +31,12 @@ func MainControl() func(bool, *Game) bool {
 	curfunc := -1
 	nextfunc := -1
 
+	nowait := false
+
+	noWait := func() {
+		nowait = true
+	}
+
 	gotoState := func(st int) {
 		nextfunc = st
 	}
@@ -87,6 +93,12 @@ func MainControl() func(bool, *Game) bool {
     id++
     funcIdsEND := id
     id++
+    funcIdsFADEIN := id
+    id++
+    funcIdsFADEINTEST := id
+    id++
+    funcIdsFADEOUT := id
+    id++
     funcIdsLOADSHOW := id
     id++
     funcIdsLOP000 := id
@@ -104,6 +116,8 @@ func MainControl() func(bool, *Game) bool {
     funcIdsMENU := id
     id++
     funcIdsPAS000 := id
+    id++
+    funcIdsPAS001 := id
     id++
     funcIdsRET000 := id
     id++
@@ -139,6 +153,8 @@ func MainControl() func(bool, *Game) bool {
     id++
     funcIdsWAIT11 := id
     id++
+    funcIdsWAIT12 := id
+    id++
     funcIdsWAIT2 := id
     id++
     funcIdsWAIT3 := id
@@ -163,12 +179,15 @@ func MainControl() func(bool, *Game) bool {
     //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
     var cntsCOUNT int
+    var goalsFADEIN float64
+    var goalsFADEOUT float64
     var loop1 = 0
     var loop2 = 0
     var timesWAIT int64
     var timesWAIT1 int64
     var timesWAIT10 int64
     var timesWAIT11 int64
+    var timesWAIT12 int64
     var timesWAIT2 int64
     var timesWAIT3 int64
     var timesWAIT4 int64
@@ -364,6 +383,79 @@ func MainControl() func(bool, *Game) bool {
          // end of state machine
     }
     /*
+        S_FADEIN
+    */
+    sFADEIN := func( bFirst  bool ) {
+        fadestepnum := 60.0
+        col := color.RGBA{255,255,255,255}
+        if bFirst {
+            if g.FadeImage == nil {
+                img,_ := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight, ebiten.FilterDefault)
+                g.FadeImage = img
+            }
+            goalsFADEIN = float64(g.Count) + fadestepnum
+            drawfunc := func() {
+                alpha := (goalsFADEIN - float64(g.Count)) / fadestepnum * 255.0
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(g.Clamp255(int(alpha)))})
+                w, h := g.FadeImage.Size()
+                op := &ebiten.DrawImageOptions{}
+                op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+                op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+                g.Screen.DrawImage(g.FadeImage, op)
+            }
+            g.ClrDrawFe()
+            g.AddDrawFe(drawfunc)
+        }
+        if float64(g.Count) < goalsFADEIN {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsPAS001)
+        }
+    }
+    /*
+        S_FADEINTEST
+    */
+    sFADEINTEST := func( bFirst  bool ) {
+        if bFirst {
+            g.TermPrint(" = FADE OUT -> IN = ")
+        }
+        if !hasNextState() {
+            gotoState(funcIdsFADEOUT)
+        }
+    }
+    /*
+        S_FADEOUT
+    */
+    sFADEOUT := func( bFirst  bool ) {
+        fadestepnum := 60.0
+        col := color.RGBA{255,255,255,255}
+        if bFirst {
+            if g.FadeImage == nil {
+                img,_ := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight, ebiten.FilterDefault)
+                g.FadeImage = img
+            }
+            goalsFADEOUT = float64(g.Count) + fadestepnum
+            drawfunc := func() {
+                alpha := (fadestepnum - (goalsFADEOUT - float64(g.Count))) / fadestepnum * 255.0
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(g.Clamp255(int(alpha)))})
+                w, h := g.FadeImage.Size()
+                op := &ebiten.DrawImageOptions{}
+                op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+                op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+                g.Screen.DrawImage(g.FadeImage, op)
+            }
+            g.ClrDrawFe()
+            g.AddDrawFe(drawfunc)
+        }
+        if float64(g.Count) < goalsFADEOUT {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsWAIT12)
+        }
+    }
+    /*
         S_LOAD_SHOW
     */
     sLOADSHOW := func( bFirst  bool ) {
@@ -390,6 +482,7 @@ func MainControl() func(bool, *Game) bool {
     sLOP000 := func ( bFirst bool ) {
         loop1 = 0
         gotoState(funcIdsLOP000LoopCheck)
+        noWait()
     }
     sLOP000LoopCheck := func ( bFirst bool ) {
         if loop1 < (g.ScreenWidth / 64) {
@@ -397,10 +490,12 @@ func MainControl() func(bool, *Game) bool {
         } else {
             gotoState(funcIdsPAS000)
         }
+        noWait()
     }
     sLOP000LoopNext := func(bFirst bool ) {
         loop1++
         gotoState(funcIdsLOP000LoopCheck)
+        noWait()
     }
     /*
         S_LOP001
@@ -408,6 +503,7 @@ func MainControl() func(bool, *Game) bool {
     sLOP001 := func ( bFirst bool ) {
         loop2 = 0
         gotoState(funcIdsLOP001LoopCheck)
+        noWait()
     }
     sLOP001LoopCheck := func ( bFirst bool ) {
         if loop2 < (g.ScreenHeight / 64) {
@@ -415,21 +511,24 @@ func MainControl() func(bool, *Game) bool {
         } else {
             gotoState(funcIdsRET000)
         }
+        noWait()
     }
     sLOP001LoopNext := func(bFirst bool ) {
         loop2++
         gotoState(funcIdsLOP001LoopCheck)
+        noWait()
     }
     /*
         S_MENU
     */
     sMENU := func( bFirst  bool ) {
         if bFirst {
-            g.TermPrint("==== TEST =====");
-            g.TermPrint("Push 1 ... Termainal Test");
-            g.TermPrint("Push 2 ... Background Color Change Test");
-            g.TermPrint("Push 3 ... Ebiten Rotaion Overlay Demo");
-            g.TermPrint("Push 4 ... StateGo Mascot Demo");
+            g.TermPrint("==== TEST =====")
+            g.TermPrint("Push 1 ... Termainal Test")
+            g.TermPrint("Push 2 ... Background Color Change Test")
+            g.TermPrint("Push 3 ... Ebiten Rotaion Overlay Demo")
+            g.TermPrint("Push 4 ... StateGo Mascot Demo")
+            g.TermPrint("Push T ... Try a new feature")
             g.TermPrint("")
             g.TermPrint("Push C ... Cear all");
             g.TermPrint("")
@@ -443,6 +542,8 @@ func MainControl() func(bool, *Game) bool {
             gotoState( funcIdsRotationOverRay )
         } else if ebiten.IsKeyPressed(ebiten.Key4) {
             gotoState( funcIdsSHOWMASCOT )
+        } else if ebiten.IsKeyPressed(ebiten.KeyT) {
+            gotoState( funcIdsFADEINTEST )
         } else if ebiten.IsKeyPressed(ebiten.KeyC) {
             gotoState( funcIdsCLEARALL )
         }
@@ -451,21 +552,29 @@ func MainControl() func(bool, *Game) bool {
         S_PAS000
     */
     sPAS000 := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsBACKTOMENU)
-        }
+        gotoState(funcIdsBACKTOMENU)
+        noWait()
+    }
+    /*
+        S_PAS001
+    */
+    sPAS001 := func( bFirst  bool ) {
+        gotoState(funcIdsBACKTOMENU)
+        noWait()
     }
     /*
         S_RET000
     */
     sRET000 := func ( bFirst bool ) {
         returnState()
+        noWait()
     }
     /*
         S_RET001
     */
     sRET001 := func ( bFirst bool ) {
         returnState()
+        noWait()
     }
     /*
         S_RotationOverRay
@@ -646,6 +755,20 @@ func MainControl() func(bool, *Game) bool {
         }
     }
     /*
+        S_WAIT12
+    */
+    sWAIT12 := func( bFirst  bool ) {
+        if bFirst {
+            timesWAIT12 = g.TimeNowMs() + 1500
+        }
+        if timesWAIT12 > g.TimeNowMs() {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsFADEIN)
+        }
+    }
+    /*
         S_WAIT2
     */
     sWAIT2 := func( bFirst  bool ) {
@@ -777,6 +900,9 @@ func MainControl() func(bool, *Game) bool {
         sCOUNT,
         sDrawMascot,
         sEND,
+        sFADEIN,
+        sFADEINTEST,
+        sFADEOUT,
         sLOADSHOW,
         sLOP000,
         sLOP000LoopCheck,
@@ -786,6 +912,7 @@ func MainControl() func(bool, *Game) bool {
         sLOP001LoopNext,
         sMENU,
         sPAS000,
+        sPAS001,
         sRET000,
         sRET001,
         sRotationOverRay,
@@ -803,6 +930,7 @@ func MainControl() func(bool, *Game) bool {
         sWAIT1,
         sWAIT10,
         sWAIT11,
+        sWAIT12,
         sWAIT2,
         sWAIT3,
         sWAIT4,
@@ -820,14 +948,20 @@ func MainControl() func(bool, *Game) bool {
 
 	update := func() bool {
 		if curfunc != funcIdsEND {
-			var bFirst = false
-			if nextfunc != -1 {
-				curfunc = nextfunc
-				nextfunc = -1
-				bFirst = true
-			}
-			if curfunc != -1 {
-				funclist[curfunc](bFirst)
+			for true {
+				var bFirst = false
+				if nextfunc != -1 {
+					curfunc = nextfunc
+					nextfunc = -1
+					bFirst = true
+				}
+				if curfunc != -1 {
+					nowait = false
+					funclist[curfunc](bFirst)
+				}
+				if nowait == false {
+					break
+				}
 			}
 			return false
 		}

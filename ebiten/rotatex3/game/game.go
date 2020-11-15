@@ -32,6 +32,9 @@ type Game struct {
 	dbgtermmsg    []string
 	dbgtermmsgstr string
 
+	// fade image
+	FadeImage *ebiten.Image
+
 	// user
 	ScreenWidth  int
 	ScreenHeight int
@@ -213,4 +216,13 @@ func (g *Game) Mascot32_png() []byte {
 }
 func (g *Game) Mascot16_png() []byte {
 	return sgimg.Mascot16_png
+}
+func (g *Game) Clamp255(i int) int {
+	if i < 0 {
+		return 0
+	}
+	if i > 255 {
+		return 255
+	}
+	return i
 }
