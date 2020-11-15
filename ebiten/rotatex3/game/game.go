@@ -7,6 +7,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
+	"github.com/psgg-go-sample/ebiten/resources/sgimg"
 )
 
 const (
@@ -172,5 +173,5 @@ func (g *Game) Gophers_jpg() []byte {
 	return images.Gophers_jpg
 }
 func (g *Game) Mascot_png() []byte {
-	return resources.mascot_t32_png
+	return sgimg.Mascot32_png
 }
