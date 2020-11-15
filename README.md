@@ -8,7 +8,7 @@ https://www.spinute.org/go-by-example/random-numbers.html
 
 ## ebiten with StateGo
 
-developing at./ebiten
+developing at ./ebiten
 
 ### How to compile
 
