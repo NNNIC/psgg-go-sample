@@ -102,6 +102,9 @@ func (g *Game) ClearAll() {
 */
 var bInitDone = false
 
+/*
+	MANAGER APIs
+*/
 func (g *Game) Update(screen *ebiten.Image) error {
 	if bInitDone == false {
 		bInitDone = true
@@ -126,10 +129,6 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	g.ScreenWidth = screenWidth
 	g.ScreenHeight = screenHeight
 	return screenWidth, screenHeight
-}
-
-func (g *Game) Gophers_jpg() []byte {
-	return images.Gophers_jpg
 }
 
 func (g *Game) TimeNowMs() int64 {
@@ -163,4 +162,11 @@ func (g *Game) TermPrint(str string) {
 func (g *Game) TermClear() {
 	g.dbgtermmsg = g.dbgtermmsg[:0]
 	g.ClrDbgTerm()
+}
+
+/*
+	USER API's
+*/
+func (g *Game) Gophers_jpg() []byte {
+	return images.Gophers_jpg
 }
