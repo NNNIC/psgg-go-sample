@@ -3,4 +3,17 @@ statego golang
 
 Now developing.
 
+referece
 https://www.spinute.org/go-by-example/random-numbers.html
+
+## ebiten with StateGo
+
+developing at./ebiten
+
+### How to compile
+
+<pre>
+cd ebiten/rotatex3
+go run main.go 
+</pre>
+
