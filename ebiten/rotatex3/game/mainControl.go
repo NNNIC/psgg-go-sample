@@ -83,6 +83,8 @@ func MainControl() func(bool, *Game) bool {
     id++
     funcIdsEND := id
     id++
+    funcIdsLOADSHOW := id
+    id++
     funcIdsMENU := id
     id++
     funcIdsRotationOverRay := id
@@ -92,6 +94,8 @@ func MainControl() func(bool, *Game) bool {
     funcIdsSETBGGREEN := id
     id++
     funcIdsSETBGRED := id
+    id++
+    funcIdsSHOWMASCOT := id
     id++
     funcIdsSTART := id
     id++
@@ -104,6 +108,8 @@ func MainControl() func(bool, *Game) bool {
     funcIdsWAIT1 := id
     id++
     funcIdsWAIT10 := id
+    id++
+    funcIdsWAIT11 := id
     id++
     funcIdsWAIT2 := id
     id++
@@ -132,6 +138,7 @@ func MainControl() func(bool, *Game) bool {
     var timesWAIT int64
     var timesWAIT1 int64
     var timesWAIT10 int64
+    var timesWAIT11 int64
     var timesWAIT2 int64
     var timesWAIT3 int64
     var timesWAIT4 int64
@@ -300,6 +307,38 @@ func MainControl() func(bool, *Game) bool {
          // end of state machine
     }
     /*
+        S_LOAD_SHOW
+    */
+    sLOADSHOW := func( bFirst  bool ) {
+        if bFirst {
+            if g.MascotImage == nil {
+                img, _, err := image.Decode(bytes.NewReader(g.Mascot_png()))
+                if err != nil {
+            	log.Fatal(err)
+                }
+                g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+            }
+            drawfunc := func() {
+            	w, h := g.GophersImage.Size()
+            	op := &ebiten.DrawImageOptions{}
+            	// Move the image's center to the screen's upper-left corner.
+            	// This is a preparation for rotating. When geometry matrices are applied,
+            	// the origin point is the upper-left corner.
+            	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+            	// Rotate the image. As a result, the anchor point of this rotate is
+            	// the center of the image.
+            	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
+            	// Move the image to the screen's center.
+            	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+            	g.Screen.DrawImage(g.GophersImage, op)
+            }
+            g.AddDrawStage(drawfunc)
+        }
+        if !hasNextState() {
+            gotoState(funcIdsBACKTOMENU)
+        }
+    }
+    /*
         S_MENU
     */
     sMENU := func( bFirst  bool ) {
@@ -307,7 +346,8 @@ func MainControl() func(bool, *Game) bool {
             g.TermPrint("==== TEST =====");
             g.TermPrint("Push 1 ... Termainal Test");
             g.TermPrint("Push 2 ... Background Color Change Test");
-            g.TermPrint("Push 3 ... Rotaion Overlay Demo");
+            g.TermPrint("Push 3 ... Ebiten Rotaion Overlay Demo");
+            g.TermPrint("Push 4 ... StateGo Mascot Demo");
             g.TermPrint("")
             g.TermPrint("Push C ... Cear all");
             g.TermPrint("")
@@ -319,6 +359,8 @@ func MainControl() func(bool, *Game) bool {
             gotoState( funcIdsCHANGEBG )
         } else if ebiten.IsKeyPressed(ebiten.Key3) {
             gotoState( funcIdsRotationOverRay )
+        } else if ebiten.IsKeyPressed(ebiten.Key4) {
+            gotoState( funcIdsSHOWMASCOT )
         } else if ebiten.IsKeyPressed(ebiten.KeyC) {
             gotoState( funcIdsCLEARALL )
         }
@@ -374,6 +416,17 @@ func MainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsWAIT8)
+        }
+    }
+    /*
+        S_SHOWMASCOT
+    */
+    sSHOWMASCOT := func( bFirst  bool ) {
+        if bFirst {
+            g.TermPrint(" = STATE GO MASCOT DEMO = ")
+        }
+        if !hasNextState() {
+            gotoState(funcIdsWAIT11)
         }
     }
     /*
@@ -444,6 +497,20 @@ func MainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsBACKTOMENU)
+        }
+    }
+    /*
+        S_WAIT11
+    */
+    sWAIT11 := func( bFirst  bool ) {
+        if bFirst {
+            timesWAIT11 = g.TimeNowMs() + 1500
+        }
+        if timesWAIT11 > g.TimeNowMs() {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsLOADSHOW)
         }
     }
     /*
@@ -576,17 +643,20 @@ func MainControl() func(bool, *Game) bool {
         sCLEARTERM,
         sCOUNT,
         sEND,
+        sLOADSHOW,
         sMENU,
         sRotationOverRay,
         sSETBGBLUE,
         sSETBGGREEN,
         sSETBGRED,
+        sSHOWMASCOT,
         sSTART,
         sTERMINAL,
         sTERMINAL1,
         sWAIT,
         sWAIT1,
         sWAIT10,
+        sWAIT11,
         sWAIT2,
         sWAIT3,
         sWAIT4,

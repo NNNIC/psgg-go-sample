@@ -37,6 +37,7 @@ type Game struct {
 	BgImage      *ebiten.Image
 
 	GophersImage *ebiten.Image
+	MascotImage  *ebiten.Image
 }
 
 func (g *Game) AddUpdate(cf func(bool, *Game) bool) int {
@@ -169,4 +170,7 @@ func (g *Game) TermClear() {
 */
 func (g *Game) Gophers_jpg() []byte {
 	return images.Gophers_jpg
+}
+func (g *Game) Mascot_png() []byte {
+	return resources.mascot_t32_png
 }

@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041
 max_name_id=30
-max_state_id=62
+max_state_id=65
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -77,6 +77,9 @@ s003b=S_SETBGGREEN
 s003c=S_MENU
 s003d=S_BACKTO_MENU
 s003e=S_CLEARALL
+s003f=S_SHOWMASCOT
+s0040=S_WAIT11
+s0041=S_LOAD_SHOW
 
 
 [s0001]
@@ -526,7 +529,8 @@ n009=@@@
 g.TermPrint("==== TEST =====");
 g.TermPrint("Push 1 ... Termainal Test");
 g.TermPrint("Push 2 ... Background Color Change Test");
-g.TermPrint("Push 3 ... Rotaion Overlay Demo");
+g.TermPrint("Push 3 ... Ebiten Rotaion Overlay Demo");
+g.TermPrint("Push 4 ... StateGo Mascot Demo");
 g.TermPrint("")
 g.TermPrint("Push C ... Cear all");
 g.TermPrint("")
@@ -539,6 +543,7 @@ n012=@@@
 brifc(S_TERMINAL);
 brelseifc(S_CHANGEBG);
 brelseifc(S_RotationOverRay);
+brelseifc(S_SHOWMASCOT);
 brelseif(S_CLEARALL);
 @@@
 
@@ -546,6 +551,7 @@ n013=@@@
 1
 2
 3
+4
 C
 @@@
 
@@ -553,6 +559,7 @@ n014=@@@
 ebiten.IsKeyPressed(ebiten.Key1)
 ebiten.IsKeyPressed(ebiten.Key2)
 ebiten.IsKeyPressed(ebiten.Key3)
+ebiten.IsKeyPressed(ebiten.Key4)
 ebiten.IsKeyPressed(ebiten.KeyC)
 @@@
 
@@ -587,8 +594,76 @@ n016=@@@
 
 @@@
 
-n017=434,1023
+n017=437,1587
 n018=100028
+
+[s003f]
+n002=S_SHOWMASCOT
+n005=S_WAIT11
+n009=@@@
+g.TermPrint(" = STATE GO MASCOT DEMO = ")
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=423,1131
+n018=100029
+
+[s0040]
+n002=S_WAIT11
+n005=S_LOAD_SHOW
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=629,1131
+n018=100030
+
+[s0041]
+n002=S_LOAD_SHOW
+n005=S_BACKTO_MENU
+n009=@@@
+if g.MascotImage == nil {
+    img, _, err := image.Decode(bytes.NewReader(g.Mascot_png()))
+    if err != nil {
+	log.Fatal(err)
+    }
+    g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+}
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=838,1135
+n018=100031
 
 
 
@@ -597,7 +672,7 @@ n018=100028
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/15 8:55:10
+; The setting was created automatically. 2020/11/15 10:08:50
 ; * pssgEditor version : 0.67.10934.5e9bd00bd140bff251fa382ae64c923e1b3b4250
 psggfile=@@@
 mainControl.psgg
@@ -615,7 +690,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+mov,S_LOAD_SHOW
 @@@
 target_pathdir=@@@
 /
@@ -630,7 +705,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":73,"y":84}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_TERMINAL2","Value":{"x":124,"y":31}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_MENU1","Value":{"x":434.4737,"y":1022.579}},{"Key":"S_BACKTO_MENU","Value":{"x":285,"y":25}},{"Key":"S_CLEARALL","Value":{"x":434,"y":1023}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":73,"y":84}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_TERMINAL2","Value":{"x":124,"y":31}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_MENU1","Value":{"x":434.4737,"y":1022.579}},{"Key":"S_BACKTO_MENU","Value":{"x":285,"y":25}},{"Key":"S_CLEARALL","Value":{"x":437,"y":1587}},{"Key":"S_CLEARALL1","Value":{"x":439,"y":971}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_1stRotation1","Value":{"x":835.7619,"y":1127.42859}},{"Key":"S_LOAD_SHOW","Value":{"x":838,"y":1135}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
