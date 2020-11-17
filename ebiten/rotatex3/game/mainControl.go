@@ -438,7 +438,7 @@ func MainControl() func(bool, *Game) bool {
             goalsFADEOUT = float64(g.Count) + fadestepnum
             drawfunc := func() {
                 alpha := (fadestepnum - (goalsFADEOUT - float64(g.Count))) / fadestepnum * 255.0
-                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(g.Clamp255(int(alpha)))})
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,g.Clamp255(int(alpha))})
                 w, h := g.FadeImage.Size()
                 op := &ebiten.DrawImageOptions{}
                 op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
