@@ -5,15 +5,86 @@ import (
 	"fmt"
 	"image"
 	"log"
+	"math"
 	"math/rand"
 	"time"
 
 	"github.com/hajimehoshi/ebiten"
 )
 
+const (
+	gLimitTop   = 40
+	gLimitBot   = screenHeight - 40
+	gLimitLeft  = 40
+	gLimitRight = screenWidth - 40
+)
+
 type GopherData struct {
 	PosX int
 	PosY int
+
+	DiffX float64
+	DiffY float64
+}
+
+func (d *GopherData) MoveDiff() {
+	x := d.PosX
+	y := d.PosY
+	x = int(float64(x) + d.DiffX)
+	y = int(float64(y) + d.DiffY)
+
+	vT := 1
+	vB := 2
+	vR := 4
+	vL := 8
+	cond := 0
+	if y <= gLimitTop {
+		cond += vT
+	} else if y >= gLimitBot {
+		cond += vB
+	}
+	if x <= gLimitLeft {
+		cond += vL
+	} else if x >= gLimitRight {
+		cond += vR
+	}
+
+	if cond == vT {
+		d.DiffY = math.Abs(d.DiffY)
+		d.PosY = gLimitTop + 1
+	} else if cond == vB {
+		d.DiffY = -math.Abs(d.DiffY)
+		d.PosY = gLimitBot - 1
+	} else if cond == vL {
+		d.DiffX = math.Abs(d.DiffX)
+		d.PosX = gLimitLeft + 1
+	} else if cond == vR {
+		d.DiffX = -math.Abs(d.DiffX)
+		d.PosX = gLimitRight - 1
+	} else if cond == vT+vL {
+		d.DiffX = math.Abs(d.DiffX)
+		d.DiffY = math.Abs(d.DiffY)
+		d.PosX = gLimitLeft + 1
+		d.PosY = gLimitTop + 1
+	} else if cond == vT+vR {
+		d.DiffX = -math.Abs(d.DiffX)
+		d.DiffY = math.Abs(d.DiffY)
+		d.PosX = gLimitRight - 1
+		d.PosY = gLimitTop + 1
+	} else if cond == vB+vL {
+		d.DiffX = math.Abs(d.DiffX)
+		d.DiffY = -math.Abs(d.DiffY)
+		d.PosX = gLimitLeft + 1
+		d.PosY = gLimitBot - 1
+	} else if cond == vB+vR {
+		d.DiffX = -math.Abs(d.DiffX)
+		d.DiffY = -math.Abs(d.DiffY)
+		d.PosX = gLimitRight - 1
+		d.PosY = gLimitBot - 1
+	} else {
+		d.PosX = x
+		d.PosY = y
+	}
 }
 
 func gopherControl(d *GopherData) func(bool, *Game) bool {
@@ -74,6 +145,8 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     id++
     funcIdsSTART := id
     id++
+    funcIdsWAIT1 := id
+    id++
 
 
 	//[STATEGO OUTPUT END]
@@ -82,6 +155,8 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
     var drawfunc func()
+    var timesWAIT1 int64
+
 
 	//[STATEGO OUTPUT END]
 
@@ -103,7 +178,7 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
             }
         }
         if !hasNextState() {
-            gotoState(funcIdsDrawUpdate)
+            gotoState(funcIdsWAIT1)
         }
         if hasNextState() {
             noWait()
@@ -113,6 +188,11 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
         S_DrawUpdate
     */
     sDrawUpdate := func( bFirst  bool ) {
+        if bFirst {
+            d.DiffX = -1.0
+            d.DiffY = -1.0
+        }
+        d.MoveDiff()
         g.AddDrawStage(drawfunc)
         if ebiten.IsKeyPressed(ebiten.KeyEscape) {
             gotoState( funcIdsEND )
@@ -146,6 +226,21 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     sSTART := func( bFirst  bool ) {
         gotoState(funcIdsLOADGOPHER)
     }
+    /*
+        S_WAIT1
+    */
+    sWAIT1 := func( bFirst  bool ) {
+        if bFirst {
+            timesWAIT1 = g.TimeNowMs() + 3 * 1000
+        }
+        g.AddDrawStage(drawfunc)
+        if timesWAIT1 > g.TimeNowMs() {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsDrawUpdate)
+        }
+    }
 
 
 	//[STATEGO OUTPUT END]
@@ -160,6 +255,7 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
         sEND,
         sLOADGOPHER,
         sSTART,
+        sWAIT1,
 
 
 		//[STATEGO OUTPUT END]

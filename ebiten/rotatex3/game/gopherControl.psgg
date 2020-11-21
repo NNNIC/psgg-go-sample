@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,,s005a,s005b
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b
 max_name_id=31
-max_state_id=92
+max_state_id=93
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -55,6 +55,7 @@ s0057=S_END
 s005a=S_LOAD_GOPHER
 s005b=S_DrawGopher
 s005c=S_DrawUpdate
+s005d=S_WAIT1
 
 
 [s0056]
@@ -107,7 +108,7 @@ n018=5
 
 [s005b]
 n002=S_DrawGopher
-n005=S_DrawUpdate
+n005=S_WAIT1
 n007=var drawfunc func()
 n008=
 n009=@@@
@@ -129,7 +130,16 @@ n018=6
 
 [s005c]
 n002=S_DrawUpdate
-n00c=g.AddDrawStage(drawfunc)
+n009=@@@
+d.DiffX = -1.0
+d.DiffY = -1.0
+@@@
+
+n00c=@@@
+d.MoveDiff()
+g.AddDrawStage(drawfunc)
+@@@
+
 n012=brif(S_END);
 n013=ESC
 n014=ebiten.IsKeyPressed(ebiten.KeyEscape)
@@ -139,8 +149,27 @@ n016=@@@
 
 @@@
 
-n017=543,498
+n017=714,506
 n018=7
+
+[s005d]
+n002=S_WAIT1
+n005=S_DrawUpdate
+n007=var time[[state>>lc]] int64
+n009=@@@
+time[[state>>lc]] = g.TimeNowMs() + 3 * 1000
+@@@
+
+n00c=g.AddDrawStage(drawfunc)
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=527,501
+n018=8
 
 
 
@@ -149,7 +178,7 @@ n018=7
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/21 11:24:38
+; The setting was created automatically. 2020/11/21 12:14:09
 ; * pssgEditor version : 0.67.24339.no hash because of debug
 psggfile=@@@
 gopherControl.psgg
@@ -167,7 +196,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Edited a state.
+init,Saved
 @@@
 target_pathdir=@@@
 /
@@ -182,7 +211,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic1","Value":{"x":336,"y":498}},{"Key":"S_DrawNic2","Value":{"x":543,"y":498}},{"Key":"S_LOAD_GOPHER","Value":{"x":111,"y":495}},{"Key":"S_DrawGopher","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":543,"y":498}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic1","Value":{"x":336,"y":498}},{"Key":"S_DrawNic2","Value":{"x":543,"y":498}},{"Key":"S_LOAD_GOPHER","Value":{"x":111,"y":495}},{"Key":"S_DrawGopher","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":714,"y":506}},{"Key":"S_WAIT1","Value":{"x":527,"y":501}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

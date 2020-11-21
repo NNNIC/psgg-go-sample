@@ -12,8 +12,9 @@ import (
 )
 
 const (
-	screenWidth  = 640
-	screenHeight = 480
+	screenWidth    = 640
+	screenHeight   = 480
+	maxDrawListLen = 100
 )
 
 // Game ...
@@ -88,9 +89,16 @@ func (g *Game) SetDrawBg(handle int, df func()) {
 
 // AddDrawStage ... Add Draw Function to DrawStageList
 func (g *Game) AddDrawStage(df func()) int {
-	handle := len(g.DrawStageList)
-	g.DrawStageList = append(g.DrawStageList, df)
-	return handle
+	for i := 0; i < len(g.DrawStageList); i++ {
+		if g.DrawStageList[i] == nil {
+			g.DrawStageList[i] = df
+			return i
+		}
+	}
+	// handle := len(g.DrawStageList)
+	// g.DrawStageList = append(g.DrawStageList, df)
+	// return handle
+	return -1
 }
 
 // SetDrawStage ...
@@ -122,8 +130,13 @@ func (g *Game) ClrDrawBg() {
 }
 
 // ClrDrawStage ...
-func (g *Game) ClrDrawStage() {
-	g.DrawStageList = g.DrawStageList[:0]
+func (g *Game) ClrDrawStage() { // for reducing gabage memory issue.
+	if len(g.DrawStageList) != maxDrawListLen {
+		g.DrawStageList = make([]func(), maxDrawListLen)
+	}
+	for i := 0; i < len(g.DrawStageList); i++ {
+		g.DrawStageList[i] = nil
+	}
 }
 
 // ClrDrawFe ...
@@ -142,7 +155,9 @@ func (g *Game) DoDraw() {
 		(g.DrawBgList[i])()
 	}
 	for i := 0; i < len(g.DrawStageList); i++ {
-		(g.DrawStageList[i])()
+		if g.DrawStageList[i] != nil {
+			(g.DrawStageList[i])()
+		}
 	}
 	for i := 0; i < len(g.DrawFeList); i++ {
 		(g.DrawFeList[i])()
@@ -159,7 +174,6 @@ func (g *Game) ClearAll() {
 	g.ClrDrawStage()
 	g.ClrDrawFe()
 	g.TermClear()
-
 }
 
 /*
