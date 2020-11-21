@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,s005f,s005e,s0060,s0061,s0062,s0063,s0064
 max_name_id=31
-max_state_id=93
+max_state_id=100
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -56,6 +56,13 @@ s005a=S_LOAD_GOPHER
 s005b=S_DrawGopher
 s005c=S_DrawUpdate
 s005d=S_WAIT1
+s005e=S_WAIT2
+s005f=S_MOVEDIFF
+s0060=S_REFLECT
+s0061=S_BACKTO_MOVEDIFF
+s0062=S_Tick
+s0063=S_MouseClick
+s0064=S_MouseClick1
 
 
 [s0056]
@@ -80,7 +87,7 @@ n016=@@@
 The root
 @@@
 
-n017=753,84
+n017=2380,35
 n018=2
 
 [s005a]
@@ -103,7 +110,7 @@ n016=@@@
 The root
 @@@
 
-n017=111,495
+n017=71,308
 n018=5
 
 [s005b]
@@ -125,36 +132,41 @@ n016=@@@
 The root
 @@@
 
-n017=336,498
+n017=296,311
 n018=6
 
 [s005c]
 n002=S_DrawUpdate
-n009=@@@
-d.DiffX = -1.0
-d.DiffY = -1.0
+n009=
+n00c=g.AddDrawStage(drawfunc)
+n01f=nowait
+n012=@@@
+brifc(S_END);
+brelse(S_Tick);
 @@@
 
-n00c=@@@
-d.MoveDiff()
-g.AddDrawStage(drawfunc)
+n013=@@@
+ESC
+?
 @@@
 
-n012=brif(S_END);
-n013=ESC
-n014=ebiten.IsKeyPressed(ebiten.KeyEscape)
+n014=@@@
+ebiten.IsKeyPressed(ebiten.KeyEscape)
+?
+@@@
+
 n016=@@@
 /
 (100,100)
 
 @@@
 
-n017=714,506
+n017=1735,442
 n018=7
 
 [s005d]
 n002=S_WAIT1
-n005=S_DrawUpdate
+n005=S_WAIT2
 n007=var time[[state>>lc]] int64
 n009=@@@
 time[[state>>lc]] = g.TimeNowMs() + 3 * 1000
@@ -168,8 +180,140 @@ n016=@@@
 The root
 @@@
 
-n017=527,501
+n017=487,314
 n018=8
+
+[s005e]
+n002=S_WAIT2
+n005=S_MOVEDIFF
+n009=@@@
+d.DiffX = -1.0
+d.DiffY = -1.0
+@@@
+
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=694,314
+n018=9
+
+[s005f]
+n002=S_MOVEDIFF
+n009=d.MoveDiff()
+n00c=b:=d.CheckKill()
+n01f=nowait
+n012=@@@
+brifc(S_REFLECT);
+brelse(S_MouseClick);
+@@@
+
+n013=@@@
+?
+?
+@@@
+
+n014=@@@
+b
+?
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=901,314
+n018=10
+
+[s0060]
+n002=S_REFLECT
+n005=S_DrawUpdate
+n009=d.Reflect()
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1118,311
+n018=11
+
+[s0061]
+n002=S_BACKTO_MOVEDIFF
+n005=S_MOVEDIFF
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=767,163
+n018=13
+
+[s0062]
+n002=S_Tick
+n005=S_BACKTO_MOVEDIFF
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1962,574
+n018=12
+
+[s0063]
+n002=S_MouseClick
+n005=
+n00c=@@@
+b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+@@@
+
+n01f=nowait
+n012=@@@
+brifc(S_DrawUpdate);
+brelse(S_MouseClick1);
+@@@
+
+n013=@@@
+Non
+Clicked
+@@@
+
+n014=@@@
+!b
+?
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1106,470
+n018=14
+
+[s0064]
+n002=S_MouseClick1
+n005=S_DrawUpdate
+n009=d.CalcDir()
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1345,640
+n018=15
 
 
 
@@ -178,8 +322,8 @@ n018=8
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/21 12:14:09
-; * pssgEditor version : 0.67.24339.no hash because of debug
+; The setting was created automatically. 2020/11/21 16:13:46
+; * pssgEditor version : 0.67.29606.a20f6ec70788921eaa6cb7c3fc0baec28f855003
 psggfile=@@@
 gopherControl.psgg
 @@@
@@ -196,7 +340,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /
@@ -211,7 +355,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic1","Value":{"x":336,"y":498}},{"Key":"S_DrawNic2","Value":{"x":543,"y":498}},{"Key":"S_LOAD_GOPHER","Value":{"x":111,"y":495}},{"Key":"S_DrawGopher","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":714,"y":506}},{"Key":"S_WAIT1","Value":{"x":527,"y":501}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":2380,"y":35}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":296,"y":311}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":487,"y":314}},{"Key":"S_WAIT2","Value":{"x":694,"y":314}},{"Key":"S_MOVEDIFF","Value":{"x":901,"y":314}},{"Key":"S_MOVEDIFF1","Value":{"x":1271,"y":447}},{"Key":"S_REFLECT","Value":{"x":1118,"y":311}},{"Key":"S_DrawUpdate1","Value":{"x":1112.85718,"y":474.5714}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1106,"y":470}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -261,7 +405,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":398,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym

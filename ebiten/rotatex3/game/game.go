@@ -3,6 +3,7 @@ package game
 import (
 	_ "image/jpeg"
 	_ "image/png"
+	"math"
 	"time"
 
 	"github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg"
@@ -302,4 +303,13 @@ func (g *Game) Clamp255(i int) uint8 {
 		return 255
 	}
 	return uint8(i)
+}
+
+func vectorLen(x, y float64) float64 {
+	var len = math.Sqrt(x*x + y*y)
+	return len
+}
+func vectorNormalize(x, y float64) (float64, float64) {
+	len := vectorLen(x, y)
+	return x / len, y / len
 }

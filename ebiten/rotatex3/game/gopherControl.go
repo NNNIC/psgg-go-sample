@@ -20,6 +20,8 @@ const (
 )
 
 type GopherData struct {
+	g *Game
+
 	PosX int
 	PosY int
 
@@ -27,6 +29,34 @@ type GopherData struct {
 	DiffY float64
 }
 
+func (d *GopherData) CheckKill() bool {
+	for _, nd := range d.g.NicDataList {
+		if !nd.Killed {
+			dx := float64(d.PosX - nd.PosX)
+			dy := float64(d.PosY - nd.PosY)
+
+			len := math.Sqrt(dx*dx + dy*dy)
+			if len <= 16 {
+				nd.Killed = true
+				return true
+			}
+		}
+	}
+	return false
+}
+func (d *GopherData) Reflect() {
+	d.DiffX = -d.DiffX
+	d.DiffY = -d.DiffY
+}
+func (d *GopherData) CalcDir() {
+	mx, my := ebiten.CursorPosition()
+	dx := float64(mx - d.PosX)
+	dy := float64(my - d.PosY)
+	nx, ny := vectorNormalize(dx, dy)
+	curlen := vectorLen(d.DiffX, d.DiffY)
+	d.DiffX = nx * curlen
+	d.DiffY = ny * curlen
+}
 func (d *GopherData) MoveDiff() {
 	x := d.PosX
 	y := d.PosY
@@ -135,6 +165,8 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 	//[STATEGO OUTPUT START] indent(4) $/^S_./->#setids$
     //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
+    funcIdsBACKTOMOVEDIFF := id
+    id++
     funcIdsDrawGopher := id
     id++
     funcIdsDrawUpdate := id
@@ -143,9 +175,21 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     id++
     funcIdsLOADGOPHER := id
     id++
+    funcIdsMouseClick := id
+    id++
+    funcIdsMouseClick1 := id
+    id++
+    funcIdsMOVEDIFF := id
+    id++
+    funcIdsREFLECT := id
+    id++
     funcIdsSTART := id
     id++
+    funcIdsTick := id
+    id++
     funcIdsWAIT1 := id
+    id++
+    funcIdsWAIT2 := id
     id++
 
 
@@ -169,6 +213,17 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
     /*
+        S_BACKTO_MOVEDIFF
+    */
+    sBACKTOMOVEDIFF := func( bFirst  bool ) {
+        if !hasNextState() {
+            gotoState(funcIdsMOVEDIFF)
+        }
+        if hasNextState() {
+            noWait()
+        }
+    }
+    /*
         S_DrawGopher
     */
     sDrawGopher := func( bFirst  bool ) {
@@ -188,14 +243,14 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
         S_DrawUpdate
     */
     sDrawUpdate := func( bFirst  bool ) {
-        if bFirst {
-            d.DiffX = -1.0
-            d.DiffY = -1.0
-        }
-        d.MoveDiff()
         g.AddDrawStage(drawfunc)
         if ebiten.IsKeyPressed(ebiten.KeyEscape) {
             gotoState( funcIdsEND )
+        } else {
+            gotoState( funcIdsTick )
+        }
+        if hasNextState() {
+            noWait()
         }
     }
     /*
@@ -221,10 +276,77 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
         }
     }
     /*
+        S_MouseClick
+    */
+    sMouseClick := func( bFirst  bool ) {
+        b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+        if !b {
+            gotoState( funcIdsDrawUpdate )
+        } else {
+            gotoState( funcIdsMouseClick1 )
+        }
+        if hasNextState() {
+            noWait()
+        }
+    }
+    /*
+        S_MouseClick1
+    */
+    sMouseClick1 := func( bFirst  bool ) {
+        if bFirst {
+            d.CalcDir()
+        }
+        if !hasNextState() {
+            gotoState(funcIdsDrawUpdate)
+        }
+        if hasNextState() {
+            noWait()
+        }
+    }
+    /*
+        S_MOVEDIFF
+    */
+    sMOVEDIFF := func( bFirst  bool ) {
+        if bFirst {
+            d.MoveDiff()
+        }
+        b:=d.CheckKill()
+        if b {
+            gotoState( funcIdsREFLECT )
+        } else {
+            gotoState( funcIdsMouseClick )
+        }
+        if hasNextState() {
+            noWait()
+        }
+    }
+    /*
+        S_REFLECT
+    */
+    sREFLECT := func( bFirst  bool ) {
+        if bFirst {
+            d.Reflect()
+        }
+        if !hasNextState() {
+            gotoState(funcIdsDrawUpdate)
+        }
+        if hasNextState() {
+            noWait()
+        }
+    }
+    /*
         S_START
     */
     sSTART := func( bFirst  bool ) {
         gotoState(funcIdsLOADGOPHER)
+    }
+    /*
+        S_Tick
+    */
+    sTick := func( bFirst  bool ) {
+        if !hasNextState() {
+            gotoState(funcIdsBACKTOMOVEDIFF)
+        }
     }
     /*
         S_WAIT1
@@ -238,7 +360,22 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
              return
         }
         if !hasNextState() {
-            gotoState(funcIdsDrawUpdate)
+            gotoState(funcIdsWAIT2)
+        }
+    }
+    /*
+        S_WAIT2
+    */
+    sWAIT2 := func( bFirst  bool ) {
+        if bFirst {
+            d.DiffX = -1.0
+            d.DiffY = -1.0
+        }
+        if !hasNextState() {
+            gotoState(funcIdsMOVEDIFF)
+        }
+        if hasNextState() {
+            noWait()
         }
     }
 
@@ -250,12 +387,19 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 		//[STATEGO OUTPUT START] indent(8) $/^S_./->#funclist$
         //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
+        sBACKTOMOVEDIFF,
         sDrawGopher,
         sDrawUpdate,
         sEND,
         sLOADGOPHER,
+        sMouseClick,
+        sMouseClick1,
+        sMOVEDIFF,
+        sREFLECT,
         sSTART,
+        sTick,
         sWAIT1,
+        sWAIT2,
 
 
 		//[STATEGO OUTPUT END]
@@ -298,6 +442,7 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 	// return update function     set true -- from start  set flase -- update
 	return func(bFirst bool, ig *Game) bool {
 		g = ig
+		d.g = ig
 		if bFirst {
 			curfunc = -1
 			nextfunc = funcIdsSTART

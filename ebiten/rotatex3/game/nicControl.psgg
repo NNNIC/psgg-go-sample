@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,,s005a,s005b
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b
 max_name_id=31
-max_state_id=92
+max_state_id=93
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -55,6 +55,7 @@ s0057=S_END
 s005a=S_LOAD_NIC
 s005b=S_DrawNic
 s005c=S_DrawUpdate
+s005d=S_Update
 
 
 [s0056]
@@ -110,7 +111,7 @@ n018=5
 
 [s005b]
 n002=S_DrawNic
-n005=S_DrawUpdate
+n005=S_Update
 n007=var drawfunc func()
 n008=
 n009=@@@
@@ -133,17 +134,45 @@ n018=6
 [s005c]
 n002=S_DrawUpdate
 n00c=g.AddDrawStage(drawfunc)
-n012=brif(S_END);
-n013=ESC
-n014=ebiten.IsKeyPressed(ebiten.KeyEscape)
+n012=@@@
+brifc(S_END);
+brelseifc(S_END);
+brelse(S_Update);
+@@@
+
+n013=@@@
+ESC
+Killed
+?
+@@@
+
+n014=@@@
+ebiten.IsKeyPressed(ebiten.KeyEscape)
+d.Killed
+?
+@@@
+
 n016=@@@
 /
 (100,100)
 
 @@@
 
-n017=543,498
+n017=793,492
 n018=7
+
+[s005d]
+n002=S_Update
+n005=S_DrawUpdate
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=580,490
+n018=8
 
 
 
@@ -152,8 +181,8 @@ n018=7
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/21 11:24:19
-; * pssgEditor version : 0.67.24339.no hash because of debug
+; The setting was created automatically. 2020/11/21 15:00:13
+; * pssgEditor version : 0.67.29606.a20f6ec70788921eaa6cb7c3fc0baec28f855003
 psggfile=@@@
 nicControl.psgg
 @@@
@@ -170,7 +199,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Edited a state.
+varied,Changed an arrow direction
 @@@
 target_pathdir=@@@
 /
@@ -185,7 +214,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_0000","Value":{"x":568,"y":212}},{"Key":"S_DrawMascot","Value":{"x":319.555573,"y":496.4445}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawNic1","Value":{"x":336,"y":498}},{"Key":"S_DrawNic2","Value":{"x":543,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":543,"y":498}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_DrawNic1","Value":{"x":580,"y":490}},{"Key":"S_Update","Value":{"x":580,"y":490}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -235,7 +264,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":398,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym
