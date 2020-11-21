@@ -1,0 +1,37 @@
+﻿{3745FCA0-D34D-4270-8C39-BB563F73BE4B}
+
+[____copyinfo____]
+pid=22760
+curdir=/
+nodegroup_comment_list=@@@
+[{"Key":"\/","Value":"The root"}]
+@@@
+nodegroup_pos_list=@@@
+[{"Key":"\/","Value":{"x":100,"y":100}}]
+@@@
+
+[S_SHOWMASCOT]
+state=@@@
+S_SHOWMASCOT
+@@@
+nextstate=@@@
+S_WAIT11
+@@@
+init=@@@
+g.TermPrint(" = STATE GO MASCOT DEMO = ")
+@@@
+!dir=@@@
+/
+(100,100)
+
+@@@
+!pos=@@@
+423,1131
+@@@
+!uuid=@@@
+100029
+@@@
+
+[____bitmapinfo____]
+num_of_bitmap=0
+

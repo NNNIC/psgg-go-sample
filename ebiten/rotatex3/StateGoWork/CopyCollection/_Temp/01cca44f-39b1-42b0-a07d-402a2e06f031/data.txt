@@ -1,0 +1,58 @@
+﻿{3745FCA0-D34D-4270-8C39-BB563F73BE4B}
+
+[____copyinfo____]
+pid=13964
+curdir=/
+nodegroup_comment_list=@@@
+[{"Key":"\/","Value":"The root"},{"Key":"\/Game\/","Value":""}]
+@@@
+nodegroup_pos_list=@@@
+[{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":435,"y":1486}}]
+@@@
+
+[S_1stRotation]
+state=@@@
+S_1stRotation
+@@@
+nextstate=@@@
+S_WAIT
+@@@
+init=@@@
+if g.GophersImage == nil {
+    img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
+    if err != nil {
+	log.Fatal(err)
+    }
+    g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+}
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+!dir=@@@
+/
+(100,100)
+The root
+@@@
+!pos=@@@
+802,780
+@@@
+!uuid=@@@
+100003
+@@@
+
+[____bitmapinfo____]
+num_of_bitmap=0
+

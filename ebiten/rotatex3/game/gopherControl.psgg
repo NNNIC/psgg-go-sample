@@ -1,0 +1,746 @@
+﻿;PSGG Editor Backup File
+version=1.1
+file=gopherControl.xlsx
+guid=2aa76cd3-d6ba-4e4c-9f29-83774e68520a
+;set read_from  excel or psgg
+read_from=psgg
+;set savemode with_excel or psgg_only
+save_mode=psgg_only
+;set check_excel_writable yes or no
+check_excel_writable=no
+
+------#======*<Guid(D13821FE-FA27-4B04-834C-CEC1E5670F48)>*======#------
+
+sheet=state-chart
+nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,,s005a,s005b
+max_name_id=31
+max_state_id=92
+[id_name_dic]
+n001=thumbnail
+n002=state
+n003=state-cmt
+n004=state-ref
+n005=nextstate
+n006=embed
+n007=members
+n008=vars
+n009=init
+n00a=init-cmt
+n00b=init-ref
+n00c=update
+n00d=update-cmt
+n00e=wait
+n00f=wait-cmt
+n010=post_wait
+n011=post_wait-cmt
+n012=branch
+n013=branch-cmt
+n014=brcond
+n016=!dir
+n017=!pos
+n018=!uuid
+n019=state-typ
+n01a=gosubstate
+n01b=loop_init
+n01c=loop_cond
+n01d=loop_next
+n01e=basestate
+n01f=nowait
+
+
+[id_state_dic]
+s0056=S_START
+s0057=S_END
+s005a=S_LOAD_GOPHER
+s005b=S_DrawGopher
+s005c=S_DrawUpdate
+
+
+[s0056]
+n002=S_START
+n019=start
+n005=S_LOAD_GOPHER
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=94,103
+n018=1
+
+[s0057]
+n002=S_END
+n019=end
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=753,84
+n018=2
+
+[s005a]
+n001=(bitmap)
+n002=S_LOAD_GOPHER
+n005=S_DrawGopher
+n009=@@@
+fmt.Println("[[state]]")
+img, _, err := image.Decode(bytes.NewReader(g.Gophers32_png()))
+if err != nil {
+    log.Fatal(err)
+}
+g.GophersImage2, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=111,495
+n018=5
+
+[s005b]
+n002=S_DrawGopher
+n005=S_DrawUpdate
+n007=var drawfunc func()
+n008=
+n009=@@@
+drawfunc = func() {
+    g.DrawImage(g.GophersImage2, float64(d.PosX-16),float64(d.PosY-16),0,1)
+}
+
+@@@
+
+n01f=nowait
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=336,498
+n018=6
+
+[s005c]
+n002=S_DrawUpdate
+n00c=g.AddDrawStage(drawfunc)
+n012=brif(S_END);
+n013=ESC
+n014=ebiten.IsKeyPressed(ebiten.KeyEscape)
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=543,498
+n018=7
+
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=config
+
+###VARIOUS-CONTENTS-BEGIN###
+; The setting was created automatically. 2020/11/21 11:24:38
+; * pssgEditor version : 0.67.24339.no hash because of debug
+psggfile=@@@
+gopherControl.psgg
+@@@
+xlsfile=@@@
+gopherControl.xlsx
+@@@
+guid=@@@
+2aa76cd3-d6ba-4e4c-9f29-83774e68520a
+@@@
+bitmap_width=2500
+bitmap_height=4000
+c_statec_cmt=1
+c_thumbnail=1
+c_contents=1
+force_display_outpin=0
+last_action=@@@
+varied,Edited a state.
+@@@
+target_pathdir=@@@
+/
+@@@
+state_location_list=@@@
+
+@@@
+nodegroup_comment_list=@@@
+[{"Key":"\/","Value":"The root"}]
+@@@
+nodegroup_pos_list=@@@
+[{"Key":"\/","Value":{"x":100,"y":100}}]
+@@@
+fillter_state_location_list=@@@
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic1","Value":{"x":336,"y":498}},{"Key":"S_DrawNic2","Value":{"x":543,"y":498}},{"Key":"S_LOAD_GOPHER","Value":{"x":111,"y":495}},{"Key":"S_DrawGopher","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":543,"y":498}}]}]
+@@@
+linecolor_data=@@@
+[{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
+@@@
+use_external_command=0
+external_command=@@@
+
+@@@
+source_editor_set=@@@
+
+@@@
+label_show=0
+label_text=@@@
+test
+@@@
+option_delete_thisstring=1
+option_delete_br_string=1
+option_delete_bracket_string=1
+option_delete_s_state_string=1
+option_copy_output_to_clipboard=0
+option_convert_with_confirm=0
+option_ignore_case_of_state=0
+option_editbranch_automode=1
+option_use_custom_prefix=0
+option_omit_basestate_string=0
+option_hide_basestate_contents=1
+option_hide_branchcmt_onbranchbox=0
+font_name=@@@
+MS UI Gothic
+@@@
+font_size=11
+comment_font_size=0
+contents_font_size=0
+state_width=140
+state_height=20
+state_short_width=50
+state_short_height=20
+comment_block_height=20
+content_max_height=200
+comment_block_fixed=0
+line_space=-1
+userbutton_title=@@@
+
+@@@
+userbutton_command=@@@
+
+@@@
+userbutton_callafterconvert=0
+itemeditform_size_list=@@@
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+@@@
+decoimage_typ_name=@@@
+sym
+@@@
+
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=template-source
+
+###VARIOUS-CONTENTS-BEGIN###
+
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=template-statefunc
+
+###VARIOUS-CONTENTS-BEGIN###
+<<<?state/^C_/
+eof>>>
+
+/*
+    [[state]]
+    [[state-cmt]]
+*/
+<<<?state/^E_/
+[[embed]]
+eof>>>
+
+<<<?state-typ/^start$/
+[[state>>lc]] := func( bFirst  bool ) {
+    gotoState(funcId[[nextstate>>lc]])
+}
+eof>>>
+
+<<<?state-typ/^pass$/
+[[state>>lc]] := func( bFirst  bool ) {
+    gotoState(funcId[[nextstate>>lc]])
+    noWait()
+}
+eof>>>
+
+<<<?state-typ/^end$/
+[[state>>lc]] := func ( bFirst  bool ) {
+     // end of state machine
+}
+eof>>>
+
+<<<?state-typ/^gosub$/
+[[state>>lc]] := func ( bFirst bool ) {
+    gosubState(funcId[[gosubstate>>lc]], funcId[[nextstate>>lc]])
+    noWait()
+}
+eof>>>
+
+<<<?state-typ/^subreturn$/
+[[state>>lc]] := func ( bFirst bool ) {
+    returnState()
+    noWait()
+}
+eof>>>
+
+<<<?state-typ/^loop$/
+[[state>>lc]] := func ( bFirst bool ) {
+    [[loop_init]]
+    gotoState(funcId[[state>>lc]]LoopCheck)
+    noWait()
+}
+[[state>>lc]]LoopCheck := func ( bFirst bool ) {
+    if [[loop_cond]] {
+        gosubState(funcId[[gosubstate>>lc]], funcId[[state>>lc]]LoopNext)
+    } else {
+        gotoState(funcId[[nextstate>>lc]])
+    }
+    noWait()
+}
+[[state>>lc]]LoopNext := func(bFirst bool ) {
+    [[loop_next]]
+    gotoState(funcId[[state>>lc]]LoopCheck)
+    noWait()
+}
+eof>>>
+
+[[state>>lc]] := func( bFirst  bool ) {
+
+    [[vars]]
+
+    <<<?init
+    if bFirst {
+        [[init]]
+    }
+    >>>
+
+    [[update]]
+
+    <<<?wait
+    if [[wait]] {
+         return
+    }
+    >>>
+
+    [[post_wait]]
+
+    [[branch]]
+
+    <<<?nextstate
+    if !hasNextState() {
+        gotoState(funcId[[nextstate>>lc]])
+    }
+    >>>
+    <<<?nowait
+    if hasNextState() {
+        noWait()
+    }
+    >>>
+}
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=setting.ini
+
+###VARIOUS-CONTENTS-BEGIN###
+[setting]
+
+psgg=gopherControl.psgg
+xls=gopherControl.xlsx
+sub_src=
+gen_src=gopherControl.go
+
+manager_src=
+manager_dir=
+
+template_src=
+template_func=template-statefunc.txt
+
+help=help.ini
+helpweb=@@@
+psgg-starter-kit\starterkit2\go\helpweb.html
+@@@
+
+
+
+
+
+
+
+
+kitpath=psgg-starter-kit\starterkit2\go
+
+
+
+
+
+[setupinfo]
+
+starterkit=@@@
+https://github.com/NNNIC/psgg-starter-kit.git 06b417a6f220200aa8489d982802935e37bc35b6
+@@@
+
+
+
+
+
+
+
+
+lang=go
+framework=
+
+statemachine=gopherControl
+prefix=__PREFIX__
+xlsdir=@@@
+G:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
+@@@
+
+
+
+
+gendir=@@@
+G:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
+@@@
+
+
+
+
+genrdir=.
+incrdir=.
+
+code_output_start=[STATEGO OUTPUT START]
+code_output_end=[STATEGO OUTPUT END]
+
+; This section has macro defines for converting.
+
+
+
+
+; commentline format  {%0} will be replaced to a comment.
+
+
+
+
+
+
+
+
+
+
+[jpn]
+
+title=GO スタートキット 2020/11/08
+
+detail=@@@
+Go 用のステートマシンを作成します。
+
+※サンプルプロジェクトを次のＵＲＬより入手可能。
+https://github.com/NNNIC/psgg-go-sample
+
+
+# ドキュメント用フォルダ
+   ステート図ファイルとエディタ起動用ショートカットを格納
+
+      G:\statego\samples\psgg-go-sample\sample
+
+  以下のファイルを作成します。
+
+      gopherControl.pssg   --- エディタで次のエクセルファイルを開く。
+      gopherControl.xlsx   --- ステート図格納用Excelファイル。エディタが編集。
+
+# ソース用フォルダ
+　エディタが生成ソースファイル`格納
+
+      G:\statego\samples\psgg-go-sample\sample
+
+  以下のファイルが作成されます。
+
+      gopherControl.go  --- Excelファイルからの変換ソースを挿入。
+
+
+注意 : 既に同名のファイルがある場合は生成されません。
+　　　 削除してから生成してください。
+
+@@@
+
+
+
+
+
+
+
+
+
+
+
+
+
+[en]
+
+title=GO STARTER KIT 2020/11/08
+
+detail=@@@
+This dialog will create files for a state machine.
+
+* You may get the sample project from the below url.
+https://github.com/NNNIC/psgg-go-sample
+
+# Document Folder
+　This folder will contain a state chart file and the shortcut of the editor.
+
+      G:\statego\samples\psgg-go-sample\sample
+
+  File:
+
+      gopherControl.pssg  --- The editor opens the below excel file.
+      gopherControl.xlsx  --- Excel File that has a state chart. The editor edits this file.
+
+# Source Folder
+   This folder will contain a source file generated by the editor.
+
+      G:\statego\samples\psgg-go-sample\sample
+
+　File:
+      gopherControl.go   -- the editor will convert from the excel file into this file.
+
+NOTE : If the same name files exists, the file will not be created.
+       Please delete the same name files ahead of the creation.
+
+
+@@@
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=help
+
+###VARIOUS-CONTENTS-BEGIN###
+[nextstate]
+
+jpn=次に実行するステートを指定する。
+en=Specify the next state to be executed.
+[branch]
+
+jpn=@@@
+分岐処理を指定する。
+１行に一つの分岐命令を書く。
+GUIにより上書きされるため引数は適当に指定する。
+例）
+br_YES(?);
+br_NO(?);
+br_UNKNOWN(?);
+@@@
+
+en=@@@
+Specify branch functions.
+Each line has a branch function.
+Specify a tentavie parameter for each branch function because GUI overwrites the parameter.
+i.e)
+br_YES(?);
+br_NO(?);
+br_UNKNOWN(?);
+@@@
+
+[update]
+
+jpn=更新処理を指定する。
+en=Specify a update process.
+[wait]
+
+jpn=@@@
+待ち条件を指定する。
+true時にループを解除する。
+@@@
+
+en=@@@
+Specify a waiting condition.
+Release the loop if the condition is true.
+@@@
+
+[gosubstate]
+
+en=Call Subroutine
+jpn=サブルーチン呼出し
+[loop_next]
+
+en=Loop increment.
+jpn=ループ用インクリメント
+[state]
+
+jpn=@@@
+ステート名を指定する。
+英文字、数字、アンダーバーで構成される。
+先頭は英文字およびアンダーバー。
+@@@
+
+en=@@@
+Specify a state name.
+The state name consits of alphabet, number and underbar except that the head characther should be alphabet or a underbar.
+@@@
+
+[init]
+
+jpn=初期化用処理を指定する。
+en=Specify a initial process.
+[post_wait]
+
+jpn='wait'後の処理を指定する。
+en=Specify the post process after 'wait'.
+[vars]
+
+en=Specify variable definitions.
+jpn=変数宣言を指定する。
+[nowait]
+
+en=
+jpn=
+[embed]
+
+en=@@@
+For embedding code.
+Enable this section if state name starts with "I_".
+Disabled state features.
+@@@
+
+jpn=@@@
+コード埋め込み用。
+ステート名がI_時に利用可能。
+ステート機能は利用できない。
+@@@
+
+[basestate]
+
+en=Set base state
+jpn=ベースステートのセット
+[!uuid]
+
+jpn=システムがステートのuuid指定に使用。
+en=@@@
+System uses this for the uuid of the state.
+@@@
+
+[state-typ]
+
+en=ステートタイプを指定
+[members]
+
+en=@@@
+Specify members, variables, classes,  etc.
+@@@
+
+jpn=メンバ変数及び関数等を指定する。
+[!dir]
+
+jpn=システムがステートのディレクトリ指定に使用。
+en=@@@
+System uses this for the directory path of the state.
+@@@
+
+[loop_init]
+
+en=Loop Initialization
+jpn=ループ初期化
+[thumbnail]
+
+jpn=説明用のイメージを指定する。
+en=@@@
+Specify a image for explanation of this state.
+@@@
+
+[loop_cond]
+
+en=Loop if the condition is true
+jpn=@@@
+ループ条件
+true時にループする。
+@@@
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=itemsinfo
+
+###VARIOUS-CONTENTS-BEGIN###
+[inpmethod]
+
+init=
+branch-cmt=
+state-ref=
+wait=
+wait-cmt=
+embed=
+gosubstate=
+loop_cond=
+branch=
+!dir=
+post_wait-cmt=
+nowait=@@@
+*select
+nowait
+@@@
+
+members=
+thumbnail=
+update-cmt=
+post_wait=
+state-cmt=
+state-typ=
+!pos=
+!uuid=
+nextstate=
+state=
+S_=
+brcond=
+update=
+init-cmt=
+basestate=
+loop_next=
+vars=
+C_=
+E_=
+init-ref=
+loop_init=
+[stateloc]
+
+E_=S1
+S_=S0
+C_=S2
+[itemcond]
+
+state-typ=read_only,exclusion,(S0)
+embed=read_only,exclusion,S1
+branch=read_only,exclusion,S0
+state=read_only,share,S.+
+nextstate=read_only,exclusion,S0
+return=read_only,exclusion,S0
+basestate=read_only,exclusion,(S0)
+brcond=read_only,exclusion,S0
+thumbnail=read_only,share,S.+
+###VARIOUS-CONTENTS-END###
+
+
+
+------#======*<Guid(4DC98CBA-6257-4E26-A454-A53F85BC234C)>*======#------
+
+

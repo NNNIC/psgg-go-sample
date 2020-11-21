@@ -16,8 +16,10 @@ const (
 	screenHeight = 480
 )
 
+// Game ...
 type Game struct {
-	UpdateList []func(bool, *Game) bool // UpdateList ... contains statego controllers
+	MainControl func(bool, *Game) bool
+	UpdateList  []func(bool, *Game) bool // UpdateList ... contains statego controllers
 
 	// drawList
 	DrawBgList    []func()
@@ -41,18 +43,34 @@ type Game struct {
 	Count        int
 	BgImage      *ebiten.Image
 
-	GophersImage *ebiten.Image
-	MascotImage  *ebiten.Image
+	GophersImage  *ebiten.Image
+	GophersImage2 *ebiten.Image
+	MascotImage   *ebiten.Image
+
+	// Gopher vs Nic
+	NicDataList []*NicData
+	GopherData0 *GopherData
 }
 
+// AddUpdate ...
 func (g *Game) AddUpdate(cf func(bool, *Game) bool) int {
 	handle := len(g.UpdateList)
 	g.UpdateList = append(g.UpdateList, cf)
 	return handle
 }
+
+// ClrUpdate ...
+func (g *Game) ClrUpdate() {
+	g.UpdateList = g.UpdateList[:0]
+}
+
+// PlayUpdate ...
 func (g *Game) PlayUpdate() {
+
+	g.MainControl(false, g) // Call Main
+
 	for i := 0; i < len(g.UpdateList); i++ {
-		g.UpdateList[i](false, g)
+		g.UpdateList[i](false, g) // Call Others
 	}
 }
 
@@ -62,6 +80,8 @@ func (g *Game) AddDrawBg(df func()) int {
 	g.DrawBgList = append(g.DrawBgList, df)
 	return handle
 }
+
+// SetDrawBg ...
 func (g *Game) SetDrawBg(handle int, df func()) {
 	g.DrawBgList[handle] = df
 }
@@ -72,6 +92,8 @@ func (g *Game) AddDrawStage(df func()) int {
 	g.DrawStageList = append(g.DrawStageList, df)
 	return handle
 }
+
+// SetDrawStage ...
 func (g *Game) SetDrawStage(handle int, df func()) {
 	g.DrawStageList[handle] = df
 }
@@ -82,27 +104,39 @@ func (g *Game) AddDrawFe(df func()) int {
 	g.DrawFeList = append(g.DrawFeList, df)
 	return handle
 }
+
+// SetDrawFe ...
 func (g Game) SetDrawFe(handle int, df func()) {
 	g.DrawFeList[handle] = df
 }
+
+// SetDbgTerm ...
 func (g *Game) SetDbgTerm(df func()) {
 	g.DrawTermFunc = g.DrawTermFunc[:0]
 	g.DrawTermFunc = append(g.DrawTermFunc, df)
 }
 
+// ClrDrawBg ...
 func (g *Game) ClrDrawBg() {
 	g.DrawBgList = g.DrawBgList[:0]
 }
+
+// ClrDrawStage ...
 func (g *Game) ClrDrawStage() {
 	g.DrawStageList = g.DrawStageList[:0]
 }
+
+// ClrDrawFe ...
 func (g *Game) ClrDrawFe() {
 	g.DrawFeList = g.DrawFeList[:0]
 }
+
+// ClrDbgTerm ...
 func (g *Game) ClrDbgTerm() {
 	g.DrawTermFunc = g.DrawTermFunc[:0]
 }
 
+// DoDraw ...
 func (g *Game) DoDraw() {
 	for i := 0; i < len(g.DrawBgList); i++ {
 		(g.DrawBgList[i])()
@@ -117,11 +151,15 @@ func (g *Game) DoDraw() {
 		g.DrawTermFunc[0]()
 	}
 }
+
+// ClearAll ...
 func (g *Game) ClearAll() {
+	g.ClrUpdate()
 	g.ClrDrawBg()
 	g.ClrDrawStage()
 	g.ClrDrawFe()
 	g.TermClear()
+
 }
 
 /*
@@ -130,14 +168,16 @@ func (g *Game) ClearAll() {
 var bInitDone = false
 
 /*
-	MANAGER APIs
+	############# MANAGER APIs #############
 */
+
+// Update ...
 func (g *Game) Update(screen *ebiten.Image) error {
 	if bInitDone == false {
 		bInitDone = true
-		maincontrol := MainControl()
+		maincontrol := mainControl()
 		//maincontrol(true, g)
-		g.AddUpdate(maincontrol)
+		g.MainControl = maincontrol
 	}
 
 	g.Screen = screen
@@ -146,23 +186,27 @@ func (g *Game) Update(screen *ebiten.Image) error {
 	return nil
 }
 
+// Draw ...
 func (g *Game) Draw(screen *ebiten.Image) {
 	g.Screen = screen
 
 	g.DoDraw()
 }
 
+// Layout ...
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	g.ScreenWidth = screenWidth
 	g.ScreenHeight = screenHeight
 	return screenWidth, screenHeight
 }
 
+// TimeNowMs ...
 func (g *Game) TimeNowMs() int64 {
 	nowUTC := time.Now().UTC()
 	return nowUTC.UnixNano() / int64(time.Millisecond)
 }
 
+// TermPrint ...
 func (g *Game) TermPrint(str string) {
 	/*
 		53 chars * 15 lines
@@ -186,6 +230,8 @@ func (g *Game) TermPrint(str string) {
 	}
 	g.SetDbgTerm(f)
 }
+
+// TermClear ...
 func (g *Game) TermClear() {
 	g.dbgtermmsg = g.dbgtermmsg[:0]
 	g.ClrDbgTerm()
@@ -203,20 +249,37 @@ func (g *Game) DrawImage(image *ebiten.Image, x, y, angle, scale float64) {
 }
 
 /*
-	USER API's
+	############# USER API's #############
 */
+
+// Gophers_jpg ...
 func (g *Game) Gophers_jpg() []byte {
 	return images.Gophers_jpg
 }
+
+func (g *Game) Gophers64_png() []byte {
+	return sgimg.Gopher64_png
+}
+func (g *Game) Gophers32_png() []byte {
+	return sgimg.Gopher32_png
+}
+
+// Mascot64_png ...
 func (g *Game) Mascot64_png() []byte {
 	return sgimg.Mascot64_png
 }
+
+// Mascot32_png ...
 func (g *Game) Mascot32_png() []byte {
 	return sgimg.Mascot32_png
 }
+
+// Mascot16_png ...
 func (g *Game) Mascot16_png() []byte {
 	return sgimg.Mascot16_png
 }
+
+// Clamp255 ...
 func (g *Game) Clamp255(i int) uint8 {
 	if i < 0 {
 		return 0
