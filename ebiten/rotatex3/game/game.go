@@ -3,6 +3,7 @@ package game
 import (
 	_ "image/jpeg"
 	_ "image/png"
+	"math"
 	"time"
 
 	"github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg"
@@ -14,7 +15,7 @@ import (
 const (
 	screenWidth    = 640
 	screenHeight   = 480
-	maxDrawListLen = 100
+	maxDrawListLen = 200
 )
 
 // Game ...
@@ -100,9 +101,6 @@ func (g *Game) AddDrawStage(df func()) int {
 			return i
 		}
 	}
-	// handle := len(g.DrawStageList)
-	// g.DrawStageList = append(g.DrawStageList, df)
-	// return handle
 	return -1
 }
 
@@ -174,6 +172,7 @@ func (g *Game) DoDraw() {
 
 // ClearAll ...
 func (g *Game) ClearAll() {
+	g.ClrDrawStageListOnUpdate = false
 	g.ClrUpdate()
 	g.ClrDrawBg()
 	g.ClrDrawStage()
@@ -262,6 +261,7 @@ func (g *Game) DrawImage(image *ebiten.Image, x, y, angle, scale float64) {
 	w, h := image.Size()
 	op := &ebiten.DrawImageOptions{}
 	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	op.GeoM.Rotate(float64(int(angle)%360) * 2 * math.Pi / 360)
 	op.GeoM.Scale(scale, scale)
 	op.GeoM.Translate(x, y)
 	g.Screen.DrawImage(image, op)

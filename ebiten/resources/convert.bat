@@ -11,5 +11,8 @@ set TL=file2byteslice-master\cmd\file2byteslice\file2byteslice.exe
 %TL% -input gopher_t64.png -output sgimg/gopher64.go -package sgimg -var Gopher64_png
 %TL% -input gopher_t128.png -output sgimg/gopher128.go -package sgimg -var Gopher128_png
 
+%TL% -input mascot_anger_t32.png -output sgimg/mascotA32.go -package sgimg -var MascotA32_png
+
+
 
 pause

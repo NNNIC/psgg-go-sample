@@ -113,11 +113,15 @@ n018=5
 [s005b]
 n002=S_DrawNic
 n005=S_Update
-n007=var drawfunc func()
+n007=@@@
+var drawfunc func()
+var angle    float64
+@@@
+
 n008=
 n009=@@@
 drawfunc = func() {
-    g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),0,1)
+    g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
 }
 g.AddDrawStage(drawfunc)
 @@@
@@ -134,7 +138,11 @@ n018=6
 
 [s005c]
 n002=S_DrawUpdate
-n00c=g.AddDrawStage(drawfunc)
+n00c=@@@
+calcUpdate()
+g.AddDrawStage(drawfunc)
+@@@
+
 n012=@@@
 brifc(S_END);
 brelseifc(S_END);
@@ -182,7 +190,7 @@ n018=8
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 9:32:47
+; The setting was created automatically. 2020/11/22 9:50:49
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 nicControl.psgg
@@ -200,7 +208,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /
@@ -265,7 +273,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":1029}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym

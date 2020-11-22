@@ -38,3 +38,15 @@ func clamp255(i int) uint8 {
 	}
 	return uint8(i)
 }
+func angleNormal(a float64) float64 {
+	for true {
+		if a < 0 {
+			a = a + 360
+		} else if a > 360 {
+			a = a - 360
+		} else {
+			break
+		}
+	}
+	return a
+}
