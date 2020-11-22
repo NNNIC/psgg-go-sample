@@ -292,9 +292,10 @@ func (g *Game) Mascot64_png() []byte {
 func (g *Game) Mascot32_png() []byte {
 	return sgimg.Mascot32_png
 }
-func (g *Game) MascotA32_png() []byte {
-	return sgimg.MascotA32_png
-}
+
+//func (g *Game) MascotA32_png() []byte {
+//	return sgimg.MascotA32_png
+//}
 
 // Mascot16_png ...
 func (g *Game) Mascot16_png() []byte {

@@ -88,7 +88,7 @@ n001=(bitmap)
 n002=S_LOAD_NIC
 n005=S_DrawNic
 n009=@@@
-img, _, err := image.Decode(bytes.NewReader(g.MascotA32_png()))
+img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
 if err != nil {
     log.Fatal(err)
 }
@@ -190,7 +190,7 @@ n018=8
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 10:42:40
+; The setting was created automatically. 2020/11/22 10:49:27
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 nicControl.psgg

@@ -153,7 +153,7 @@ func nicControl(d *NicData) func(bool, *Game) bool {
     */
     sLOADNIC := func( bFirst  bool ) {
         if bFirst {
-            img, _, err := image.Decode(bytes.NewReader(g.MascotA32_png()))
+            img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
             if err != nil {
                 log.Fatal(err)
             }
