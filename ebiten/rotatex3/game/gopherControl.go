@@ -171,44 +171,46 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 	// #
 	id := 0
 	//[STATEGO OUTPUT START] indent(4) $/^S_./->#setids$
-    //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
-    funcIdsBACKTOMOVEDIFF := id
-    id++
-    funcIdsDrawGopher := id
-    id++
-    funcIdsDrawUpdate := id
-    id++
-    funcIdsEND := id
-    id++
-    funcIdsLOADGOPHER := id
-    id++
-    funcIdsMouseClick := id
-    id++
-    funcIdsMouseClick1 := id
-    id++
-    funcIdsMOVEDIFF := id
-    id++
-    funcIdsREFLECT := id
-    id++
-    funcIdsSTART := id
-    id++
-    funcIdsTick := id
-    id++
-    funcIdsWAIT1 := id
-    id++
-    funcIdsWAIT2 := id
-    id++
-
+	funcIdsBACKTOMOVEDIFF := id
+	id++
+	funcIdsDrawGopher := id
+	id++
+	funcIdsDrawUpdate := id
+	id++
+	funcIdsEND := id
+	id++
+	funcIdsLOADGOPHER := id
+	id++
+	funcIdsMouseClick := id
+	id++
+	funcIdsMouseClick1 := id
+	id++
+	funcIdsMOVEDIFF := id
+	id++
+	funcIdsREFLECT := id
+	id++
+	funcIdsSTART := id
+	id++
+	funcIdsTick := id
+	id++
+	funcIdsWAIT1 := id
+	id++
+	funcIdsWAIT2 := id
+	id++
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
-    //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
-    var drawfunc func()
-    var timesWAIT1 int64
+	var drawfunc func()
+	var timesWAIT1 int64
 
+	//[STATEGO OUTPUT END]
+	// [STATEGO OUTPUT START] indent(4) $/^E_./$
+	//             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
 	//[STATEGO OUTPUT END]
 
@@ -218,228 +220,226 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 	var endofFuncList = func(bFirst bool) { // for end of function list
 	}
 	//[STATEGO OUTPUT START] indent(4) $/^S_./$
-    //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
-    /*
-        S_BACKTO_MOVEDIFF
-    */
-    sBACKTOMOVEDIFF := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsMOVEDIFF)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawGopher
-    */
-    sDrawGopher := func( bFirst  bool ) {
-        if bFirst {
-            drawfunc = func() {
-                g.DrawImage(g.GophersImage2, float64(d.PosX-16),float64(d.PosY-16),0,1)
-            }
-        }
-        if !hasNextState() {
-            gotoState(funcIdsWAIT1)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawUpdate
-    */
-    sDrawUpdate := func( bFirst  bool ) {
-        g.AddDrawStage(drawfunc)
-        if ebiten.IsKeyPressed(ebiten.KeyEscape) {
-            gotoState( funcIdsEND )
-        } else {
-            gotoState( funcIdsTick )
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_END
-    */
-    sEND := func ( bFirst  bool ) {
-         // end of state machine
-    }
-    /*
-        S_LOAD_GOPHER
-    */
-    sLOADGOPHER := func( bFirst  bool ) {
-        if bFirst {
-            img, _, err := image.Decode(bytes.NewReader(g.Gophers32_png()))
-            if err != nil {
-                log.Fatal(err)
-            }
-            g.GophersImage2 = ebiten.NewImageFromImage(img)
-        }
-        if !hasNextState() {
-            gotoState(funcIdsDrawGopher)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_MouseClick
-    */
-    sMouseClick := func( bFirst  bool ) {
-        b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
-        if !b {
-            gotoState( funcIdsDrawUpdate )
-        } else {
-            gotoState( funcIdsMouseClick1 )
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_MouseClick1
-    */
-    sMouseClick1 := func( bFirst  bool ) {
-        if bFirst {
-            d.CalcDir()
-        }
-        if !hasNextState() {
-            gotoState(funcIdsDrawUpdate)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_MOVEDIFF
-    */
-    sMOVEDIFF := func( bFirst  bool ) {
-        if bFirst {
-            hitwall := d.MoveDiff()
-            if hitwall {
-                d.Speedup(-0.5)
-            }
-        }
-        b:=d.CheckKill()
-        if b {
-            gotoState( funcIdsREFLECT )
-        } else {
-            gotoState( funcIdsMouseClick )
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_REFLECT
-    */
-    sREFLECT := func( bFirst  bool ) {
-        if bFirst {
-            d.Speedup(0.2)
-            d.Reflect()
-        }
-        if !hasNextState() {
-            gotoState(funcIdsDrawUpdate)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_START
-    */
-    sSTART := func( bFirst  bool ) {
-        gotoState(funcIdsLOADGOPHER)
-    }
-    /*
-        S_Tick
-    */
-    sTick := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsBACKTOMOVEDIFF)
-        }
-    }
-    /*
-        S_WAIT1
-    */
-    sWAIT1 := func( bFirst  bool ) {
-        if bFirst {
-            timesWAIT1 = g.TimeNowMs() + 3 * 1000
-        }
-        g.AddDrawStage(drawfunc)
-        if timesWAIT1 > g.TimeNowMs() {
-             return
-        }
-        if !hasNextState() {
-            gotoState(funcIdsWAIT2)
-        }
-    }
-    /*
-        S_WAIT2
-    */
-    sWAIT2 := func( bFirst  bool ) {
-        if bFirst {
-            d.DiffX = -1.0
-            d.DiffY = -1.0
-        }
-        if !hasNextState() {
-            gotoState(funcIdsMOVEDIFF)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-
+	/*
+	   S_BACKTO_MOVEDIFF
+	*/
+	sBACKTOMOVEDIFF := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsMOVEDIFF)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawGopher
+	*/
+	sDrawGopher := func(bFirst bool) {
+		if bFirst {
+			drawfunc = func() {
+				g.DrawImage(g.GophersImage2, float64(d.PosX-16), float64(d.PosY-16), 0, 1)
+			}
+		}
+		if !hasNextState() {
+			gotoState(funcIdsWAIT1)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawUpdate
+	*/
+	sDrawUpdate := func(bFirst bool) {
+		g.AddDrawStage(drawfunc)
+		if ebiten.IsKeyPressed(ebiten.KeyEscape) {
+			gotoState(funcIdsEND)
+		} else {
+			gotoState(funcIdsTick)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_END
+	*/
+	sEND := func(bFirst bool) {
+		// end of state machine
+	}
+	/*
+	   S_LOAD_GOPHER
+	*/
+	sLOADGOPHER := func(bFirst bool) {
+		if bFirst {
+			img, _, err := image.Decode(bytes.NewReader(g.Gophers32_png()))
+			if err != nil {
+				log.Fatal(err)
+			}
+			g.GophersImage2 = ebiten.NewImageFromImage(img)
+		}
+		if !hasNextState() {
+			gotoState(funcIdsDrawGopher)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_MouseClick
+	*/
+	sMouseClick := func(bFirst bool) {
+		b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+		if !b {
+			gotoState(funcIdsDrawUpdate)
+		} else {
+			gotoState(funcIdsMouseClick1)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_MouseClick1
+	*/
+	sMouseClick1 := func(bFirst bool) {
+		if bFirst {
+			d.CalcDir()
+		}
+		if !hasNextState() {
+			gotoState(funcIdsDrawUpdate)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_MOVEDIFF
+	*/
+	sMOVEDIFF := func(bFirst bool) {
+		if bFirst {
+			hitwall := d.MoveDiff()
+			if hitwall {
+				d.Speedup(-0.5)
+			}
+		}
+		b := d.CheckKill()
+		if b {
+			gotoState(funcIdsREFLECT)
+		} else {
+			gotoState(funcIdsMouseClick)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_REFLECT
+	*/
+	sREFLECT := func(bFirst bool) {
+		if bFirst {
+			d.Speedup(0.2)
+			d.Reflect()
+		}
+		if !hasNextState() {
+			gotoState(funcIdsDrawUpdate)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_START
+	*/
+	sSTART := func(bFirst bool) {
+		gotoState(funcIdsLOADGOPHER)
+	}
+	/*
+	   S_Tick
+	*/
+	sTick := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsBACKTOMOVEDIFF)
+		}
+	}
+	/*
+	   S_WAIT1
+	*/
+	sWAIT1 := func(bFirst bool) {
+		if bFirst {
+			timesWAIT1 = g.TimeNowMs() + 3*1000
+		}
+		g.AddDrawStage(drawfunc)
+		if timesWAIT1 > g.TimeNowMs() {
+			return
+		}
+		if !hasNextState() {
+			gotoState(funcIdsWAIT2)
+		}
+	}
+	/*
+	   S_WAIT2
+	*/
+	sWAIT2 := func(bFirst bool) {
+		if bFirst {
+			d.DiffX = -1.0
+			d.DiffY = -1.0
+		}
+		if !hasNextState() {
+			gotoState(funcIdsMOVEDIFF)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
 
 	//[STATEGO OUTPUT END]
 
 	var funclist = [...]func(bool){
 
 		//[STATEGO OUTPUT START] indent(8) $/^S_./->#funclist$
-        //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
+		//             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
-        sBACKTOMOVEDIFF,
-        sDrawGopher,
-        sDrawUpdate,
-        sEND,
-        sLOADGOPHER,
-        sMouseClick,
-        sMouseClick1,
-        sMOVEDIFF,
-        sREFLECT,
-        sSTART,
-        sTick,
-        sWAIT1,
-        sWAIT2,
-
+		sBACKTOMOVEDIFF,
+		sDrawGopher,
+		sDrawUpdate,
+		sEND,
+		sLOADGOPHER,
+		sMouseClick,
+		sMouseClick1,
+		sMOVEDIFF,
+		sREFLECT,
+		sSTART,
+		sTick,
+		sWAIT1,
+		sWAIT2,
 
 		//[STATEGO OUTPUT END]
 		endofFuncList}
 	/*
-				var dbgfunclist = [...]string{
-					//[STATEGO OUTPUT START] indent(8) $/^S_./->#dbgfunclist$
-        //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
+						var dbgfunclist = [...]string{
+							//[STATEGO OUTPUT START] indent(8) $/^S_./->#dbgfunclist$
+		        //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
-        "S_BACKTO_MOVEDIFF",
-        "S_DrawGopher",
-        "S_DrawUpdate",
-        "S_END",
-        "S_LOAD_GOPHER",
-        "S_MouseClick",
-        "S_MouseClick1",
-        "S_MOVEDIFF",
-        "S_REFLECT",
-        "S_START",
-        "S_Tick",
-        "S_WAIT1",
-        "S_WAIT2",
+		        "S_BACKTO_MOVEDIFF",
+		        "S_DrawGopher",
+		        "S_DrawUpdate",
+		        "S_END",
+		        "S_LOAD_GOPHER",
+		        "S_MouseClick",
+		        "S_MouseClick1",
+		        "S_MOVEDIFF",
+		        "S_REFLECT",
+		        "S_START",
+		        "S_Tick",
+		        "S_WAIT1",
+		        "S_WAIT2",
 
 
-					//[STATEGO OUTPUT END]
-					"none"}
+							//[STATEGO OUTPUT END]
+							"none"}
 	*/
 	nextfunc = funcIdsSTART
 

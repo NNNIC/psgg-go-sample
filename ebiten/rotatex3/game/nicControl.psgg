@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,,s005e
 max_name_id=31
-max_state_id=93
+max_state_id=94
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -56,6 +56,7 @@ s005a=S_LOAD_NIC
 s005b=S_DrawNic
 s005c=S_DrawUpdate
 s005d=S_Update
+s005e=E_DrawNic
 
 
 [s0056]
@@ -94,10 +95,23 @@ if err != nil {
 }
 g.MascotImage = ebiten.NewImageFromImage(img)
 
-drawfunc := func() {
+img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
+if err != nil {
+    log.Fatal(err)
+}
+g.MascotAImage = ebiten.NewImageFromImage(img)
+
+
+drawfunc = func() {
 	g.DrawImage(g.MascotImage,8,8,0,1)
 }
+
 g.AddDrawStage(drawfunc)
+
+drawfuncA = func() {
+	g.DrawImage(g.MascotAImage,8,8,0,1)
+}
+
 @@@
 
 n01f=nowait
@@ -113,11 +127,7 @@ n018=5
 [s005b]
 n002=S_DrawNic
 n005=S_Update
-n007=@@@
-var drawfunc func()
-var angle    float64
-@@@
-
+n007=var angle    float64
 n008=
 n009=@@@
 drawfunc = func() {
@@ -183,6 +193,23 @@ n016=@@@
 n017=580,490
 n018=8
 
+[s005e]
+n002=E_DrawNic
+n006=@@@
+var drawfunc func()
+var drawfuncA func()
+
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=133,326
+n018=9
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -190,7 +217,7 @@ n018=8
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 10:49:27
+; The setting was created automatically. 2020/11/22 10:59:43
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 nicControl.psgg
@@ -208,7 +235,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Edited a state.
+init,Saved
 @@@
 target_pathdir=@@@
 /
@@ -223,7 +250,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

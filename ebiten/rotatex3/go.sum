@@ -7,6 +7,8 @@ github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201121014942-c3a
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201121014942-c3a9be8903a7/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122003833-9a6865c8794d h1:K6SDrlVRgRZBJJivhQdmD61K6nQv9gK+FqLFQog15jQ=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122003833-9a6865c8794d/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
+github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122014955-c472728c86b0 h1:Dck6G9R6i+sV+V3OFmNhIqntEQIEMZteEvF9AkiTkag=
+github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122014955-c472728c86b0/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200707082815-5321531c36a2/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20201108214237-06ea97f0c265/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=

@@ -85,8 +85,18 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
     //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
 
-    var drawfunc func()
     var angle    float64
+
+	//[STATEGO OUTPUT END]
+
+	// [STATEGO OUTPUT START] indent(4) $/^E_./$
+    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+
+    /*
+        E_DrawNic
+    */
+    var drawfunc func()
+    var drawfuncA func()
 
 
 	//[STATEGO OUTPUT END]
@@ -158,10 +168,18 @@ func nicControl(d *NicData) func(bool, *Game) bool {
                 log.Fatal(err)
             }
             g.MascotImage = ebiten.NewImageFromImage(img)
-            drawfunc := func() {
+            img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
+            if err != nil {
+                log.Fatal(err)
+            }
+            g.MascotAImage = ebiten.NewImageFromImage(img)
+            drawfunc = func() {
             	g.DrawImage(g.MascotImage,8,8,0,1)
             }
             g.AddDrawStage(drawfunc)
+            drawfuncA = func() {
+            	g.DrawImage(g.MascotAImage,8,8,0,1)
+            }
         }
         if !hasNextState() {
             gotoState(funcIdsDrawNic)
