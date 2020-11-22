@@ -13,6 +13,8 @@ set TL=file2byteslice-master\cmd\file2byteslice\file2byteslice.exe
 
 %TL% -input mascot_anger_t32.png -output sgimg/mascotA32.go -package sgimg -var MascotA32_png
 
+%TL% -input ebiten_t32.png -output sgimg/ebiten32.go -package sgimg -var Ebiten32_png
+%TL% -input ebiten_power_t32.png -output sgimg/ebitenP32.go -package sgimg -var EbitenP32_png
 
 
 pause
