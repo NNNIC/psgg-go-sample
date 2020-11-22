@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,s005f,s005e,s0060,s0061,s0062,s0063,s0064
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,s005f,s005e,s0060,s0061,s0062,s0063,s0064,s0066,s0065,s0067
 max_name_id=31
-max_state_id=100
+max_state_id=103
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -63,6 +63,9 @@ s0061=S_BACKTO_MOVEDIFF
 s0062=S_Tick
 s0063=S_MouseClick
 s0064=S_MouseClick1
+s0065=S_LOSE
+s0066=S_DrawUpdate1
+s0067=S_Tick1
 
 
 [s0056]
@@ -210,20 +213,23 @@ if hitwall {
 }
 @@@
 
-n00c=b:=d.CheckKill()
+n00c=bKillNic, bKillMe :=d.CheckKill()
 n01f=nowait
 n012=@@@
-brifc(S_REFLECT);
+brifc(S_LOSE);
+brelseifc(S_REFLECT);
 brelse(S_MouseClick);
 @@@
 
 n013=@@@
 ?
 ?
+?
 @@@
 
 n014=@@@
-b
+bKillMe
+bKillNic
 ?
 @@@
 
@@ -252,7 +258,7 @@ n016=@@@
 
 @@@
 
-n017=1118,311
+n017=1128,386
 n018=11
 
 [s0061]
@@ -309,7 +315,7 @@ n016=@@@
 
 @@@
 
-n017=1106,470
+n017=1124,479
 n018=14
 
 [s0064]
@@ -326,6 +332,63 @@ n016=@@@
 n017=1345,640
 n018=15
 
+[s0065]
+n002=S_LOSE
+n005=S_DrawUpdate1
+n009=@@@
+g.GameOver = true
+d.Killed = true
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1135,298
+n018=16
+
+[s0066]
+n002=S_DrawUpdate1
+n00c=g.AddDrawStage(drawfunc)
+n01f=nowait
+n012=@@@
+brifc(S_END);
+brelse(S_Tick1);
+@@@
+
+n013=@@@
+ESC
+?
+@@@
+
+n014=@@@
+ebiten.IsKeyPressed(ebiten.KeyEscape)
+?
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1560,264
+n018=17
+
+[s0067]
+n002=S_Tick1
+n005=S_DrawUpdate1
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1751,365
+n018=18
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -333,7 +396,7 @@ n018=15
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 9:18:43
+; The setting was created automatically. 2020/11/22 11:40:17
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 gopherControl.psgg
@@ -351,7 +414,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-mov,S_WAIT2
+varied,Changed an arrow direction
 @@@
 target_pathdir=@@@
 /
@@ -360,13 +423,13 @@ state_location_list=@@@
 
 @@@
 nodegroup_comment_list=@@@
-[{"Key":"\/","Value":"The root"}]
+[{"Key":"\/","Value":""}]
 @@@
 nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":2380,"y":35}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":264.666656,"y":307.6667}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":463.666626,"y":305.333344}},{"Key":"S_WAIT2","Value":{"x":659.3334,"y":308}},{"Key":"S_MOVEDIFF","Value":{"x":901,"y":314}},{"Key":"S_REFLECT","Value":{"x":1118,"y":311}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1106,"y":470}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":2380,"y":35}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":265,"y":308}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":464,"y":305}},{"Key":"S_WAIT2","Value":{"x":659,"y":308}},{"Key":"S_MOVEDIFF","Value":{"x":901,"y":314}},{"Key":"S_REFLECT","Value":{"x":1128,"y":386}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1124,"y":479}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}},{"Key":"S_REFLECT1","Value":{"x":1135,"y":298}},{"Key":"S_LOSE","Value":{"x":1135,"y":298}},{"Key":"S_DrawUpdate1","Value":{"x":1560,"y":264}},{"Key":"S_Tick1","Value":{"x":1751,"y":365}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

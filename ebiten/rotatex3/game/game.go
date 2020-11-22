@@ -55,6 +55,7 @@ type Game struct {
 	// Gopher vs Nic
 	NicDataList []*NicData
 	GopherData0 *GopherData
+	GameOver    bool
 }
 
 // AddUpdate ...

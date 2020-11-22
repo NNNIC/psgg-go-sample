@@ -622,6 +622,7 @@ func mainControl() func(bool, *Game) bool {
     sINIT1 := func( bFirst  bool ) {
         if bFirst {
             g.ClrDrawStageListOnUpdate = true
+            g.GameOver = false
         }
         if !hasNextState() {
             gotoState(funcIdsFADEOUT1)
@@ -940,10 +941,11 @@ func mainControl() func(bool, *Game) bool {
         if bFirst {
             timesWAITCLRDRAW = g.TimeNowMs() + 600*1000
         }
-        g.ClrDrawStage()
         if ebiten.IsKeyPressed(ebiten.KeyEscape) {
             gotoState( funcIdsFADEOUT2 )
         } else if timesWAITCLRDRAW < g.TimeNowMs() {
+            gotoState( funcIdsFADEOUT2 )
+        } else if g.GameOver {
             gotoState( funcIdsFADEOUT2 )
         }
     }

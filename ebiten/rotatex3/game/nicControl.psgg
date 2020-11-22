@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,,s005e
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,s005f,s005e,s0061,s0060,s0062
 max_name_id=31
-max_state_id=94
+max_state_id=98
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -57,6 +57,10 @@ s005b=S_DrawNic
 s005c=S_DrawUpdate
 s005d=S_Update
 s005e=E_DrawNic
+s005f=S_DrawAnger
+s0060=S_TICK
+s0061=S_DrawAnger1
+s0062=S_BACKTO_DRAWANGER
 
 
 [s0056]
@@ -156,18 +160,21 @@ g.AddDrawStage(drawfunc)
 n012=@@@
 brifc(S_END);
 brelseifc(S_END);
+brelseifc(S_DrawAnger);
 brelse(S_Update);
 @@@
 
 n013=@@@
 ESC
 Killed
+Anger
 ?
 @@@
 
 n014=@@@
 ebiten.IsKeyPressed(ebiten.KeyEscape)
 d.Killed
+d.Anger
 ?
 @@@
 
@@ -210,6 +217,65 @@ n016=@@@
 n017=133,326
 n018=9
 
+[s005f]
+n002=S_DrawAnger
+n005=S_TICK
+n009=@@@
+drawfuncA = func() {
+            g.DrawImage(g.MascotAImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
+}
+
+@@@
+
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1171,465
+n018=10
+
+[s0060]
+n002=S_TICK
+n005=S_DrawAnger1
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1423,231
+n018=11
+
+[s0061]
+n002=S_DrawAnger1
+n005=S_BACKTO_DRAWANGER
+n009=g.AddDrawStage(drawfuncA)
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1574,435
+n018=12
+
+[s0062]
+n002=S_BACKTO_DRAWANGER
+n005=S_TICK
+n01f=nowait
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=1665,125
+n018=13
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -217,7 +283,7 @@ n018=9
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 10:59:43
+; The setting was created automatically. 2020/11/22 11:24:10
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 nicControl.psgg
@@ -235,7 +301,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /
@@ -250,7 +316,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}},{"Key":"S_DrawUpdate1","Value":{"x":1102.36365,"y":491.1818}},{"Key":"S_DrawAnger","Value":{"x":1171,"y":465}},{"Key":"S_DrawAnger1","Value":{"x":1574,"y":435}},{"Key":"S_TICK","Value":{"x":1423,"y":231}},{"Key":"S_DrawAnger2","Value":{"x":1502,"y":155}},{"Key":"S_BACKTO_DRAWANGER","Value":{"x":1665,"y":125}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

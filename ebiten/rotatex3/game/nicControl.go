@@ -16,6 +16,7 @@ type NicData struct {
 	PosX   float64
 	PosY   float64
 	Killed bool
+	Anger  bool
 }
 
 func nicControl(d *NicData) func(bool, *Game) bool {
@@ -64,40 +65,46 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	// #
 	id := 0
 	//[STATEGO OUTPUT START] indent(4) $/^S_./->#setids$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:nicControl.psgg
 
-    funcIdsDrawNic := id
-    id++
-    funcIdsDrawUpdate := id
-    id++
-    funcIdsEND := id
-    id++
-    funcIdsLOADNIC := id
-    id++
-    funcIdsSTART := id
-    id++
-    funcIdsUpdate := id
-    id++
-
+	funcIdsBACKTODRAWANGER := id
+	id++
+	funcIdsDrawAnger := id
+	id++
+	funcIdsDrawAnger1 := id
+	id++
+	funcIdsDrawNic := id
+	id++
+	funcIdsDrawUpdate := id
+	id++
+	funcIdsEND := id
+	id++
+	funcIdsLOADNIC := id
+	id++
+	funcIdsSTART := id
+	id++
+	funcIdsTICK := id
+	id++
+	funcIdsUpdate := id
+	id++
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:nicControl.psgg
 
-    var angle    float64
+	var angle float64
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^E_./$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:nicControl.psgg
 
-    /*
-        E_DrawNic
-    */
-    var drawfunc func()
-    var drawfuncA func()
-
+	/*
+	   E_DrawNic
+	*/
+	var drawfunc func()
+	var drawfuncA func()
 
 	//[STATEGO OUTPUT END]
 
@@ -119,108 +126,161 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	var endofFuncList = func(bFirst bool) { // for end of function list
 	}
 	//[STATEGO OUTPUT START] indent(4) $/^S_./$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:nicControl.psgg
 
-    /*
-        S_DrawNic
-    */
-    sDrawNic := func( bFirst  bool ) {
-        if bFirst {
-            drawfunc = func() {
-                g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
-            }
-            g.AddDrawStage(drawfunc)
-        }
-        if !hasNextState() {
-            gotoState(funcIdsUpdate)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawUpdate
-    */
-    sDrawUpdate := func( bFirst  bool ) {
-        calcUpdate()
-        g.AddDrawStage(drawfunc)
-        if ebiten.IsKeyPressed(ebiten.KeyEscape) {
-            gotoState( funcIdsEND )
-        } else if d.Killed {
-            gotoState( funcIdsEND )
-        } else {
-            gotoState( funcIdsUpdate )
-        }
-    }
-    /*
-        S_END
-    */
-    sEND := func ( bFirst  bool ) {
-         // end of state machine
-    }
-    /*
-        S_LOAD_NIC
-    */
-    sLOADNIC := func( bFirst  bool ) {
-        if bFirst {
-            img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
-            if err != nil {
-                log.Fatal(err)
-            }
-            g.MascotImage = ebiten.NewImageFromImage(img)
-            img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
-            if err != nil {
-                log.Fatal(err)
-            }
-            g.MascotAImage = ebiten.NewImageFromImage(img)
-            drawfunc = func() {
-            	g.DrawImage(g.MascotImage,8,8,0,1)
-            }
-            g.AddDrawStage(drawfunc)
-            drawfuncA = func() {
-            	g.DrawImage(g.MascotAImage,8,8,0,1)
-            }
-        }
-        if !hasNextState() {
-            gotoState(funcIdsDrawNic)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_START
-    */
-    sSTART := func( bFirst  bool ) {
-        gotoState(funcIdsLOADNIC)
-    }
-    /*
-        S_Update
-    */
-    sUpdate := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsDrawUpdate)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-
+	/*
+	   S_BACKTO_DRAWANGER
+	*/
+	sBACKTODRAWANGER := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsTICK)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawAnger
+	*/
+	sDrawAnger := func(bFirst bool) {
+		if bFirst {
+			drawfuncA = func() {
+				g.DrawImage(g.MascotAImage, float64(d.PosX-16), float64(d.PosY-16), angle, 1)
+			}
+		}
+		if !hasNextState() {
+			gotoState(funcIdsTICK)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawAnger1
+	*/
+	sDrawAnger1 := func(bFirst bool) {
+		if bFirst {
+			g.AddDrawStage(drawfuncA)
+		}
+		if !hasNextState() {
+			gotoState(funcIdsBACKTODRAWANGER)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawNic
+	*/
+	sDrawNic := func(bFirst bool) {
+		if bFirst {
+			drawfunc = func() {
+				g.DrawImage(g.MascotImage, float64(d.PosX-16), float64(d.PosY-16), angle, 1)
+			}
+			g.AddDrawStage(drawfunc)
+		}
+		if !hasNextState() {
+			gotoState(funcIdsUpdate)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawUpdate
+	*/
+	sDrawUpdate := func(bFirst bool) {
+		calcUpdate()
+		g.AddDrawStage(drawfunc)
+		if ebiten.IsKeyPressed(ebiten.KeyEscape) {
+			gotoState(funcIdsEND)
+		} else if d.Killed {
+			gotoState(funcIdsEND)
+		} else if d.Anger {
+			gotoState(funcIdsDrawAnger)
+		} else {
+			gotoState(funcIdsUpdate)
+		}
+	}
+	/*
+	   S_END
+	*/
+	sEND := func(bFirst bool) {
+		// end of state machine
+	}
+	/*
+	   S_LOAD_NIC
+	*/
+	sLOADNIC := func(bFirst bool) {
+		if bFirst {
+			img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
+			if err != nil {
+				log.Fatal(err)
+			}
+			g.MascotImage = ebiten.NewImageFromImage(img)
+			img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
+			if err != nil {
+				log.Fatal(err)
+			}
+			g.MascotAImage = ebiten.NewImageFromImage(img)
+			drawfunc = func() {
+				g.DrawImage(g.MascotImage, 8, 8, 0, 1)
+			}
+			g.AddDrawStage(drawfunc)
+			drawfuncA = func() {
+				g.DrawImage(g.MascotAImage, 8, 8, 0, 1)
+			}
+		}
+		if !hasNextState() {
+			gotoState(funcIdsDrawNic)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_START
+	*/
+	sSTART := func(bFirst bool) {
+		gotoState(funcIdsLOADNIC)
+	}
+	/*
+	   S_TICK
+	*/
+	sTICK := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsDrawAnger1)
+		}
+	}
+	/*
+	   S_Update
+	*/
+	sUpdate := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsDrawUpdate)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
 
 	//[STATEGO OUTPUT END]
 
 	var funclist = [...]func(bool){
 
 		//[STATEGO OUTPUT START] indent(8) $/^S_./->#funclist$
-        //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+		//             psggConverterLib.dll converted from psgg-file:nicControl.psgg
 
-        sDrawNic,
-        sDrawUpdate,
-        sEND,
-        sLOADNIC,
-        sSTART,
-        sUpdate,
-
+		sBACKTODRAWANGER,
+		sDrawAnger,
+		sDrawAnger1,
+		sDrawNic,
+		sDrawUpdate,
+		sEND,
+		sLOADNIC,
+		sSTART,
+		sTICK,
+		sUpdate,
 
 		//[STATEGO OUTPUT END]
 		endofFuncList}
@@ -267,6 +327,10 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 			curfunc = -1
 			nextfunc = funcIdsSTART
 		}
+		if ebiten.IsKeyPressed(ebiten.KeyA) {
+			d.Anger = true
+		}
+
 		return update()
 	}
 }
