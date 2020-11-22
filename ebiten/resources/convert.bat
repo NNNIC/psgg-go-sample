@@ -15,6 +15,7 @@ set TL=file2byteslice-master\cmd\file2byteslice\file2byteslice.exe
 
 %TL% -input ebiten_t32.png -output sgimg/ebiten32.go -package sgimg -var Ebiten32_png
 %TL% -input ebiten_power_t32.png -output sgimg/ebitenP32.go -package sgimg -var EbitenP32_png
+%TL% -input ebiten_time_t32.png -output sgimg/ebitenT32.go -package sgimg -var EbitenT32_png
 
 
 pause
