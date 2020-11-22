@@ -138,6 +138,8 @@ drawfunc = func() {
     g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
 }
 g.AddDrawStage(drawfunc)
+d.DiffX = 0.7
+d.DiffY = 0.7
 @@@
 
 n01f=nowait
@@ -153,6 +155,7 @@ n018=6
 [s005c]
 n002=S_DrawUpdate
 n00c=@@@
+d.MoveDiff()
 calcUpdate()
 g.AddDrawStage(drawfunc)
 @@@
@@ -224,7 +227,8 @@ n009=@@@
 drawfuncA = func() {
             g.DrawImage(g.MascotAImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
 }
-
+d.DiffX = 1
+d.DiffY = 1
 @@@
 
 n01f=nowait
@@ -234,7 +238,7 @@ n016=@@@
 
 @@@
 
-n017=1171,465
+n017=1102,473
 n018=10
 
 [s0060]
@@ -246,13 +250,18 @@ n016=@@@
 
 @@@
 
-n017=1423,231
+n017=1301,269
 n018=11
 
 [s0061]
 n002=S_DrawAnger1
 n005=S_BACKTO_DRAWANGER
-n009=g.AddDrawStage(drawfuncA)
+n009=@@@
+d.MoveDiff()
+g.AddDrawStage(drawfuncA)
+
+@@@
+
 n01f=nowait
 n016=@@@
 /
@@ -260,7 +269,7 @@ n016=@@@
 
 @@@
 
-n017=1574,435
+n017=1426,483
 n018=12
 
 [s0062]
@@ -283,7 +292,7 @@ n018=13
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 11:24:10
+; The setting was created automatically. 2020/11/22 22:03:33
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 nicControl.psgg
@@ -316,7 +325,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}},{"Key":"S_DrawUpdate1","Value":{"x":1102.36365,"y":491.1818}},{"Key":"S_DrawAnger","Value":{"x":1171,"y":465}},{"Key":"S_DrawAnger1","Value":{"x":1574,"y":435}},{"Key":"S_TICK","Value":{"x":1423,"y":231}},{"Key":"S_DrawAnger2","Value":{"x":1502,"y":155}},{"Key":"S_BACKTO_DRAWANGER","Value":{"x":1665,"y":125}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}},{"Key":"S_DrawUpdate1","Value":{"x":1102.36365,"y":491.1818}},{"Key":"S_DrawAnger","Value":{"x":1102,"y":473}},{"Key":"S_DrawAnger1","Value":{"x":1426,"y":483}},{"Key":"S_TICK","Value":{"x":1301,"y":269}},{"Key":"S_DrawAnger2","Value":{"x":1502,"y":155}},{"Key":"S_BACKTO_DRAWANGER","Value":{"x":1665,"y":125}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,,s005a
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063
 max_name_id=31
-max_state_id=95
+max_state_id=100
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -110,6 +110,10 @@ s005b=S_INIT
 s005c=S_WAIT13
 s005d=S_TEXT
 s005f=S_INIT1
+s0060=S_OPENING
+s0062=S_GAMEOVER
+s0063=S_ESC
+s0064=S_TIMEOUT
 
 
 [s0001]
@@ -977,10 +981,7 @@ n018=100047
 [s0051]
 n002=S_SHOWMASCOT1
 n005=S_INIT1
-n009=@@@
-g.TermPrint(" = STATE GO MASCOT DEMO = ")
-@@@
-
+n009=g.TermClear()
 n016=@@@
 /Game/
 (435,1486)
@@ -1130,9 +1131,9 @@ time[[state>>lc]] = g.TimeNowMs() + 600*1000
 n00c=
 n00e=
 n012=@@@
-brifc(S_FADEOUT2);
-brelseifc(S_FADEOUT2);
-brelseif(S_FADEOUT2);
+brifc(S_ESC);
+brelseifc(S_TIMEOUT);
+brelseif(S_GAMEOVER);
 @@@
 
 n013=@@@
@@ -1241,7 +1242,7 @@ n018=100063
 
 [s005f]
 n002=S_INIT1
-n005=S_FADEOUT1
+n005=S_OPENING
 n009=@@@
 g.ClrDrawStageListOnUpdate = true
 g.GameOver = false
@@ -1253,8 +1254,67 @@ n016=@@@
 The root
 @@@
 
-n017=533,108
+n017=534,97
 n018=100064
+
+[s0060]
+n002=S_OPENING
+n005=S_FADEOUT1
+n00c=@@@
+td := func() {
+	textdrawBig(g.Screen, 180, 100, "GOPHER\n   VS\nSTATEGO\nMASCOT", color.White)
+}
+g.AddDrawStage(td)
+@@@
+
+n00e=!ebiten.IsKeyPressed(ebiten.KeyS)
+n016=@@@
+/Game/
+(100,100)
+
+@@@
+
+n017=185,425
+n018=100065
+
+[s0062]
+n002=S_GAMEOVER
+n005=S_FADEOUT2
+n009=fmt.Println("[[state]]")
+n016=@@@
+/Game/
+(435,1486)
+
+@@@
+
+n017=1982,578
+n018=100068
+
+[s0063]
+n002=S_ESC
+n005=S_FADEOUT2
+n009=fmt.Println("[[state]]")
+n016=@@@
+/Game/
+(100,100)
+
+@@@
+
+n017=1983,364
+n018=100066
+
+[s0064]
+n002=S_TIMEOUT
+n005=S_FADEOUT2
+n009=fmt.Println("[[state]]")
+n016=@@@
+/Game/
+(435,1486)
+
+@@@
+
+n017=1981,485
+n018=100067
 
 
 
@@ -1263,7 +1323,7 @@ n018=100064
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 11:36:40
+; The setting was created automatically. 2020/11/22 22:11:42
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
@@ -1281,7 +1341,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Changed an arrow direction
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /Game/
@@ -1296,7 +1356,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":435,"y":1486}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_BACKTO_MENU","Value":{"x":328,"y":127}},{"Key":"S_CLEARALL","Value":{"x":408,"y":2343}},{"Key":"S_CLEARALL1","Value":{"x":1044,"y":1137}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_LOP000","Value":{"x":1523,"y":1205}},{"Key":"S_SBS000","Value":{"x":1611,"y":1396}},{"Key":"S_RET000","Value":{"x":2166,"y":1348}},{"Key":"S_PAS000","Value":{"x":1917,"y":1176}},{"Key":"S_LOP001","Value":{"x":1727,"y":1396}},{"Key":"S_SBS001","Value":{"x":1821,"y":1497}},{"Key":"S_RET001","Value":{"x":2143,"y":1499}},{"Key":"S_DrawMascot","Value":{"x":1924,"y":1498}},{"Key":"S_SETBG","Value":{"x":1252,"y":1135}},{"Key":"S_FADEINTEST","Value":{"x":454,"y":1907}},{"Key":"S_PAS001","Value":{"x":1663,"y":1909}},{"Key":"S_FADEOUT","Value":{"x":673,"y":1908}},{"Key":"S_WAIT12","Value":{"x":1435,"y":1912}},{"Key":"S_FADEIN","Value":{"x":884,"y":1913}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1311,"y":1486}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":838,"y":1135}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1091,"y":1913}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":50,"y":100}},{"Key":"S_SHOWMASCOT1","Value":{"x":326,"y":108}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":489,"y":429}},{"Key":"S_FADEOUT2","Value":{"x":2279,"y":619}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1536,"y":435}},{"Key":"S_DISPLAY_NIC","Value":{"x":892,"y":430}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1781,"y":437}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":1068,"y":431}},{"Key":"S_SETBG1","Value":{"x":690,"y":431}},{"Key":"S_WAIT13","Value":{"x":1287,"y":434}},{"Key":"S_INIT1","Value":{"x":533,"y":108}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_BACKTO_MENU","Value":{"x":328,"y":127}},{"Key":"S_CLEARALL","Value":{"x":408,"y":2343}},{"Key":"S_CLEARALL1","Value":{"x":1044,"y":1137}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_LOP000","Value":{"x":1523,"y":1205}},{"Key":"S_SBS000","Value":{"x":1611,"y":1396}},{"Key":"S_RET000","Value":{"x":2166,"y":1348}},{"Key":"S_PAS000","Value":{"x":1917,"y":1176}},{"Key":"S_LOP001","Value":{"x":1727,"y":1396}},{"Key":"S_SBS001","Value":{"x":1821,"y":1497}},{"Key":"S_RET001","Value":{"x":2143,"y":1499}},{"Key":"S_DrawMascot","Value":{"x":1924,"y":1498}},{"Key":"S_SETBG","Value":{"x":1252,"y":1135}},{"Key":"S_FADEINTEST","Value":{"x":454,"y":1907}},{"Key":"S_PAS001","Value":{"x":1663,"y":1909}},{"Key":"S_FADEOUT","Value":{"x":673,"y":1908}},{"Key":"S_WAIT12","Value":{"x":1435,"y":1912}},{"Key":"S_FADEIN","Value":{"x":884,"y":1913}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1311,"y":1486}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":838,"y":1135}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1091,"y":1913}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":50,"y":100}},{"Key":"S_SHOWMASCOT1","Value":{"x":326,"y":108}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":489,"y":429}},{"Key":"S_FADEOUT2","Value":{"x":2279,"y":619}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1536,"y":435}},{"Key":"S_DISPLAY_NIC","Value":{"x":892,"y":430}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1781,"y":437}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":1068,"y":431}},{"Key":"S_SETBG1","Value":{"x":690,"y":431}},{"Key":"S_WAIT13","Value":{"x":1287,"y":434}},{"Key":"S_INIT1","Value":{"x":534,"y":97}},{"Key":"S_INIT2","Value":{"x":316.322571,"y":261.45163}},{"Key":"S_OPENING","Value":{"x":185,"y":425}},{"Key":"S_WAIT14","Value":{"x":475,"y":262}},{"Key":"S_WAIT_CLRDRAW1","Value":{"x":1983,"y":498}},{"Key":"S_ESC","Value":{"x":1983,"y":364}},{"Key":"S_ESC1","Value":{"x":1981,"y":485}},{"Key":"S_ESC2","Value":{"x":1982,"y":578}},{"Key":"S_TIMEOUT","Value":{"x":1981,"y":485}},{"Key":"S_GAMEOVER","Value":{"x":1982,"y":578}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
