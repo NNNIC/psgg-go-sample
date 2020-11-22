@@ -3,13 +3,12 @@ package game
 import (
 	_ "image/jpeg"
 	_ "image/png"
-	"math"
 	"time"
 
 	"github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg"
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/examples/resources/images"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 const (
@@ -20,14 +19,16 @@ const (
 
 // Game ...
 type Game struct {
+	counter     int
 	MainControl func(bool, *Game) bool
 	UpdateList  []func(bool, *Game) bool // UpdateList ... contains statego controllers
 
 	// drawList
-	DrawBgList    []func()
-	DrawStageList []func()
-	DrawFeList    []func()
-	DrawTermFunc  []func()
+	DrawBgList               []func()
+	DrawStageList            []func()
+	DrawFeList               []func()
+	DrawTermFunc             []func()
+	ClrDrawStageListOnUpdate bool
 
 	// ebiten
 	Screen *ebiten.Image
@@ -68,6 +69,9 @@ func (g *Game) ClrUpdate() {
 
 // PlayUpdate ...
 func (g *Game) PlayUpdate() {
+	if g.ClrDrawStageListOnUpdate {
+		g.ClrDrawStage()
+	}
 
 	g.MainControl(false, g) // Call Main
 
@@ -187,7 +191,7 @@ var bInitDone = false
 */
 
 // Update ...
-func (g *Game) Update(screen *ebiten.Image) error {
+func (g *Game) Update() error {
 	if bInitDone == false {
 		bInitDone = true
 		maincontrol := mainControl()
@@ -195,7 +199,7 @@ func (g *Game) Update(screen *ebiten.Image) error {
 		g.MainControl = maincontrol
 	}
 
-	g.Screen = screen
+	//g.Screen = screen
 	g.PlayUpdate()
 	g.Count++
 	return nil
@@ -292,24 +296,4 @@ func (g *Game) Mascot32_png() []byte {
 // Mascot16_png ...
 func (g *Game) Mascot16_png() []byte {
 	return sgimg.Mascot16_png
-}
-
-// Clamp255 ...
-func (g *Game) Clamp255(i int) uint8 {
-	if i < 0 {
-		return 0
-	}
-	if i > 255 {
-		return 255
-	}
-	return uint8(i)
-}
-
-func vectorLen(x, y float64) float64 {
-	var len = math.Sqrt(x*x + y*y)
-	return len
-}
-func vectorNormalize(x, y float64) (float64, float64) {
-	len := vectorLen(x, y)
-	return x / len, y / len
 }

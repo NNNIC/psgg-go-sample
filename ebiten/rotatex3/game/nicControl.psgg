@@ -92,7 +92,7 @@ img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
 if err != nil {
     log.Fatal(err)
 }
-g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+g.MascotImage = ebiten.NewImageFromImage(img)
 
 drawfunc := func() {
 	g.DrawImage(g.MascotImage,8,8,0,1)
@@ -100,6 +100,7 @@ drawfunc := func() {
 g.AddDrawStage(drawfunc)
 @@@
 
+n01f=nowait
 n016=@@@
 /
 (100,100)
@@ -118,7 +119,7 @@ n009=@@@
 drawfunc = func() {
     g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),0,1)
 }
-
+g.AddDrawStage(drawfunc)
 @@@
 
 n01f=nowait
@@ -181,8 +182,8 @@ n018=8
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/21 15:00:13
-; * pssgEditor version : 0.67.29606.a20f6ec70788921eaa6cb7c3fc0baec28f855003
+; The setting was created automatically. 2020/11/22 9:32:47
+; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 nicControl.psgg
 @@@
@@ -199,7 +200,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Changed an arrow direction
+init,Saved
 @@@
 target_pathdir=@@@
 /
@@ -214,7 +215,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_DrawNic1","Value":{"x":580,"y":490}},{"Key":"S_Update","Value":{"x":580,"y":490}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -264,7 +265,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":398,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym

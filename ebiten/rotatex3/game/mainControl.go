@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // Gamemain ... invoke game
@@ -111,6 +111,8 @@ func mainControl() func(bool, *Game) bool {
     id++
     funcIdsINIT := id
     id++
+    funcIdsINIT1 := id
+    id++
     funcIdsLOADNIC := id
     id++
     funcIdsLOP000 := id
@@ -163,6 +165,8 @@ func mainControl() func(bool, *Game) bool {
     id++
     funcIdsTERMINAL1 := id
     id++
+    funcIdsTEXT := id
+    id++
     funcIdsWAIT := id
     id++
     funcIdsWAITCLRDRAW := id
@@ -174,6 +178,8 @@ func mainControl() func(bool, *Game) bool {
     funcIdsWAIT11 := id
     id++
     funcIdsWAIT12 := id
+    id++
+    funcIdsWAIT13 := id
     id++
     funcIdsWAIT2 := id
     id++
@@ -205,14 +211,14 @@ func mainControl() func(bool, *Game) bool {
 				posX := g.ScreenWidth/2 - (w * maxX / 2) + x*w
 				posY := g.ScreenHeight/2 - (w * maxY / 2) + y*w
 
-				d := NicData{PosX: posX, PosY: posY}
+				d := NicData{PosX: float64(posX), PosY: float64(posY)}
 				g.NicDataList = append(g.NicDataList, &d)
 				g.AddUpdate(nicControl(&d))
 			}
 		}
 	}
 	createGopher := func() {
-		d := GopherData{PosX: g.ScreenWidth / 2, PosY: g.ScreenHeight - 20}
+		d := GopherData{PosX: float64(g.ScreenWidth / 2), PosY: float64(g.ScreenHeight - 20)}
 		g.AddUpdate(gopherControl(&d))
 	}
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
@@ -231,6 +237,7 @@ func mainControl() func(bool, *Game) bool {
     var timesWAIT10 int64
     var timesWAIT11 int64
     var timesWAIT12 int64
+    var timesWAIT13 int64
     var timesWAIT2 int64
     var timesWAIT3 int64
     var timesWAIT4 int64
@@ -261,7 +268,7 @@ func mainControl() func(bool, *Game) bool {
                 if err != nil {
             	log.Fatal(err)
                 }
-                g.GophersImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+                g.GophersImage = ebiten.NewImageFromImage(img )
             }
             drawfunc := func() {
             	w, h := g.GophersImage.Size()
@@ -411,7 +418,7 @@ func mainControl() func(bool, *Game) bool {
             createGopher()
         }
         if !hasNextState() {
-            gotoState(funcIdsFADEIN1)
+            gotoState(funcIdsWAIT13)
         }
     }
     /*
@@ -455,13 +462,13 @@ func mainControl() func(bool, *Game) bool {
         col := color.RGBA{255,255,255,255}
         if bFirst {
             if g.FadeImage == nil {
-                img,_ := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight, ebiten.FilterDefault)
+                img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
                 g.FadeImage = img
             }
             goalsFADEIN = float64(g.Count) + fadestepnum
             drawfunc := func() {
                 alpha := (goalsFADEIN - float64(g.Count)) / fadestepnum * 255.0
-                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(g.Clamp255(int(alpha)))})
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(clamp255(int(alpha)))})
                 w, h := g.FadeImage.Size()
                 op := &ebiten.DrawImageOptions{}
                 op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
@@ -475,7 +482,7 @@ func mainControl() func(bool, *Game) bool {
              return
         }
         if !hasNextState() {
-            gotoState(funcIdsWAIT12)
+            gotoState(funcIdsTEXT)
         }
     }
     /*
@@ -486,13 +493,13 @@ func mainControl() func(bool, *Game) bool {
         col := color.RGBA{255,255,255,255}
         if bFirst {
             if g.FadeImage == nil {
-                img,_ := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight, ebiten.FilterDefault)
+                img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
                 g.FadeImage = img
             }
             goalsFADEIN1 = float64(g.Count) + fadestepnum
             drawfunc := func() {
                 alpha := (goalsFADEIN1 - float64(g.Count)) / fadestepnum * 255.0
-                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(g.Clamp255(int(alpha)))})
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(clamp255(int(alpha)))})
                 w, h := g.FadeImage.Size()
                 op := &ebiten.DrawImageOptions{}
                 op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
@@ -528,13 +535,13 @@ func mainControl() func(bool, *Game) bool {
         col := color.RGBA{255,255,255,255}
         if bFirst {
             if g.FadeImage == nil {
-                img,_ := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight, ebiten.FilterDefault)
+                img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
                 g.FadeImage = img
             }
             goalsFADEOUT = float64(g.Count) + fadestepnum
             drawfunc := func() {
                 alpha := (fadestepnum - (goalsFADEOUT - float64(g.Count))) / fadestepnum * 255.0
-                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,g.Clamp255(int(alpha))})
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,clamp255(int(alpha))})
                 w, h := g.FadeImage.Size()
                 op := &ebiten.DrawImageOptions{}
                 op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
@@ -559,13 +566,13 @@ func mainControl() func(bool, *Game) bool {
         col := color.RGBA{255,255,255,255}
         if bFirst {
             if g.FadeImage == nil {
-                img,_ := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight, ebiten.FilterDefault)
+                img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
                 g.FadeImage = img
             }
             goalsFADEOUT1 = float64(g.Count) + fadestepnum
             drawfunc := func() {
                 alpha := (fadestepnum - (goalsFADEOUT1 - float64(g.Count))) / fadestepnum * 255.0
-                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,g.Clamp255(int(alpha))})
+                g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,clamp255(int(alpha))})
                 w, h := g.FadeImage.Size()
                 op := &ebiten.DrawImageOptions{}
                 op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
@@ -595,9 +602,21 @@ func mainControl() func(bool, *Game) bool {
     sINIT := func( bFirst  bool ) {
         if bFirst {
             g.ClearAll()
+            fontInit()
         }
         if !hasNextState() {
             gotoState(funcIdsMENU)
+        }
+    }
+    /*
+        S_INIT1
+    */
+    sINIT1 := func( bFirst  bool ) {
+        if bFirst {
+            g.ClrDrawStageListOnUpdate = true
+        }
+        if !hasNextState() {
+            gotoState(funcIdsFADEOUT1)
         }
     }
     /*
@@ -610,7 +629,7 @@ func mainControl() func(bool, *Game) bool {
                 if err != nil {
             	log.Fatal(err)
                 }
-                g.MascotImage, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+                g.MascotImage = ebiten.NewImageFromImage(img )
             }
             drawfunc := func() {
             	g.DrawImage(g.MascotImage,8,8,0,1)
@@ -847,7 +866,7 @@ func mainControl() func(bool, *Game) bool {
             g.TermPrint(" = STATE GO MASCOT DEMO = ")
         }
         if !hasNextState() {
-            gotoState(funcIdsFADEOUT1)
+            gotoState(funcIdsINIT1)
         }
     }
     /*
@@ -879,6 +898,19 @@ func mainControl() func(bool, *Game) bool {
         }
     }
     /*
+        S_TEXT
+    */
+    sTEXT := func( bFirst  bool ) {
+        if bFirst {
+            g.AddDrawStage(func() {
+            	textdraw(g.Screen, 10, 100, "TEST", color.White)
+            })
+        }
+        if !hasNextState() {
+            gotoState(funcIdsWAIT12)
+        }
+    }
+    /*
         S_WAIT
     */
     sWAIT := func( bFirst  bool ) {
@@ -894,12 +926,11 @@ func mainControl() func(bool, *Game) bool {
     }
     /*
         S_WAIT_CLRDRAW
-        毎フレームDrawBgListをクリア
-        ６０秒待つ
+        600秒待つ
     */
     sWAITCLRDRAW := func( bFirst  bool ) {
         if bFirst {
-            timesWAITCLRDRAW = g.TimeNowMs() + 60*1000
+            timesWAITCLRDRAW = g.TimeNowMs() + 600*1000
         }
         g.ClrDrawStage()
         if ebiten.IsKeyPressed(ebiten.KeyEscape) {
@@ -964,6 +995,20 @@ func mainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsPAS001)
+        }
+    }
+    /*
+        S_WAIT13
+    */
+    sWAIT13 := func( bFirst  bool ) {
+        if bFirst {
+            timesWAIT13 = g.TimeNowMs() + 500
+        }
+        if timesWAIT13 > g.TimeNowMs() {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsFADEIN1)
         }
     }
     /*
@@ -1107,6 +1152,7 @@ func mainControl() func(bool, *Game) bool {
         sFADEOUT1,
         sFADEOUT2,
         sINIT,
+        sINIT1,
         sLOADNIC,
         sLOP000,
         sLOP000LoopCheck,
@@ -1133,12 +1179,14 @@ func mainControl() func(bool, *Game) bool {
         sSTART,
         sTERMINAL,
         sTERMINAL1,
+        sTEXT,
         sWAIT,
         sWAITCLRDRAW,
         sWAIT1,
         sWAIT10,
         sWAIT11,
         sWAIT12,
+        sWAIT13,
         sWAIT2,
         sWAIT3,
         sWAIT4,

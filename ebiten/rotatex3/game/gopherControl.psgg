@@ -95,15 +95,15 @@ n001=(bitmap)
 n002=S_LOAD_GOPHER
 n005=S_DrawGopher
 n009=@@@
-fmt.Println("[[state]]")
 img, _, err := image.Decode(bytes.NewReader(g.Gophers32_png()))
 if err != nil {
     log.Fatal(err)
 }
-g.GophersImage2, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+g.GophersImage2 = ebiten.NewImageFromImage(img)
 
 @@@
 
+n01f=nowait
 n016=@@@
 /
 (100,100)
@@ -132,7 +132,7 @@ n016=@@@
 The root
 @@@
 
-n017=296,311
+n017=265,308
 n018=6
 
 [s005c]
@@ -180,7 +180,7 @@ n016=@@@
 The root
 @@@
 
-n017=487,314
+n017=464,305
 n018=8
 
 [s005e]
@@ -198,12 +198,18 @@ n016=@@@
 
 @@@
 
-n017=694,314
+n017=659,308
 n018=9
 
 [s005f]
 n002=S_MOVEDIFF
-n009=d.MoveDiff()
+n009=@@@
+hitwall := d.MoveDiff()
+if hitwall {
+    d.Speedup(-0.5)
+}
+@@@
+
 n00c=b:=d.CheckKill()
 n01f=nowait
 n012=@@@
@@ -233,7 +239,12 @@ n018=10
 [s0060]
 n002=S_REFLECT
 n005=S_DrawUpdate
-n009=d.Reflect()
+n009=@@@
+d.Speedup(0.2)
+d.Reflect()
+
+@@@
+
 n01f=nowait
 n016=@@@
 /
@@ -322,8 +333,8 @@ n018=15
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/21 16:13:46
-; * pssgEditor version : 0.67.29606.a20f6ec70788921eaa6cb7c3fc0baec28f855003
+; The setting was created automatically. 2020/11/22 9:18:43
+; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 gopherControl.psgg
 @@@
@@ -340,7 +351,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Edited a state.
+mov,S_WAIT2
 @@@
 target_pathdir=@@@
 /
@@ -355,7 +366,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":2380,"y":35}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":296,"y":311}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":487,"y":314}},{"Key":"S_WAIT2","Value":{"x":694,"y":314}},{"Key":"S_MOVEDIFF","Value":{"x":901,"y":314}},{"Key":"S_MOVEDIFF1","Value":{"x":1271,"y":447}},{"Key":"S_REFLECT","Value":{"x":1118,"y":311}},{"Key":"S_DrawUpdate1","Value":{"x":1112.85718,"y":474.5714}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1106,"y":470}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":2380,"y":35}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":264.666656,"y":307.6667}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":463.666626,"y":305.333344}},{"Key":"S_WAIT2","Value":{"x":659.3334,"y":308}},{"Key":"S_MOVEDIFF","Value":{"x":901,"y":314}},{"Key":"S_REFLECT","Value":{"x":1118,"y":311}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1106,"y":470}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -405,7 +416,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":398,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym

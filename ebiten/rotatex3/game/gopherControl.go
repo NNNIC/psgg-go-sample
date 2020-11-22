@@ -2,14 +2,13 @@
 
 import (
 	"bytes"
-	"fmt"
 	"image"
 	"log"
 	"math"
 	"math/rand"
 	"time"
 
-	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/v2"
 )
 
 const (
@@ -22,8 +21,8 @@ const (
 type GopherData struct {
 	g *Game
 
-	PosX int
-	PosY int
+	PosX float64
+	PosY float64
 
 	DiffX float64
 	DiffY float64
@@ -48,20 +47,26 @@ func (d *GopherData) Reflect() {
 	d.DiffX = -d.DiffX
 	d.DiffY = -d.DiffY
 }
+func (d *GopherData) Speedup(add float64) {
+	x, y := vectorAdd(d.DiffX, d.DiffY, add, 1.0, 10.0)
+	d.DiffX = x
+	d.DiffY = y
+	//fmt.Println(d.DiffX, ",", d.DiffY)
+}
 func (d *GopherData) CalcDir() {
 	mx, my := ebiten.CursorPosition()
-	dx := float64(mx - d.PosX)
-	dy := float64(my - d.PosY)
+	dx := float64(mx) - d.PosX
+	dy := float64(my) - d.PosY
 	nx, ny := vectorNormalize(dx, dy)
 	curlen := vectorLen(d.DiffX, d.DiffY)
 	d.DiffX = nx * curlen
 	d.DiffY = ny * curlen
 }
-func (d *GopherData) MoveDiff() {
+func (d *GopherData) MoveDiff() bool {
 	x := d.PosX
 	y := d.PosY
-	x = int(float64(x) + d.DiffX)
-	y = int(float64(y) + d.DiffY)
+	x = x + d.DiffX
+	y = y + d.DiffY
 
 	vT := 1
 	vB := 2
@@ -115,6 +120,9 @@ func (d *GopherData) MoveDiff() {
 		d.PosX = x
 		d.PosY = y
 	}
+
+	//fmt.Println(cond)
+	return cond > 0
 }
 
 func gopherControl(d *GopherData) func(bool, *Game) bool {
@@ -264,15 +272,17 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     */
     sLOADGOPHER := func( bFirst  bool ) {
         if bFirst {
-            fmt.Println("S_LOAD_GOPHER")
             img, _, err := image.Decode(bytes.NewReader(g.Gophers32_png()))
             if err != nil {
                 log.Fatal(err)
             }
-            g.GophersImage2, _ = ebiten.NewImageFromImage(img, ebiten.FilterDefault)
+            g.GophersImage2 = ebiten.NewImageFromImage(img)
         }
         if !hasNextState() {
             gotoState(funcIdsDrawGopher)
+        }
+        if hasNextState() {
+            noWait()
         }
     }
     /*
@@ -308,7 +318,10 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     */
     sMOVEDIFF := func( bFirst  bool ) {
         if bFirst {
-            d.MoveDiff()
+            hitwall := d.MoveDiff()
+            if hitwall {
+                d.Speedup(-0.5)
+            }
         }
         b:=d.CheckKill()
         if b {
@@ -325,6 +338,7 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
     */
     sREFLECT := func( bFirst  bool ) {
         if bFirst {
+            d.Speedup(0.2)
             d.Reflect()
         }
         if !hasNextState() {
@@ -404,7 +418,29 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 
 		//[STATEGO OUTPUT END]
 		endofFuncList}
+	/*
+				var dbgfunclist = [...]string{
+					//[STATEGO OUTPUT START] indent(8) $/^S_./->#dbgfunclist$
+        //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
+        "S_BACKTO_MOVEDIFF",
+        "S_DrawGopher",
+        "S_DrawUpdate",
+        "S_END",
+        "S_LOAD_GOPHER",
+        "S_MouseClick",
+        "S_MouseClick1",
+        "S_MOVEDIFF",
+        "S_REFLECT",
+        "S_START",
+        "S_Tick",
+        "S_WAIT1",
+        "S_WAIT2",
+
+
+					//[STATEGO OUTPUT END]
+					"none"}
+	*/
 	nextfunc = funcIdsSTART
 
 	update := func() bool {
@@ -415,6 +451,7 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 					curfunc = nextfunc
 					nextfunc = -1
 					bFirst = true
+					//fmt.Println(dbgfunclist[curfunc])
 				}
 				if curfunc != -1 {
 					nowait = false
@@ -472,6 +509,14 @@ id++
 <<<?state-typ/^loop$/
 [[state>>lc]]LoopCheck,
 [[state>>lc]]LoopNext,
+>>>
+@@@
+
+#dbgfunclist=@@@
+"[[state]]",
+<<<?state-typ/^loop$/
+"[[state]]_LoopCheck",
+"[[state]]_LoopNext",
 >>>
 @@@
 
