@@ -11,7 +11,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type NicData struct {
+type BlkData struct {
 	g      *Game
 	PosX   float64
 	PosY   float64
@@ -22,7 +22,7 @@ type NicData struct {
 	DiffY float64
 }
 
-func (d *NicData) MoveDiff() bool {
+func (d *BlkData) MoveDiff() bool {
 	x := d.PosX
 	y := d.PosY
 	x = x + d.DiffX
@@ -85,7 +85,7 @@ func (d *NicData) MoveDiff() bool {
 	return cond > 0
 }
 
-func nicControl(d *NicData) func(bool, *Game) bool {
+func blkControl(d *BlkData) func(bool, *Game) bool {
 	var g *Game
 
 	rand.Seed(time.Now().Unix())
@@ -131,7 +131,7 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	// #
 	id := 0
 	//[STATEGO OUTPUT START] indent(4) $/^S_./->#setids$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
     funcIdsBACKTODRAWANGER := id
     id++
@@ -139,13 +139,13 @@ func nicControl(d *NicData) func(bool, *Game) bool {
     id++
     funcIdsDrawAnger1 := id
     id++
-    funcIdsDrawNic := id
+    funcIdsDrawBlk := id
     id++
     funcIdsDrawUpdate := id
     id++
     funcIdsEND := id
     id++
-    funcIdsLOADNIC := id
+    funcIdsLOADBLK := id
     id++
     funcIdsSTART := id
     id++
@@ -158,14 +158,14 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
     var angle    float64
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^E_./$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
     /*
         E_DrawNic
@@ -194,7 +194,7 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	var endofFuncList = func(bFirst bool) { // for end of function list
 	}
 	//[STATEGO OUTPUT START] indent(4) $/^S_./$
-    //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
     /*
         S_BACKTO_DRAWANGER
@@ -241,16 +241,16 @@ func nicControl(d *NicData) func(bool, *Game) bool {
         }
     }
     /*
-        S_DrawNic
+        S_DrawBlk
     */
-    sDrawNic := func( bFirst  bool ) {
+    sDrawBlk := func( bFirst  bool ) {
         if bFirst {
             drawfunc = func() {
-                g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
+                g.DrawImage(g.EbitenImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
             }
             g.AddDrawStage(drawfunc)
             d.DiffX = 0.7
-            d.DiffY = 0.7
+            d.DiffY = -0.7
         }
         if !hasNextState() {
             gotoState(funcIdsUpdate)
@@ -283,22 +283,22 @@ func nicControl(d *NicData) func(bool, *Game) bool {
          // end of state machine
     }
     /*
-        S_LOAD_NIC
+        S_LOAD_BLK
     */
-    sLOADNIC := func( bFirst  bool ) {
+    sLOADBLK := func( bFirst  bool ) {
         if bFirst {
-            img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
+            img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
             if err != nil {
                 log.Fatal(err)
             }
-            g.MascotImage = ebiten.NewImageFromImage(img)
+            g.EbitenImage = ebiten.NewImageFromImage(img)
             img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
             if err != nil {
                 log.Fatal(err)
             }
             g.MascotAImage = ebiten.NewImageFromImage(img)
             drawfunc = func() {
-            	g.DrawImage(g.MascotImage,8,8,0,1)
+            	g.DrawImage(g.EbitenImage,8,8,0,1)
             }
             g.AddDrawStage(drawfunc)
             drawfuncA = func() {
@@ -306,7 +306,7 @@ func nicControl(d *NicData) func(bool, *Game) bool {
             }
         }
         if !hasNextState() {
-            gotoState(funcIdsDrawNic)
+            gotoState(funcIdsDrawBlk)
         }
         if hasNextState() {
             noWait()
@@ -316,7 +316,7 @@ func nicControl(d *NicData) func(bool, *Game) bool {
         S_START
     */
     sSTART := func( bFirst  bool ) {
-        gotoState(funcIdsLOADNIC)
+        gotoState(funcIdsLOADBLK)
     }
     /*
         S_TICK
@@ -344,15 +344,15 @@ func nicControl(d *NicData) func(bool, *Game) bool {
 	var funclist = [...]func(bool){
 
 		//[STATEGO OUTPUT START] indent(8) $/^S_./->#funclist$
-        //             psggConverterLib.dll converted from psgg-file:nicControl.psgg
+        //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
         sBACKTODRAWANGER,
         sDrawAnger,
         sDrawAnger1,
-        sDrawNic,
+        sDrawBlk,
         sDrawUpdate,
         sEND,
-        sLOADNIC,
+        sLOADBLK,
         sSTART,
         sTICK,
         sUpdate,

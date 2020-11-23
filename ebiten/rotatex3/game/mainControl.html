@@ -1,0 +1,106 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>mainControl FLOW CHART</title>
+</head>
+<body>
+<h1>mainControl</h1>
+<p> source:g:\statego\samples\psgg-go-sample\ebiten\rotatex3\game\mainControl.psgg</p>
+<p>﻿<div class="mermaid">
+graph LR
+    S_START(("START")) --> S_INIT
+    S_END(("END"))
+    S_COUNT["COUNT"] --> S_WAIT4
+    S_2ndRotation["2ndRotation"] --> S_WAIT6
+    S_3rdRotation["3rdRotation"] --> S_BACKTO_MENU
+    S_WAIT["WAIT"] --> S_2ndRotation
+    S_WAIT6["WAIT6"] --> S_3rdRotation
+    S_TERMINAL["TERMINAL"] --> S_WAIT1
+    S_WAIT1["WAIT1"] --> S_TERMINAL1
+    S_TERMINAL1["TERMINAL1"] --> S_WAIT2
+    S_WAIT2["WAIT2"] --> S_COUNT
+    S_WAIT3["WAIT3"] --> S_BACKTO_MENU
+    S_CLEARTERM["CLEARTERM"] --> S_WAIT3
+    S_WAIT4["WAIT4"] --> S_CLEARTERM
+    S_RotationOverRay["RotationOverRay"] --> S_WAIT5
+    S_WAIT5["WAIT5"] --> S_1stRotation
+    S_CHANGEBG["CHANGEBG"] --> S_WAIT7
+    S_WAIT7["WAIT7"] --> S_SETBGRED
+    S_SETBGRED["SETBGRED"] --> S_WAIT8
+    S_WAIT8["WAIT8"] --> S_SETBGBLUE
+    S_WAIT9["WAIT9"] --> S_SETBGGREEN
+    S_1stRotation["1stRotation"] --> S_WAIT
+    S_WAIT10["WAIT10"] --> S_BACKTO_MENU
+    S_SETBGBLUE["SETBGBLUE"] --> S_WAIT9
+    S_SETBGGREEN["SETBGGREEN"] --> S_WAIT10
+    S_BACKTO_MENU["BACKTO_MENU"] --> S_MENU
+    S_MENU["MENU"] ==> S_MENU____br
+    S_MENU____br{{"?"}} -->|"1"| S_TERMINAL
+    S_MENU____br -->|"2"| S_CHANGEBG
+    S_MENU____br -->|"3"| S_RotationOverRay
+    S_MENU____br -->|"4"| S_SHOWMASCOT
+    S_MENU____br -->|"G"| S_SHOWMASCOT1
+    S_MENU____br -->|"T"| S_FADEINTEST
+    S_MENU____br -->|"C"| S_CLEARALL
+    S_CLEARALL["CLEARALL"] --> S_BACKTO_MENU
+    S_SHOWMASCOT["SHOWMASCOT"] --> S_WAIT11
+    S_WAIT11["WAIT11"] --> S_LOAD_NIC
+    S_LOAD_NIC["LOAD_NIC"] --> S_CLEARALL1
+    S_FADEINTEST["FADEINTEST"] --> S_FADEOUT
+    S_CLEARALL1["CLEARALL1"] --> S_SETBG
+    S_LOP000[["LOP000<br/>LOOP (<br/>loop1 = 0<br/>loop1 < (g.ScreenWidth / 64)<br/>loop1++<br/>)<br/>CALL S_SBS000"]] --> S_PAS000
+    S_SBS000("SBS000") --> S_LOP001
+    S_RET000("RET000")
+    S_PAS000["PAS000"] --> S_BACKTO_MENU
+    S_LOP001[["LOP001<br/>LOOP (<br/>loop2 = 0<br/>loop2 < (g.ScreenHeight / 64)<br/>loop2++<br/>)<br/>CALL S_SBS001"]] --> S_RET000
+    S_SBS001("SBS001") --> S_DrawMascot
+    S_RET001("RET001")
+    S_DrawMascot["DrawMascot"] --> S_RET001
+    S_SETBG["SETBG"] --> S_LOP000
+    S_FADEOUT["FADEOUT"] --> S_FADEIN
+    S_PAS001["PAS001"] --> S_BACKTO_MENU
+    S_WAIT12["WAIT12"] --> S_PAS001
+    S_FADEIN["FADEIN"] --> S_TEXT
+    S_PAS002["PAS002"] --> S_BACKTO_MENU
+    S_SHOWMASCOT1["SHOWMASCOT1"] --> S_INIT1
+    S_FADEOUT1["FADEOUT1"] --> S_SETBG1
+    S_FADEOUT2["FADEOUT2"] --> S_PAS002
+    S_FADEIN1["FADEIN1"] --> S_WAIT_CLRDRAW
+    S_DISPLAY_NIC["DISPLAY_NIC"] --> S_DISPLAY_GOPHER
+    S_DISPLAY_GOPHER["DISPLAY_GOPHER"] --> S_WAIT13
+    S_WAIT_CLRDRAW["WAIT_CLRDRAW<br/>600秒待つ"] ==> S_WAIT_CLRDRAW____br
+    S_WAIT_CLRDRAW____br{{"?"}} -->|"ESC"| S_ESC
+    S_WAIT_CLRDRAW____br -->|"TIME OUT"| S_TIMEOUT
+    S_WAIT_CLRDRAW____br -->|"Game Over"| S_GAMEOVER
+    S_WAIT13["WAIT13"] --> S_FADEIN1
+    S_INIT["INIT"] --> S_MENU
+    S_INIT1["INIT1"] --> S_OPENING
+    S_TEXT["TEXT"] --> S_WAIT12
+    S_OPENING["OPENING"] --> S_FADEOUT1
+    S_SETBG1["SETBG1"] --> S_DISPLAY_NIC
+    S_TIMEOUT["TIMEOUT"] --> S_FADEOUT2
+    S_GAMEOVER["GAMEOVER"] --> S_FADEOUT2
+    S_ESC["ESC"] --> S_FADEOUT2
+    C_MEMO["C_MEMO<br/>Please go to link to view memo."]
+    classDef typ_START     fill:#9cf,stroke:#000,stroke-width:1px;
+    classDef typ_END       fill:#9cf,stroke:#000,stroke-width:1px;
+    classDef typ_SUBSTART  fill:#9cf,stroke:#000,stroke-width:1px;
+    classDef typ_SUBRETURN fill:#9cf,stroke:#000,stroke-width:1px;
+    classDef comment       fill:#ff9,stroke:#000,stroke-width:4px;
+    classDef embed         fill:#fff,stroke:#000,stroke-width:4px;
+    class S_START typ_START
+    class S_END typ_END
+    class S_LOP000,S_LOP001 typ_LOOP
+    class S_SBS000,S_SBS001 typ_SUBSTART
+    class S_RET000,S_RET001 typ_SUBRETURN
+    class S_PAS000,S_PAS001,S_PAS002,S_FADEOUT2 typ_PASS
+    class C_MEMO comment
+
+</div><br> </p>
+<script>
+mermaid.initialize({startOnLoad: true, theme: 'neutral'});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.0/mermaid.min.js" integrity="sha512-ja+hSBi4JDtjSqc4LTBsSwuBT3tdZ3oKYKd07lTVYmCnTCor56AnRql00ssqnTOR9Ss4gOP/ROGB3SfcJnZkeg==" crossorigin="anonymous"></script>
+</body>
+</html>

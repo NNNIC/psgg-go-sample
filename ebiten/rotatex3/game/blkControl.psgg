@@ -1,7 +1,7 @@
 ﻿;PSGG Editor Backup File
 version=1.1
-file=nicControl.xlsx
-guid=b770d8a4-a09c-4994-8a38-51a3ef54d2ae
+file=blkControl.xlsx
+guid=f0535a7a-c060-4560-b075-7e4881058b47
 ;set read_from  excel or psgg
 read_from=psgg
 ;set savemode with_excel or psgg_only
@@ -52,8 +52,8 @@ n01f=nowait
 [id_state_dic]
 s0056=S_START
 s0057=S_END
-s005a=S_LOAD_NIC
-s005b=S_DrawNic
+s005a=S_LOAD_BLK
+s005b=S_DrawBlk
 s005c=S_DrawUpdate
 s005d=S_Update
 s005e=E_DrawNic
@@ -66,7 +66,7 @@ s0062=S_BACKTO_DRAWANGER
 [s0056]
 n002=S_START
 n019=start
-n005=S_LOAD_NIC
+n005=S_LOAD_BLK
 n016=@@@
 /
 (100,100)
@@ -90,14 +90,14 @@ n018=2
 
 [s005a]
 n001=(bitmap)
-n002=S_LOAD_NIC
-n005=S_DrawNic
+n002=S_LOAD_BLK
+n005=S_DrawBlk
 n009=@@@
-img, _, err := image.Decode(bytes.NewReader(g.Mascot32_png()))
+img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
 if err != nil {
     log.Fatal(err)
 }
-g.MascotImage = ebiten.NewImageFromImage(img)
+g.EbitenImage = ebiten.NewImageFromImage(img)
 
 img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
 if err != nil {
@@ -107,7 +107,7 @@ g.MascotAImage = ebiten.NewImageFromImage(img)
 
 
 drawfunc = func() {
-	g.DrawImage(g.MascotImage,8,8,0,1)
+	g.DrawImage(g.EbitenImage,8,8,0,1)
 }
 
 g.AddDrawStage(drawfunc)
@@ -129,17 +129,17 @@ n017=111,495
 n018=5
 
 [s005b]
-n002=S_DrawNic
+n002=S_DrawBlk
 n005=S_Update
 n007=var angle    float64
 n008=
 n009=@@@
 drawfunc = func() {
-    g.DrawImage(g.MascotImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
+    g.DrawImage(g.EbitenImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
 }
 g.AddDrawStage(drawfunc)
 d.DiffX = 0.7
-d.DiffY = 0.7
+d.DiffY = -0.7
 @@@
 
 n01f=nowait
@@ -292,16 +292,16 @@ n018=13
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 22:03:33
+; The setting was created automatically. 2020/11/23 11:13:32
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
-nicControl.psgg
+blkControl.psgg
 @@@
 xlsfile=@@@
-nicControl.xlsx
+blkControl.xlsx
 @@@
 guid=@@@
-b770d8a4-a09c-4994-8a38-51a3ef54d2ae
+f0535a7a-c060-4560-b075-7e4881058b47
 @@@
 bitmap_width=2500
 bitmap_height=4000
@@ -325,7 +325,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}},{"Key":"S_DrawUpdate1","Value":{"x":1102.36365,"y":491.1818}},{"Key":"S_DrawAnger","Value":{"x":1102,"y":473}},{"Key":"S_DrawAnger1","Value":{"x":1426,"y":483}},{"Key":"S_TICK","Value":{"x":1301,"y":269}},{"Key":"S_DrawAnger2","Value":{"x":1502,"y":155}},{"Key":"S_BACKTO_DRAWANGER","Value":{"x":1665,"y":125}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":94,"y":103}},{"Key":"S_END","Value":{"x":753,"y":84}},{"Key":"S_LOAD_NIC","Value":{"x":111,"y":495}},{"Key":"S_DrawNic","Value":{"x":336,"y":498}},{"Key":"S_DrawUpdate","Value":{"x":793,"y":492}},{"Key":"S_Update","Value":{"x":580,"y":490}},{"Key":"E_DrawNic","Value":{"x":133,"y":326}},{"Key":"S_DrawAnger","Value":{"x":1102,"y":473}},{"Key":"S_DrawAnger1","Value":{"x":1426,"y":483}},{"Key":"S_TICK","Value":{"x":1301,"y":269}},{"Key":"S_BACKTO_DRAWANGER","Value":{"x":1665,"y":125}},{"Key":"S_LOAD_BLK","Value":{"x":111,"y":495}},{"Key":"S_DrawBlk","Value":{"x":336,"y":498}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -506,10 +506,10 @@ sheet=setting.ini
 ###VARIOUS-CONTENTS-BEGIN###
 [setting]
 
-psgg=nicControl.psgg
-xls=nicControl.xlsx
+psgg=blkControl.psgg
+xls=blkControl.xlsx
 sub_src=
-gen_src=nicControl.go
+gen_src=blkControl.go
 
 manager_src=
 manager_dir=
@@ -528,7 +528,9 @@ psgg-starter-kit\starterkit2\go\helpweb.html
 
 
 
+
 kitpath=psgg-starter-kit\starterkit2\go
+
 
 
 
@@ -545,20 +547,23 @@ https://github.com/NNNIC/psgg-starter-kit.git 06b417a6f220200aa8489d982802935e37
 
 
 
+
 lang=go
 framework=
 
-statemachine=nicControl
+statemachine=blkControl
 prefix=__PREFIX__
 xlsdir=@@@
-G:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
+g:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
 @@@
+
 
 
 
 gendir=@@@
-G:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
+g:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
 @@@
+
 
 
 
@@ -568,12 +573,13 @@ incrdir=.
 code_output_start=[STATEGO OUTPUT START]
 code_output_end=[STATEGO OUTPUT END]
 
-; This section has macro defines for converting.
+; This section has macro defines for converting.
 
 
 
 
-; commentline format  {%0} will be replaced to a comment.
+; commentline format  {%0} will be replaced to a comment.
+
 
 
 
@@ -601,8 +607,8 @@ https://github.com/NNNIC/psgg-go-sample
 
   以下のファイルを作成します。
 
-      nicControl.pssg   --- エディタで次のエクセルファイルを開く。
-      nicControl.xlsx   --- ステート図格納用Excelファイル。エディタが編集。
+      blkControl.pssg   --- エディタで次のエクセルファイルを開く。
+      blkControl.xlsx   --- ステート図格納用Excelファイル。エディタが編集。
 
 # ソース用フォルダ
 　エディタが生成ソースファイル`格納
@@ -611,13 +617,15 @@ https://github.com/NNNIC/psgg-go-sample
 
   以下のファイルが作成されます。
 
-      nicControl.go  --- Excelファイルからの変換ソースを挿入。
+      blkControl.go  --- Excelファイルからの変換ソースを挿入。
 
 
 注意 : 既に同名のファイルがある場合は生成されません。
 　　　 削除してから生成してください。
 
 @@@
+
+
 
 
 
@@ -646,8 +654,8 @@ https://github.com/NNNIC/psgg-go-sample
 
   File:
 
-      nicControl.pssg  --- The editor opens the below excel file.
-      nicControl.xlsx  --- Excel File that has a state chart. The editor edits this file.
+      blkControl.pssg  --- The editor opens the below excel file.
+      blkControl.xlsx  --- Excel File that has a state chart. The editor edits this file.
 
 # Source Folder
    This folder will contain a source file generated by the editor.
@@ -655,7 +663,7 @@ https://github.com/NNNIC/psgg-go-sample
       G:\statego\samples\psgg-go-sample\sample
 
 　File:
-      nicControl.go   -- the editor will convert from the excel file into this file.
+      blkControl.go   -- the editor will convert from the excel file into this file.
 
 NOTE : If the same name files exists, the file will not be created.
        Please delete the same name files ahead of the creation.

@@ -38,6 +38,15 @@ func clamp255(i int) uint8 {
 	}
 	return uint8(i)
 }
+func clamp(i, min, max int) int {
+	if i < min {
+		return min
+	}
+	if i > max {
+		return max
+	}
+	return i
+}
 func angleNormal(a float64) float64 {
 	for true {
 		if a < 0 {

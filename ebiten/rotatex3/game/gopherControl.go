@@ -3,6 +3,7 @@
 import (
 	"bytes"
 	"image"
+	"image/color"
 	"log"
 	"math"
 	"math/rand"
@@ -32,7 +33,7 @@ type GopherData struct {
 
 // CheckKill ... 1st killed nic  2nd I dead
 func (d *GopherData) CheckKill() (bool, bool) {
-	for _, nd := range d.g.NicDataList {
+	for _, nd := range d.g.BlkDataList {
 		if !nd.Killed {
 			dx := float64(d.PosX - nd.PosX)
 			dy := float64(d.PosY - nd.PosY)
@@ -425,7 +426,14 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
             timesWAIT1 = g.TimeNowMs() + 3 * 1000
         }
         g.AddDrawStage(drawfunc)
-        if timesWAIT1 > g.TimeNowMs() {
+        dt := func() {
+            red := color.RGBA{255, 0, 0, 255}
+            textdrawBigWFrame(g.Screen,  90,   240  , "CLICK ON SCREEN", color.White, red)
+            textdrawBigWFrame(g.Screen, 175,   310  , "TO MOVE", color.White, red)
+        }
+        g.AddDrawStage(dt)
+        b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+        if !b {
              return
         }
         if !hasNextState() {
@@ -477,8 +485,8 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
 		//[STATEGO OUTPUT END]
 		endofFuncList}
 	/*
-								var dbgfunclist = [...]string{
-									//[STATEGO OUTPUT START] indent(8) $/^S_./->#dbgfunclist$
+																		var dbgfunclist = [...]string{
+																			//[STATEGO OUTPUT START] indent(8) $/^S_./->#dbgfunclist$
         //             psggConverterLib.dll converted from psgg-file:gopherControl.psgg
 
         "S_BACKTO_MOVEDIFF",
@@ -499,8 +507,8 @@ func gopherControl(d *GopherData) func(bool, *Game) bool {
         "S_WAIT2",
 
 
-									//[STATEGO OUTPUT END]
-									"none"}
+																			//[STATEGO OUTPUT END]
+																			"none"}
 	*/
 	nextfunc = funcIdsSTART
 

@@ -51,9 +51,10 @@ type Game struct {
 	GophersImage2 *ebiten.Image
 	MascotImage   *ebiten.Image
 	MascotAImage  *ebiten.Image
+	EbitenImage   *ebiten.Image
 
 	// Gopher vs Nic
-	NicDataList []*NicData
+	BlkDataList []*BlkData
 	GopherData0 *GopherData
 	GameOver    bool
 }
@@ -278,6 +279,9 @@ func (g *Game) Gophers_jpg() []byte {
 	return images.Gophers_jpg
 }
 
+func (g *Game) Gophers128_png() []byte {
+	return sgimg.Gopher128_png
+}
 func (g *Game) Gophers64_png() []byte {
 	return sgimg.Gopher64_png
 }

@@ -51,3 +51,17 @@ func textdraw(screen *ebiten.Image, x, y int, s string, col color.Color) {
 func textdrawBig(screen *ebiten.Image, x, y int, s string, col color.Color) {
 	text.Draw(screen, s, mplusBigFont, x, y, col)
 }
+
+// benri
+func textdrawBigWFrame(screen *ebiten.Image, x, y int, s string, col, colFrame color.Color) {
+	textdrawBig(screen, x+1, y+2, s, colFrame)
+	textdrawBig(screen, x+2, y+1, s, colFrame)
+	textdrawBig(screen, x-1, y-2, s, colFrame)
+	textdrawBig(screen, x-2, y-1, s, colFrame)
+
+	textdrawBig(screen, x+2, y+2, s, colFrame)
+	textdrawBig(screen, x+2, y-2, s, colFrame)
+	textdrawBig(screen, x-2, y+2, s, colFrame)
+	textdrawBig(screen, x-2, y-2, s, colFrame)
+	textdrawBig(screen, x, y, s, col)
+}

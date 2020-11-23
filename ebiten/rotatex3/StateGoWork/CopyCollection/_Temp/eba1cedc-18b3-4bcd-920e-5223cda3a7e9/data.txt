@@ -1,0 +1,65 @@
+﻿{3745FCA0-D34D-4270-8C39-BB563F73BE4B}
+
+[____copyinfo____]
+pid=29660
+curdir=/
+nodegroup_comment_list=@@@
+[{"Key":"\/","Value":"The root"}]
+@@@
+nodegroup_pos_list=@@@
+[{"Key":"\/","Value":{"x":100,"y":100}}]
+@@@
+
+[S_LOAD_BLK]
+thumbnail=@@@
+(bitmap)
+@@@
+state=@@@
+S_LOAD_BLK
+@@@
+nextstate=@@@
+S_DrawBlk
+@@@
+init=@@@
+img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
+if err != nil {
+    log.Fatal(err)
+}
+g.EbitenImage = ebiten.NewImageFromImage(img)
+
+img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
+if err != nil {
+    log.Fatal(err)
+}
+g.MascotAImage = ebiten.NewImageFromImage(img)
+
+
+drawfunc = func() {
+	g.DrawImage(g.EbitenImage,8,8,0,1)
+}
+
+g.AddDrawStage(drawfunc)
+
+drawfuncA = func() {
+	g.DrawImage(g.MascotAImage,8,8,0,1)
+}
+
+@@@
+nowait=@@@
+nowait
+@@@
+!dir=@@@
+/
+(100,100)
+The root
+@@@
+!pos=@@@
+111,495
+@@@
+!uuid=@@@
+5
+@@@
+
+[____bitmapinfo____]
+num_of_bitmap=0
+
