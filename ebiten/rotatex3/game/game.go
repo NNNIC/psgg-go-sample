@@ -303,3 +303,13 @@ func (g *Game) MascotA32_png() []byte {
 func (g *Game) Mascot16_png() []byte {
 	return sgimg.Mascot16_png
 }
+
+func (g *Game) Ebiten32_png() []byte {
+	return sgimg.Ebiten32_png
+}
+func (g *Game) EbitenP32_png() []byte {
+	return sgimg.EbitenP32_png
+}
+func (g *Game) EbitenT32_png() []byte {
+	return sgimg.EbitenT32_png
+}

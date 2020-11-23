@@ -3,7 +3,7 @@ module github.com/NNNIC/psgg-go-sample/ebiten/rotatex3
 go 1.15
 
 require (
-	github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122014955-c472728c86b0
+	github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122234530-86d715f8c42b
 	github.com/go-gl/glfw/v3.3/glfw v0.0.0-20201108214237-06ea97f0c265 // indirect
 	github.com/hajimehoshi/ebiten v1.12.3
 	github.com/hajimehoshi/ebiten/v2 v2.0.0
