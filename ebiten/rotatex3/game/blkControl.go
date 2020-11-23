@@ -131,56 +131,54 @@ func blkControl(d *BlkData) func(bool, *Game) bool {
 	// #
 	id := 0
 	//[STATEGO OUTPUT START] indent(4) $/^S_./->#setids$
-    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
-    funcIdsBACKTODRAWANGER := id
-    id++
-    funcIdsDrawAnger := id
-    id++
-    funcIdsDrawAnger1 := id
-    id++
-    funcIdsDrawBlk := id
-    id++
-    funcIdsDrawUpdate := id
-    id++
-    funcIdsEND := id
-    id++
-    funcIdsLOADBLK := id
-    id++
-    funcIdsSTART := id
-    id++
-    funcIdsTICK := id
-    id++
-    funcIdsUpdate := id
-    id++
-
+	funcIdsBACKTODRAWANGER := id
+	id++
+	funcIdsDrawAnger := id
+	id++
+	funcIdsDrawAnger1 := id
+	id++
+	funcIdsDrawBlk := id
+	id++
+	funcIdsDrawUpdate := id
+	id++
+	funcIdsEND := id
+	id++
+	funcIdsLOADBLK := id
+	id++
+	funcIdsSTART := id
+	id++
+	funcIdsTICK := id
+	id++
+	funcIdsUpdate := id
+	id++
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^S_./->#memlist$
-    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
-    var angle    float64
+	var angle float64
 
 	//[STATEGO OUTPUT END]
 
 	// [STATEGO OUTPUT START] indent(4) $/^E_./$
-    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
-    /*
-        E_DrawNic
-    */
-    var drawfunc func()
-    var drawfuncA func()
-
+	/*
+	   E_DrawNic
+	*/
+	var drawfunc func()
+	var drawfuncA func()
 
 	//[STATEGO OUTPUT END]
 
 	// USER FUNCTION
 
 	calcUpdate := func() {
-		gx := g.GopherData0.PosX
-		gy := g.GopherData0.PosY
+		gx := g.GopherDataList[0].PosX
+		gy := g.GopherDataList[0].PosY
 		dx := gx - d.PosX
 		dy := gy - d.PosY
 		angle = math.Atan2(dy, dx) * (180.0 / math.Pi)
@@ -194,169 +192,167 @@ func blkControl(d *BlkData) func(bool, *Game) bool {
 	var endofFuncList = func(bFirst bool) { // for end of function list
 	}
 	//[STATEGO OUTPUT START] indent(4) $/^S_./$
-    //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
+	//             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
-    /*
-        S_BACKTO_DRAWANGER
-    */
-    sBACKTODRAWANGER := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsTICK)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawAnger
-    */
-    sDrawAnger := func( bFirst  bool ) {
-        if bFirst {
-            drawfuncA = func() {
-                        g.DrawImage(g.MascotAImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
-            }
-            d.DiffX = 1
-            d.DiffY = 1
-        }
-        if !hasNextState() {
-            gotoState(funcIdsTICK)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawAnger1
-    */
-    sDrawAnger1 := func( bFirst  bool ) {
-        if bFirst {
-            d.MoveDiff()
-            g.AddDrawStage(drawfuncA)
-        }
-        if !hasNextState() {
-            gotoState(funcIdsBACKTODRAWANGER)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawBlk
-    */
-    sDrawBlk := func( bFirst  bool ) {
-        if bFirst {
-            drawfunc = func() {
-                g.DrawImage(g.EbitenImage, float64(d.PosX-16),float64(d.PosY-16),angle,1)
-            }
-            g.AddDrawStage(drawfunc)
-            d.DiffX = 0.7
-            d.DiffY = -0.7
-        }
-        if !hasNextState() {
-            gotoState(funcIdsUpdate)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_DrawUpdate
-    */
-    sDrawUpdate := func( bFirst  bool ) {
-        d.MoveDiff()
-        calcUpdate()
-        g.AddDrawStage(drawfunc)
-        if ebiten.IsKeyPressed(ebiten.KeyEscape) {
-            gotoState( funcIdsEND )
-        } else if d.Killed {
-            gotoState( funcIdsEND )
-        } else if d.Anger {
-            gotoState( funcIdsDrawAnger )
-        } else {
-            gotoState( funcIdsUpdate )
-        }
-    }
-    /*
-        S_END
-    */
-    sEND := func ( bFirst  bool ) {
-         // end of state machine
-    }
-    /*
-        S_LOAD_BLK
-    */
-    sLOADBLK := func( bFirst  bool ) {
-        if bFirst {
-            img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
-            if err != nil {
-                log.Fatal(err)
-            }
-            g.EbitenImage = ebiten.NewImageFromImage(img)
-            img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
-            if err != nil {
-                log.Fatal(err)
-            }
-            g.MascotAImage = ebiten.NewImageFromImage(img)
-            drawfunc = func() {
-            	g.DrawImage(g.EbitenImage,8,8,0,1)
-            }
-            g.AddDrawStage(drawfunc)
-            drawfuncA = func() {
-            	g.DrawImage(g.MascotAImage,8,8,0,1)
-            }
-        }
-        if !hasNextState() {
-            gotoState(funcIdsDrawBlk)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-    /*
-        S_START
-    */
-    sSTART := func( bFirst  bool ) {
-        gotoState(funcIdsLOADBLK)
-    }
-    /*
-        S_TICK
-    */
-    sTICK := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsDrawAnger1)
-        }
-    }
-    /*
-        S_Update
-    */
-    sUpdate := func( bFirst  bool ) {
-        if !hasNextState() {
-            gotoState(funcIdsDrawUpdate)
-        }
-        if hasNextState() {
-            noWait()
-        }
-    }
-
+	/*
+	   S_BACKTO_DRAWANGER
+	*/
+	sBACKTODRAWANGER := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsTICK)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawAnger
+	*/
+	sDrawAnger := func(bFirst bool) {
+		if bFirst {
+			drawfuncA = func() {
+				g.DrawImage(g.MascotAImage, float64(d.PosX-16), float64(d.PosY-16), angle, 1)
+			}
+			d.DiffX = 1
+			d.DiffY = 1
+		}
+		if !hasNextState() {
+			gotoState(funcIdsTICK)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawAnger1
+	*/
+	sDrawAnger1 := func(bFirst bool) {
+		if bFirst {
+			d.MoveDiff()
+			g.AddDrawStage(drawfuncA)
+		}
+		if !hasNextState() {
+			gotoState(funcIdsBACKTODRAWANGER)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawBlk
+	*/
+	sDrawBlk := func(bFirst bool) {
+		if bFirst {
+			drawfunc = func() {
+				g.DrawImage(g.EbitenImage, float64(d.PosX-16), float64(d.PosY-16), angle, 1)
+			}
+			g.AddDrawStage(drawfunc)
+			d.DiffX = 0.7
+			d.DiffY = -0.7
+		}
+		if !hasNextState() {
+			gotoState(funcIdsUpdate)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_DrawUpdate
+	*/
+	sDrawUpdate := func(bFirst bool) {
+		d.MoveDiff()
+		calcUpdate()
+		g.AddDrawStage(drawfunc)
+		if ebiten.IsKeyPressed(ebiten.KeyEscape) {
+			gotoState(funcIdsEND)
+		} else if d.Killed {
+			gotoState(funcIdsEND)
+		} else if d.Anger {
+			gotoState(funcIdsDrawAnger)
+		} else {
+			gotoState(funcIdsUpdate)
+		}
+	}
+	/*
+	   S_END
+	*/
+	sEND := func(bFirst bool) {
+		// end of state machine
+	}
+	/*
+	   S_LOAD_BLK
+	*/
+	sLOADBLK := func(bFirst bool) {
+		if bFirst {
+			img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
+			if err != nil {
+				log.Fatal(err)
+			}
+			g.EbitenImage = ebiten.NewImageFromImage(img)
+			img, _, err = image.Decode(bytes.NewReader(g.MascotA32_png()))
+			if err != nil {
+				log.Fatal(err)
+			}
+			g.MascotAImage = ebiten.NewImageFromImage(img)
+			drawfunc = func() {
+				g.DrawImage(g.EbitenImage, 8, 8, 0, 1)
+			}
+			g.AddDrawStage(drawfunc)
+			drawfuncA = func() {
+				g.DrawImage(g.MascotAImage, 8, 8, 0, 1)
+			}
+		}
+		if !hasNextState() {
+			gotoState(funcIdsDrawBlk)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
+	/*
+	   S_START
+	*/
+	sSTART := func(bFirst bool) {
+		gotoState(funcIdsLOADBLK)
+	}
+	/*
+	   S_TICK
+	*/
+	sTICK := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsDrawAnger1)
+		}
+	}
+	/*
+	   S_Update
+	*/
+	sUpdate := func(bFirst bool) {
+		if !hasNextState() {
+			gotoState(funcIdsDrawUpdate)
+		}
+		if hasNextState() {
+			noWait()
+		}
+	}
 
 	//[STATEGO OUTPUT END]
 
 	var funclist = [...]func(bool){
 
 		//[STATEGO OUTPUT START] indent(8) $/^S_./->#funclist$
-        //             psggConverterLib.dll converted from psgg-file:blkControl.psgg
+		//             psggConverterLib.dll converted from psgg-file:blkControl.psgg
 
-        sBACKTODRAWANGER,
-        sDrawAnger,
-        sDrawAnger1,
-        sDrawBlk,
-        sDrawUpdate,
-        sEND,
-        sLOADBLK,
-        sSTART,
-        sTICK,
-        sUpdate,
-
+		sBACKTODRAWANGER,
+		sDrawAnger,
+		sDrawAnger1,
+		sDrawBlk,
+		sDrawUpdate,
+		sEND,
+		sLOADBLK,
+		sSTART,
+		sTICK,
+		sUpdate,
 
 		//[STATEGO OUTPUT END]
 		endofFuncList}

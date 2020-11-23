@@ -1,7 +1,7 @@
 ﻿;PSGG Editor Backup File
 version=1.1
-file=gopherControl.xlsx
-guid=2aa76cd3-d6ba-4e4c-9f29-83774e68520a
+file=scoreControl.xlsx
+guid=47f9a0f1-2802-4d55-849c-c112249e5705
 ;set read_from  excel or psgg
 read_from=psgg
 ;set savemode with_excel or psgg_only
@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,
-stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0056,s0057,s005c,s005d,s005a,s005b,s005f,s005e,s0060,s0061,s0062,s0063,s0064,s0066,s0065,s0067
+stateid_list=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,s0068,s0069,s006a,s006b,s006c
 max_name_id=31
-max_state_id=103
+max_state_id=108
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -50,38 +50,27 @@ n01f=nowait
 
 
 [id_state_dic]
-s0056=S_START
-s0057=S_END
-s005a=S_LOAD_GOPHER
-s005b=S_DrawGopher
-s005c=S_DrawUpdate
-s005d=S_WAIT1
-s005e=S_WAIT2
-s005f=S_MOVEDIFF
-s0060=S_REFLECT
-s0061=S_BACKTO_MOVEDIFF
-s0062=S_Tick
-s0063=S_MouseClick
-s0064=S_MouseClick1
-s0065=S_PERFECT
-s0066=S_DrawUpdate1
-s0067=S_Tick1
+s0068=S_START
+s0069=S_END
+s006a=S_0000
+s006b=E_0000
+s006c=S_INIT
 
 
-[s0056]
+[s0068]
 n002=S_START
 n019=start
-n005=S_LOAD_GOPHER
+n005=S_INIT
 n016=@@@
 /
 (100,100)
 The root
 @@@
 
-n017=49,103
+n017=92,262
 n018=1
 
-[s0057]
+[s0069]
 n002=S_END
 n019=end
 n016=@@@
@@ -90,242 +79,35 @@ n016=@@@
 The root
 @@@
 
-n017=2380,35
+n017=886,251
 n018=2
 
-[s005a]
-n001=(bitmap)
-n002=S_LOAD_GOPHER
-n005=S_DrawGopher
-n009=@@@
-if (g.GophersImage3 == nil) {
-    img, _, err := image.Decode(bytes.NewReader(g.Gophers32_png()))
-    if err != nil {
-        log.Fatal(err)
-    }
-    g.GophersImage3 = ebiten.NewImageFromImage(img)
-}
-@@@
-
-n01f=nowait
-n016=@@@
-/
-(100,100)
-The root
-@@@
-
-n017=71,308
-n018=5
-
-[s005b]
-n002=S_DrawGopher
-n005=S_WAIT1
-n007=var drawfunc func()
-n008=
-n009=@@@
-drawfunc = func() {
-    g.DrawImage(g.GophersImage3, float64(d.PosX-16),float64(d.PosY-16),0,1)
-}
-
-@@@
-
-n01f=nowait
-n016=@@@
-/
-(100,100)
-The root
-@@@
-
-n017=265,308
-n018=6
-
-[s005c]
-n002=S_DrawUpdate
-n009=
-n00c=g.AddDrawStage(drawfunc)
-n01f=nowait
-n012=@@@
-brifc(S_END);
-brelse(S_Tick);
-@@@
-
-n013=@@@
-ESC
-?
-@@@
-
-n014=@@@
-ebiten.IsKeyPressed(ebiten.KeyEscape)
-?
-@@@
-
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=1735,442
-n018=7
-
-[s005d]
-n002=S_WAIT1
-n005=S_WAIT2
-n007=var time[[state>>lc]] int64
-n009=@@@
-time[[state>>lc]] = g.TimeNowMs() + 3 * 1000
-@@@
-
-n00c=@@@
-g.AddDrawStage(drawfunc)
-dt := func() {
-    red := color.RGBA{255, 0, 0, 255}
-    textdrawBigWFrame(g.Screen,  90,   240  , "CLICK ON SCREEN", color.White, red)
-    textdrawBigWFrame(g.Screen, 175,   310  , "TO MOVE", color.White, red)
-}
-g.AddDrawStage(dt)
-b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
-@@@
-
-n00e=!b
-n016=@@@
-/
-(100,100)
-The root
-@@@
-
-n017=464,305
-n018=8
-
-[s005e]
-n002=S_WAIT2
-n005=S_MOVEDIFF
-n009=@@@
-d.DiffX = -1.0
-d.DiffY = -1.0
-@@@
-
-n01f=nowait
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=659,308
-n018=9
-
-[s005f]
-n002=S_MOVEDIFF
-n009=@@@
-hitwall := d.MoveDiff()
-if hitwall {
-    d.Speedup(-0.5)
-    g.ScoreMul = 1
-}
-@@@
-
-n00c=bKillBlk, bKillAll :=d.CheckKill()
-n01f=nowait
-n012=@@@
-brifc(S_PERFECT);
-brelseifc(S_REFLECT);
-brelse(S_MouseClick);
-@@@
-
-n013=@@@
-?
-?
-?
-@@@
-
-n014=@@@
-bKillAll
-bKillBlk
-?
-@@@
-
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=897,320
-n018=10
-
-[s0060]
-n002=S_REFLECT
-n005=S_DrawUpdate
-n009=@@@
-d.Speedup(0.2)
-d.Reflect()
-g.ScoreData0.Add(1000 * g.ScoreMul)
-g.ScoreMul++
-g.ScoreBase += 500
-@@@
-
-n01f=nowait
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=1128,386
-n018=11
-
-[s0061]
-n002=S_BACKTO_MOVEDIFF
-n005=S_MOVEDIFF
-n01f=nowait
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=767,163
-n018=13
-
-[s0062]
-n002=S_Tick
-n005=S_BACKTO_MOVEDIFF
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=1962,574
-n018=12
-
-[s0063]
-n002=S_MouseClick
+[s006a]
+n002=S_0000
 n005=
 n00c=@@@
-b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
-if (b && g.ScoreClickCount != g.Count) {
-    g.ScoreClickCount = g.Count
-    g.ScoreData0.Add(-200)
+d.Update()
+d.Msg1,d.Msg2 = d.ToString()
+
+g.AddDrawStage(df)
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=399,263
+n018=3
+
+[s006b]
+n002=E_0000
+n006=@@@
+df := func() {
+    textdraw(g.Screen, 10,20,d.Msg1, color.White)
+    textdraw(g.Screen, 50,50,d.Msg2, color.White)
 }
-
-@@@
-
-n01f=nowait
-n012=@@@
-brifc(S_DrawUpdate);
-brelse(S_MouseClick1);
-@@@
-
-n013=@@@
-Non
-Clicked
-@@@
-
-n014=@@@
-!b
-?
 @@@
 
 n016=@@@
@@ -334,57 +116,15 @@ n016=@@@
 
 @@@
 
-n017=1133,562
-n018=14
+n017=276,8
+n018=4
 
-[s0064]
-n002=S_MouseClick1
-n005=S_DrawUpdate
-n009=d.CalcDir()
-n01f=nowait
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=1345,640
-n018=15
-
-[s0065]
-n002=S_PERFECT
-n005=S_DrawUpdate1
-n009=g.GameOver = true
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=1135,298
-n018=16
-
-[s0066]
-n002=S_DrawUpdate1
-n00c=@@@
-d.MoveDiff()
-g.AddDrawStage(drawfunc)
-@@@
-
-n01f=nowait
-n012=@@@
-brifc(S_END);
-brelse(S_Tick1);
-@@@
-
-n013=@@@
-ESC
-?
-@@@
-
-n014=@@@
-ebiten.IsKeyPressed(ebiten.KeyEscape)
-?
+[s006c]
+n002=S_INIT
+n005=S_0000
+n009=@@@
+d.Score = 0
+d.Add(0)
 @@@
 
 n016=@@@
@@ -393,20 +133,8 @@ n016=@@@
 
 @@@
 
-n017=1560,264
-n018=17
-
-[s0067]
-n002=S_Tick1
-n005=S_DrawUpdate1
-n016=@@@
-/
-(100,100)
-
-@@@
-
-n017=1751,365
-n018=18
+n017=209,262
+n018=5
 
 
 
@@ -415,16 +143,16 @@ n018=18
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/23 23:38:07
+; The setting was created automatically. 2020/11/23 23:18:21
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
-gopherControl.psgg
+scoreControl.psgg
 @@@
 xlsfile=@@@
-gopherControl.xlsx
+scoreControl.xlsx
 @@@
 guid=@@@
-2aa76cd3-d6ba-4e4c-9f29-83774e68520a
+47f9a0f1-2802-4d55-849c-c112249e5705
 @@@
 bitmap_width=2500
 bitmap_height=4000
@@ -448,7 +176,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":49,"y":103}},{"Key":"S_END","Value":{"x":2380,"y":35}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":265,"y":308}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":464,"y":305}},{"Key":"S_WAIT2","Value":{"x":659,"y":308}},{"Key":"S_MOVEDIFF","Value":{"x":897,"y":320}},{"Key":"S_REFLECT","Value":{"x":1128,"y":386}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1133,"y":562}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}},{"Key":"S_LOSE","Value":{"x":1135,"y":298}},{"Key":"S_DrawUpdate1","Value":{"x":1560,"y":264}},{"Key":"S_Tick1","Value":{"x":1751,"y":365}},{"Key":"S_PERFECT","Value":{"x":1135,"y":298}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":92,"y":262}},{"Key":"S_END","Value":{"x":886,"y":251}},{"Key":"S_LOAD_GOPHER","Value":{"x":71,"y":308}},{"Key":"S_DrawGopher","Value":{"x":265,"y":308}},{"Key":"S_DrawUpdate","Value":{"x":1735,"y":442}},{"Key":"S_WAIT1","Value":{"x":464,"y":305}},{"Key":"S_WAIT2","Value":{"x":659,"y":308}},{"Key":"S_MOVEDIFF","Value":{"x":897,"y":320}},{"Key":"S_REFLECT","Value":{"x":1128,"y":386}},{"Key":"S_Tick","Value":{"x":1962,"y":574}},{"Key":"S_BACKTO_MOVEDIFF","Value":{"x":767,"y":163}},{"Key":"S_MouseClick","Value":{"x":1124,"y":479}},{"Key":"S_MouseClick1","Value":{"x":1345,"y":640}},{"Key":"S_DrawUpdate1","Value":{"x":1560,"y":264}},{"Key":"S_Tick1","Value":{"x":1751,"y":365}},{"Key":"S_PERFECT","Value":{"x":1135,"y":298}},{"Key":"S_0000","Value":{"x":399,"y":263}},{"Key":"E_0000","Value":{"x":276,"y":8}},{"Key":"S_INIT","Value":{"x":209,"y":262}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -629,10 +357,10 @@ sheet=setting.ini
 ###VARIOUS-CONTENTS-BEGIN###
 [setting]
 
-psgg=gopherControl.psgg
-xls=gopherControl.xlsx
+psgg=scoreControl.psgg
+xls=scoreControl.xlsx
 sub_src=
-gen_src=gopherControl.go
+gen_src=scoreControl.go
 
 manager_src=
 manager_dir=
@@ -652,7 +380,9 @@ psgg-starter-kit\starterkit2\go\helpweb.html
 
 
 
+
 kitpath=psgg-starter-kit\starterkit2\go
+
 
 
 
@@ -671,21 +401,24 @@ https://github.com/NNNIC/psgg-starter-kit.git 06b417a6f220200aa8489d982802935e37
 
 
 
+
 lang=go
 framework=
 
-statemachine=gopherControl
+statemachine=scoreControl
 prefix=__PREFIX__
 xlsdir=@@@
-G:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
+g:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
 @@@
+
 
 
 
 
 gendir=@@@
-G:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
+g:\statego\samples\psgg-go-sample\ebiten\rotatex3\game
 @@@
+
 
 
 
@@ -696,12 +429,13 @@ incrdir=.
 code_output_start=[STATEGO OUTPUT START]
 code_output_end=[STATEGO OUTPUT END]
 
-; This section has macro defines for converting.
+; This section has macro defines for converting.
 
 
 
 
-; commentline format  {%0} will be replaced to a comment.
+; commentline format  {%0} will be replaced to a comment.
+
 
 
 
@@ -730,8 +464,8 @@ https://github.com/NNNIC/psgg-go-sample
 
   以下のファイルを作成します。
 
-      gopherControl.pssg   --- エディタで次のエクセルファイルを開く。
-      gopherControl.xlsx   --- ステート図格納用Excelファイル。エディタが編集。
+      scoreControl.pssg   --- エディタで次のエクセルファイルを開く。
+      scoreControl.xlsx   --- ステート図格納用Excelファイル。エディタが編集。
 
 # ソース用フォルダ
 　エディタが生成ソースファイル`格納
@@ -740,13 +474,15 @@ https://github.com/NNNIC/psgg-go-sample
 
   以下のファイルが作成されます。
 
-      gopherControl.go  --- Excelファイルからの変換ソースを挿入。
+      scoreControl.go  --- Excelファイルからの変換ソースを挿入。
 
 
 注意 : 既に同名のファイルがある場合は生成されません。
 　　　 削除してから生成してください。
 
 @@@
+
+
 
 
 
@@ -777,8 +513,8 @@ https://github.com/NNNIC/psgg-go-sample
 
   File:
 
-      gopherControl.pssg  --- The editor opens the below excel file.
-      gopherControl.xlsx  --- Excel File that has a state chart. The editor edits this file.
+      scoreControl.pssg  --- The editor opens the below excel file.
+      scoreControl.xlsx  --- Excel File that has a state chart. The editor edits this file.
 
 # Source Folder
    This folder will contain a source file generated by the editor.
@@ -786,7 +522,7 @@ https://github.com/NNNIC/psgg-go-sample
       G:\statego\samples\psgg-go-sample\sample
 
 　File:
-      gopherControl.go   -- the editor will convert from the excel file into this file.
+      scoreControl.go   -- the editor will convert from the excel file into this file.
 
 NOTE : If the same name files exists, the file will not be created.
        Please delete the same name files ahead of the creation.

@@ -86,6 +86,8 @@ func mainControl() func(bool, *Game) bool {
     id++
     funcIdsCLEARALL1 := id
     id++
+    funcIdsCLEARALL2 := id
+    id++
     funcIdsCLEARTERM := id
     id++
     funcIdsCOUNT := id
@@ -93,6 +95,8 @@ func mainControl() func(bool, *Game) bool {
     funcIdsDISPLAYBLK := id
     id++
     funcIdsDISPLAYGOPHER := id
+    id++
+    funcIdsDISPLAYSCORE := id
     id++
     funcIdsDrawMascot := id
     id++
@@ -113,6 +117,8 @@ func mainControl() func(bool, *Game) bool {
     funcIdsFADEOUT2 := id
     id++
     funcIdsGAMEOVER := id
+    id++
+    funcIdsGAMEOVER1 := id
     id++
     funcIdsINIT := id
     id++
@@ -256,14 +262,15 @@ func mainControl() func(bool, *Game) bool {
     var gde func()
     var gdt func()
     var gds func()
+    var gdp func()
 
 
 	//[STATEGO OUTPUT END]
 	// USER API
 	createBlk := func() {
-		maxX := 14
-		maxY := 8
-		w := 36
+		maxX := 20
+		maxY := 12
+		w := 24
 		for y := 0; y < maxY; y++ {
 			for x := 0; x < maxX; x++ {
 				posX := g.ScreenWidth/2 + w/2 - (w * maxX / 2) + x*w
@@ -275,12 +282,25 @@ func mainControl() func(bool, *Game) bool {
 			}
 		}
 	}
-	createGopher := func() {
-		d := GopherData{PosX: float64(g.ScreenWidth / 2), PosY: float64(g.ScreenHeight - 20)}
-		g.GopherData0 = &d
-		g.AddUpdate(gopherControl(&d))
-	}
+	createGopher := func(id int) {
+		dx := 0
+		if id > 0 {
+			sym := 1
+			if id%2 == 0 {
+				sym = -1
+			}
+			dx = (id + 1) / 2 * 38 * sym
+		}
 
+		d := GopherData{PosX: float64(g.ScreenWidth/2 + dx), PosY: float64(g.ScreenHeight - 20)}
+		g.GopherDataList = append(g.GopherDataList, &d)
+		g.AddUpdate(gopherControl(&d, id))
+	}
+	createScore := func() {
+		d := ScoreData{}
+		g.ScoreData0 = &d
+		g.AddUpdate(scoreControl(&d))
+	}
 	// #
 	// #  State Function
 	// #
@@ -415,6 +435,17 @@ func mainControl() func(bool, *Game) bool {
         }
     }
     /*
+        S_CLEARALL2
+    */
+    sCLEARALL2 := func( bFirst  bool ) {
+        if bFirst {
+            g.ClearAll()
+        }
+        if !hasNextState() {
+            gotoState(funcIdsFADEOUT2)
+        }
+    }
+    /*
         S_CLEARTERM
     */
     sCLEARTERM := func( bFirst  bool ) {
@@ -457,7 +488,22 @@ func mainControl() func(bool, *Game) bool {
     */
     sDISPLAYGOPHER := func( bFirst  bool ) {
         if bFirst {
-            createGopher()
+            createGopher(0)
+            createGopher(1)
+            createGopher(2)
+            createGopher(3)
+            createGopher(4)
+        }
+        if !hasNextState() {
+            gotoState(funcIdsDISPLAYSCORE)
+        }
+    }
+    /*
+        S_DISPLAY_SCORE
+    */
+    sDISPLAYSCORE := func( bFirst  bool ) {
+        if bFirst {
+            createScore()
         }
         if !hasNextState() {
             gotoState(funcIdsWAIT13)
@@ -493,7 +539,7 @@ func mainControl() func(bool, *Game) bool {
             fmt.Println("S_ESC")
         }
         if !hasNextState() {
-            gotoState(funcIdsFADEOUT2)
+            gotoState(funcIdsCLEARALL2)
         }
     }
     /*
@@ -646,7 +692,28 @@ func mainControl() func(bool, *Game) bool {
             fmt.Println("S_GAMEOVER")
         }
         if !hasNextState() {
-            gotoState(funcIdsFADEOUT2)
+            gotoState(funcIdsGAMEOVER1)
+        }
+    }
+    /*
+        S_GAMEOVER1
+    */
+    sGAMEOVER1 := func( bFirst  bool ) {
+        if bFirst {
+            gdp = func() {
+                textdrawBigWFrame(g.Screen, 220, 220, "PERFECT", color.White, color.White)
+            }
+            gds = func() {
+                textdraw(g.Screen, 200, 400, "PUSH SPACE TO END", color.White)
+            }
+        }
+        g.AddDrawStage(gdp)
+        g.AddDrawStage(gds)
+        if !ebiten.IsKeyPressed(ebiten.KeySpace) {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsCLEARALL2)
         }
     }
     /*
@@ -668,6 +735,7 @@ func mainControl() func(bool, *Game) bool {
         if bFirst {
             g.ClrDrawStageListOnUpdate = true
             g.GameOver = false
+            g.ScoreMul = 1
         }
         if !hasNextState() {
             gotoState(funcIdsLOADGOPHER)
@@ -1069,7 +1137,7 @@ func mainControl() func(bool, *Game) bool {
             fmt.Println("S_TIMEOUT")
         }
         if !hasNextState() {
-            gotoState(funcIdsFADEOUT2)
+            gotoState(funcIdsCLEARALL2)
         }
     }
     /*
@@ -1302,10 +1370,12 @@ func mainControl() func(bool, *Game) bool {
         sCHANGEBG,
         sCLEARALL,
         sCLEARALL1,
+        sCLEARALL2,
         sCLEARTERM,
         sCOUNT,
         sDISPLAYBLK,
         sDISPLAYGOPHER,
+        sDISPLAYSCORE,
         sDrawMascot,
         sEND,
         sESC,
@@ -1316,6 +1386,7 @@ func mainControl() func(bool, *Game) bool {
         sFADEOUT1,
         sFADEOUT2,
         sGAMEOVER,
+        sGAMEOVER1,
         sINIT,
         sINIT1,
         sLOADEBITEN,

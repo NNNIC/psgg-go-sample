@@ -15,7 +15,7 @@ import (
 const (
 	screenWidth    = 640
 	screenHeight   = 480
-	maxDrawListLen = 200
+	maxDrawListLen = 500
 )
 
 // Game ...
@@ -49,14 +49,21 @@ type Game struct {
 
 	GophersImage  *ebiten.Image
 	GophersImage2 *ebiten.Image
-	MascotImage   *ebiten.Image
-	MascotAImage  *ebiten.Image
-	EbitenImage   *ebiten.Image
+	GophersImage3 *ebiten.Image
+
+	MascotImage  *ebiten.Image
+	MascotAImage *ebiten.Image
+	EbitenImage  *ebiten.Image
 
 	// Gopher vs Nic
-	BlkDataList []*BlkData
-	GopherData0 *GopherData
-	GameOver    bool
+	BlkDataList    []*BlkData
+	GopherDataList []*GopherData
+	ScoreData0     *ScoreData
+	GameOver       bool
+
+	ScoreMul        int
+	ScoreBase       int
+	ScoreClickCount int
 }
 
 // AddUpdate ...

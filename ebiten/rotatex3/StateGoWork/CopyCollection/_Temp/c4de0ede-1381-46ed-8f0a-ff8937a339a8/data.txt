@@ -1,0 +1,37 @@
+﻿{3745FCA0-D34D-4270-8C39-BB563F73BE4B}
+
+[____copyinfo____]
+pid=1304
+curdir=/
+nodegroup_comment_list=@@@
+[{"Key":"\/","Value":"The root"},{"Key":"\/Game\/","Value":null}]
+@@@
+nodegroup_pos_list=@@@
+[{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":0,"y":0}}]
+@@@
+
+[S_CLEARALL]
+state=@@@
+S_CLEARALL
+@@@
+nextstate=@@@
+S_BACKTO_MENU
+@@@
+init=@@@
+g.ClearAll()
+@@@
+!dir=@@@
+/
+(100,100)
+The root
+@@@
+!pos=@@@
+408,2343
+@@@
+!uuid=@@@
+100028
+@@@
+
+[____bitmapinfo____]
+num_of_bitmap=0
+

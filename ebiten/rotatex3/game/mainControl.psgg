@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n021,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068,s006a,s0069,s006b
 max_name_id=33
-max_state_id=104
+max_state_id=107
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -119,6 +119,9 @@ s0065=S_OPENING1
 s0066=S_LOAD_GOPHER
 s0067=E_GAME_ETC
 s0068=S_LOAD_EBITEN
+s0069=S_GAMEOVER1
+s006a=S_CLEARALL2
+s006b=S_DISPLAY_SCORE
 
 
 [s0001]
@@ -1044,7 +1047,7 @@ n016=@@@
 The root
 @@@
 
-n017=250,1497
+n017=26,1504
 n018=100050
 
 [s0054]
@@ -1057,7 +1060,7 @@ n016=@@@
 The root
 @@@
 
-n017=2040,1687
+n017=2375,1679
 n018=100051
 
 [s0055]
@@ -1121,7 +1124,7 @@ n016=@@@
 The root
 @@@
 
-n017=653,1498
+n017=429,1505
 n018=100054
 
 [s0058]
@@ -1159,20 +1162,27 @@ n016=@@@
 The root
 @@@
 
-n017=1542,1505
+n017=1508,1506
 n018=100056
 
 [s0059]
 n002=S_DISPLAY_GOPHER
-n005=S_WAIT13
-n009=createGopher()
+n005=S_DISPLAY_SCORE
+n009=@@@
+createGopher(0)
+createGopher(1)
+createGopher(2)
+createGopher(3)
+createGopher(4)
+@@@
+
 n016=@@@
 /Game/
 (435,1486)
 The root
 @@@
 
-n017=829,1499
+n017=605,1506
 n018=100057
 
 [s005a]
@@ -1192,7 +1202,7 @@ n016=@@@
 The root
 @@@
 
-n017=451,1499
+n017=227,1506
 n018=100058
 
 [s005b]
@@ -1224,7 +1234,7 @@ n016=@@@
 The root
 @@@
 
-n017=1048,1502
+n017=1110,1506
 n018=100061
 
 [s005d]
@@ -1251,6 +1261,7 @@ n005=S_LOAD_GOPHER
 n009=@@@
 g.ClrDrawStageListOnUpdate = true
 g.GameOver = false
+g.ScoreMul = 1
 @@@
 
 n016=@@@
@@ -1303,7 +1314,7 @@ n018=100065
 
 [s0062]
 n002=S_GAMEOVER
-n005=S_FADEOUT2
+n005=S_GAMEOVER1
 n009=fmt.Println("[[state]]")
 n016=@@@
 /Game/
@@ -1311,12 +1322,12 @@ n016=@@@
 The root
 @@@
 
-n017=1743,1646
+n017=1728,1719
 n018=100068
 
 [s0063]
 n002=S_ESC
-n005=S_FADEOUT2
+n005=S_CLEARALL2
 n009=fmt.Println("[[state]]")
 n016=@@@
 /Game/
@@ -1329,7 +1340,7 @@ n018=100066
 
 [s0064]
 n002=S_TIMEOUT
-n005=S_FADEOUT2
+n005=S_CLEARALL2
 n009=fmt.Println("[[state]]")
 n016=@@@
 /Game/
@@ -1384,7 +1395,7 @@ gdg = func() {
 n01f=nowait
 n016=@@@
 /Game/
-(0,0)
+(435,1486)
 The root
 @@@
 
@@ -1398,15 +1409,16 @@ var gdg func()
 var gde func()
 var gdt func()
 var gds func()
+var gdp func()
 @@@
 
 n016=@@@
 /Game/
-(100,100)
-
+(435,1486)
+The root
 @@@
 
-n017=534,108
+n017=534,49
 n018=100071
 
 [s0068]
@@ -1433,12 +1445,65 @@ gde = func() {
 n01f=nowait
 n016=@@@
 /Game/
-(0,0)
+(435,1486)
 The root
 @@@
 
 n017=960,202
 n018=100072
+
+[s0069]
+n002=S_GAMEOVER1
+n005=S_CLEARALL2
+n009=@@@
+gdp = func() {
+    textdrawBigWFrame(g.Screen, 220, 220, "PERFECT", color.White, color.White)
+}
+gds = func() {
+    textdraw(g.Screen, 200, 400, "PUSH SPACE TO END", color.White)
+}
+@@@
+
+n00c=@@@
+g.AddDrawStage(gdp)
+g.AddDrawStage(gds)
+@@@
+
+n00e=!ebiten.IsKeyPressed(ebiten.KeySpace)
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1980,1772
+n018=100073
+
+[s006a]
+n002=S_CLEARALL2
+n005=S_FADEOUT2
+n009=g.ClearAll()
+n016=@@@
+/Game/
+(0,0)
+The root
+@@@
+
+n017=2156,1724
+n018=100074
+
+[s006b]
+n002=S_DISPLAY_SCORE
+n005=S_WAIT13
+n009=createScore()
+n016=@@@
+/Game/
+(100,100)
+
+@@@
+
+n017=812,1506
+n018=100075
 
 
 
@@ -1447,7 +1512,7 @@ n018=100072
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/23 11:26:43
+; The setting was created automatically. 2020/11/23 23:24:24
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
@@ -1465,7 +1530,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Saved
+varied,Edited a state.
 @@@
 target_pathdir=@@@
 /Game/
@@ -1480,7 +1545,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":0,"y":0}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_BACKTO_MENU","Value":{"x":328,"y":127}},{"Key":"S_CLEARALL","Value":{"x":408,"y":2343}},{"Key":"S_CLEARALL1","Value":{"x":1044,"y":1137}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_LOP000","Value":{"x":1523,"y":1205}},{"Key":"S_SBS000","Value":{"x":1611,"y":1396}},{"Key":"S_RET000","Value":{"x":2166,"y":1348}},{"Key":"S_PAS000","Value":{"x":1917,"y":1176}},{"Key":"S_LOP001","Value":{"x":1727,"y":1396}},{"Key":"S_SBS001","Value":{"x":1821,"y":1497}},{"Key":"S_RET001","Value":{"x":2143,"y":1499}},{"Key":"S_DrawMascot","Value":{"x":1924,"y":1498}},{"Key":"S_SETBG","Value":{"x":1252,"y":1135}},{"Key":"S_FADEINTEST","Value":{"x":454,"y":1907}},{"Key":"S_PAS001","Value":{"x":1663,"y":1909}},{"Key":"S_FADEOUT","Value":{"x":673,"y":1908}},{"Key":"S_WAIT12","Value":{"x":1435,"y":1912}},{"Key":"S_FADEIN","Value":{"x":884,"y":1913}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1311,"y":1486}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":838,"y":1135}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1091,"y":1913}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":50,"y":100}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":250,"y":1497}},{"Key":"S_FADEOUT2","Value":{"x":2040,"y":1687}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1542,"y":1505}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":829,"y":1499}},{"Key":"S_SETBG1","Value":{"x":451,"y":1499}},{"Key":"S_WAIT13","Value":{"x":1048,"y":1502}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1743,"y":1646}},{"Key":"S_DISPLAY_BLK","Value":{"x":653,"y":1498}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_LOAD_GOPHER","Value":{"x":533.712158,"y":108.411995}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":108}},{"Key":"S_LOAD_BLK","Value":{"x":959.8334,"y":202}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_BACKTO_MENU","Value":{"x":328,"y":127}},{"Key":"S_CLEARALL","Value":{"x":408,"y":2343}},{"Key":"S_CLEARALL1","Value":{"x":1044,"y":1137}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_LOP000","Value":{"x":1523,"y":1205}},{"Key":"S_SBS000","Value":{"x":1611,"y":1396}},{"Key":"S_RET000","Value":{"x":2166,"y":1348}},{"Key":"S_PAS000","Value":{"x":1917,"y":1176}},{"Key":"S_LOP001","Value":{"x":1727,"y":1396}},{"Key":"S_SBS001","Value":{"x":1821,"y":1497}},{"Key":"S_RET001","Value":{"x":2143,"y":1499}},{"Key":"S_DrawMascot","Value":{"x":1924,"y":1498}},{"Key":"S_SETBG","Value":{"x":1252,"y":1135}},{"Key":"S_FADEINTEST","Value":{"x":454,"y":1907}},{"Key":"S_PAS001","Value":{"x":1663,"y":1909}},{"Key":"S_FADEOUT","Value":{"x":673,"y":1908}},{"Key":"S_WAIT12","Value":{"x":1435,"y":1912}},{"Key":"S_FADEIN","Value":{"x":884,"y":1913}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1311,"y":1486}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":838,"y":1135}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1091,"y":1913}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":50,"y":100}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":26,"y":1504}},{"Key":"S_FADEOUT2","Value":{"x":2375,"y":1679}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1508,"y":1506}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":605,"y":1506}},{"Key":"S_SETBG1","Value":{"x":227,"y":1506}},{"Key":"S_WAIT13","Value":{"x":1110,"y":1506}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1728,"y":1719}},{"Key":"S_DISPLAY_BLK","Value":{"x":429,"y":1505}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_LOAD_GOPHER","Value":{"x":533.712158,"y":108.411995}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":49}},{"Key":"S_LOAD_BLK","Value":{"x":959.8334,"y":202}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}},{"Key":"S_WAIT14","Value":{"x":1939.70374,"y":1682.14819}},{"Key":"S_OPENING2","Value":{"x":1970,"y":1702}},{"Key":"S_GAMEOVER1","Value":{"x":1980,"y":1772}},{"Key":"S_CLEARALL2","Value":{"x":2156,"y":1724}},{"Key":"S_DISPLAY_SCORE","Value":{"x":812,"y":1506}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
