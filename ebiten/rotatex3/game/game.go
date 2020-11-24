@@ -13,9 +13,10 @@ import (
 )
 
 const (
-	screenWidth    = 640
-	screenHeight   = 480
-	maxDrawListLen = 500
+	screenWidth         = 640
+	screenHeight        = 480
+	maxDrawStageListLen = 500
+	maxCommonListLen    = 100
 )
 
 // Game ...
@@ -75,6 +76,9 @@ func (g *Game) AddUpdate(cf func(bool, *Game) bool) int {
 
 // ClrUpdate ...
 func (g *Game) ClrUpdate() {
+	if len(g.UpdateList) == 0 {
+		g.UpdateList = make([]func(bool, *Game) bool, 0, maxCommonListLen)
+	}
 	g.UpdateList = g.UpdateList[:0]
 }
 
@@ -105,13 +109,9 @@ func (g *Game) SetDrawBg(handle int, df func()) {
 
 // AddDrawStage ... Add Draw Function to DrawStageList
 func (g *Game) AddDrawStage(df func()) int {
-	for i := 0; i < len(g.DrawStageList); i++ {
-		if g.DrawStageList[i] == nil {
-			g.DrawStageList[i] = df
-			return i
-		}
-	}
-	return -1
+	handle := len(g.DrawStageList)
+	g.DrawStageList = append(g.DrawStageList, df)
+	return handle
 }
 
 // SetDrawStage ...
@@ -139,26 +139,33 @@ func (g *Game) SetDbgTerm(df func()) {
 
 // ClrDrawBg ...
 func (g *Game) ClrDrawBg() {
+	if len(g.DrawBgList) == 0 {
+		g.DrawBgList = make([]func(), 0, maxCommonListLen)
+	}
 	g.DrawBgList = g.DrawBgList[:0]
 }
 
 // ClrDrawStage ...
 func (g *Game) ClrDrawStage() { // for reducing gabage memory issue.
-	if len(g.DrawStageList) != maxDrawListLen {
-		g.DrawStageList = make([]func(), maxDrawListLen)
+	if len(g.DrawStageList) == 0 {
+		g.DrawStageList = make([]func(), 0, maxDrawStageListLen)
 	}
-	for i := 0; i < len(g.DrawStageList); i++ {
-		g.DrawStageList[i] = nil
-	}
+	g.DrawStageList = g.DrawStageList[:0]
 }
 
 // ClrDrawFe ...
 func (g *Game) ClrDrawFe() {
+	if len(g.DrawFeList) == 0 {
+		g.DrawFeList = make([]func(), 0, maxCommonListLen)
+	}
 	g.DrawFeList = g.DrawFeList[:0]
 }
 
 // ClrDbgTerm ...
 func (g *Game) ClrDbgTerm() {
+	if len(g.DrawTermFunc) == 0 {
+		g.DrawTermFunc = make([]func(), 0, maxCommonListLen)
+	}
 	g.DrawTermFunc = g.DrawTermFunc[:0]
 }
 
@@ -168,9 +175,7 @@ func (g *Game) DoDraw() {
 		(g.DrawBgList[i])()
 	}
 	for i := 0; i < len(g.DrawStageList); i++ {
-		if g.DrawStageList[i] != nil {
-			(g.DrawStageList[i])()
-		}
+		(g.DrawStageList[i])()
 	}
 	for i := 0; i < len(g.DrawFeList); i++ {
 		(g.DrawFeList[i])()
