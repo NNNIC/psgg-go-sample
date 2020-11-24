@@ -736,6 +736,7 @@ func mainControl() func(bool, *Game) bool {
             g.ClrDrawStageListOnUpdate = true
             g.GameOver = false
             g.ScoreMul = 1
+            g.ScoreBase = 1000
         }
         if !hasNextState() {
             gotoState(funcIdsLOADGOPHER)
