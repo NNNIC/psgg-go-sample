@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n021,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068,s006a,s0069,s006b
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068,s006a,s0069,s006b,s006d,s006c
 max_name_id=33
-max_state_id=107
+max_state_id=109
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -122,6 +122,8 @@ s0068=S_LOAD_EBITEN
 s0069=S_GAMEOVER1
 s006a=S_CLEARALL2
 s006b=S_DISPLAY_SCORE
+s006c=S_IS_RELEASE
+s006d=E_0000
 
 
 [s0001]
@@ -146,7 +148,7 @@ n016=@@@
 The root
 @@@
 
-n017=2325,1212
+n017=2309,1635
 n018=100002
 
 [s0024]
@@ -183,7 +185,7 @@ n016=@@@
 The root
 @@@
 
-n017=802,780
+n017=786,1203
 n018=100003
 
 [s0025]
@@ -205,7 +207,7 @@ n016=@@@
 The root
 @@@
 
-n017=1238,188
+n017=1222,611
 n018=100004
 
 [s0026]
@@ -236,7 +238,7 @@ n016=@@@
 The root
 @@@
 
-n017=1185,780
+n017=1169,1203
 n018=100005
 
 [s0027]
@@ -267,7 +269,7 @@ n016=@@@
 The root
 @@@
 
-n017=1573,780
+n017=1557,1203
 n018=100006
 
 [s0028]
@@ -282,7 +284,7 @@ n016=@@@
 The root
 @@@
 
-n017=992,780
+n017=976,1203
 n018=100007
 
 [s0029]
@@ -297,7 +299,7 @@ n016=@@@
 The root
 @@@
 
-n017=1373,780
+n017=1357,1203
 n018=100008
 
 [s002b]
@@ -311,7 +313,7 @@ n016=@@@
 The root
 @@@
 
-n017=497,192
+n017=481,615
 n018=100009
 
 [s002c]
@@ -327,7 +329,7 @@ n016=@@@
 The root
 @@@
 
-n017=684,193
+n017=668,616
 n018=100010
 
 [s002d]
@@ -340,7 +342,7 @@ n016=@@@
 The root
 @@@
 
-n017=871,195
+n017=855,618
 n018=100011
 
 [s002e]
@@ -355,7 +357,7 @@ n016=@@@
 The root
 @@@
 
-n017=1055,191
+n017=1039,614
 n018=100012
 
 [s002f]
@@ -370,7 +372,7 @@ n016=@@@
 The root
 @@@
 
-n017=1853,187
+n017=1837,610
 n018=100013
 
 [s0030]
@@ -383,7 +385,7 @@ n016=@@@
 The root
 @@@
 
-n017=1653,189
+n017=1637,612
 n018=100014
 
 [s0031]
@@ -398,7 +400,7 @@ n016=@@@
 The root
 @@@
 
-n017=1448,188
+n017=1432,611
 n018=100015
 
 [s0032]
@@ -411,7 +413,7 @@ n016=@@@
 The root
 @@@
 
-n017=430,780
+n017=414,1203
 n018=100016
 
 [s0033]
@@ -426,7 +428,7 @@ n016=@@@
 The root
 @@@
 
-n017=614,780
+n017=598,1203
 n018=100017
 
 [s0034]
@@ -442,7 +444,7 @@ n016=@@@
 The root
 @@@
 
-n017=440,507
+n017=424,930
 n018=100018
 
 [s0035]
@@ -457,7 +459,7 @@ n016=@@@
 The root
 @@@
 
-n017=668,507
+n017=652,930
 n018=100019
 
 [s0036]
@@ -477,7 +479,7 @@ n016=@@@
 The root
 @@@
 
-n017=898,507
+n017=882,930
 n018=100020
 
 [s0037]
@@ -492,7 +494,7 @@ n016=@@@
 The root
 @@@
 
-n017=1110,507
+n017=1094,930
 n018=100021
 
 [s0038]
@@ -507,7 +509,7 @@ n016=@@@
 The root
 @@@
 
-n017=1551,507
+n017=1535,930
 n018=100022
 
 [s0039]
@@ -527,7 +529,7 @@ n016=@@@
 The root
 @@@
 
-n017=1339,507
+n017=1323,930
 n018=100023
 
 [s003a]
@@ -542,7 +544,7 @@ n016=@@@
 The root
 @@@
 
-n017=2004,507
+n017=1988,930
 n018=100024
 
 [s003b]
@@ -562,7 +564,7 @@ n016=@@@
 The root
 @@@
 
-n017=1792,507
+n017=1776,930
 n018=100025
 
 [s003c]
@@ -619,19 +621,19 @@ n016=@@@
 The root
 @@@
 
-n017=46,221
+n017=30,644
 n018=100026
 
 [s003d]
 n002=S_BACKTO_MENU
-n005=S_MENU
+n005=S_IS_RELEASE
 n016=@@@
 /
 (100,100)
 The root
 @@@
 
-n017=328,127
+n017=482,137
 n018=100027
 
 [s003e]
@@ -644,7 +646,7 @@ n016=@@@
 The root
 @@@
 
-n017=408,2343
+n017=392,2766
 n018=100028
 
 [s003f]
@@ -660,7 +662,7 @@ n016=@@@
 The root
 @@@
 
-n017=423,1131
+n017=407,1554
 n018=100029
 
 [s0040]
@@ -675,7 +677,7 @@ n016=@@@
 The root
 @@@
 
-n017=629,1131
+n017=613,1554
 n018=100030
 
 [s0041]
@@ -701,7 +703,7 @@ n016=@@@
 The root
 @@@
 
-n017=838,1135
+n017=822,1558
 n018=100031
 
 [s0042]
@@ -715,7 +717,7 @@ n016=@@@
 The root
 @@@
 
-n017=454,1907
+n017=438,2330
 n018=100043
 
 [s0043]
@@ -728,7 +730,7 @@ n016=@@@
 The root
 @@@
 
-n017=1044,1137
+n017=1028,1560
 n018=100033
 
 [s0044]
@@ -746,7 +748,7 @@ n016=@@@
 The root
 @@@
 
-n017=1523,1205
+n017=1507,1628
 n018=100034
 
 [s0045]
@@ -759,7 +761,7 @@ n016=@@@
 The root
 @@@
 
-n017=1611,1396
+n017=1595,1819
 n018=100035
 
 [s0046]
@@ -771,7 +773,7 @@ n016=@@@
 The root
 @@@
 
-n017=2166,1348
+n017=2150,1771
 n018=100036
 
 [s0047]
@@ -784,7 +786,7 @@ n016=@@@
 The root
 @@@
 
-n017=1917,1176
+n017=1901,1599
 n018=100037
 
 [s0048]
@@ -802,7 +804,7 @@ n016=@@@
 The root
 @@@
 
-n017=1727,1396
+n017=1711,1819
 n018=100038
 
 [s0049]
@@ -815,7 +817,7 @@ n016=@@@
 The root
 @@@
 
-n017=1821,1497
+n017=1805,1920
 n018=100039
 
 [s004a]
@@ -827,7 +829,7 @@ n016=@@@
 The root
 @@@
 
-n017=2143,1499
+n017=2127,1922
 n018=100040
 
 [s004b]
@@ -849,7 +851,7 @@ n016=@@@
 The root
 @@@
 
-n017=1924,1498
+n017=1908,1921
 n018=100041
 
 [s004c]
@@ -870,7 +872,7 @@ n016=@@@
 The root
 @@@
 
-n017=1252,1135
+n017=1236,1558
 n018=100042
 
 [s004d]
@@ -883,7 +885,7 @@ n016=@@@
 The root
 @@@
 
-n017=1663,1909
+n017=1647,2332
 n018=100044
 
 [s004e]
@@ -922,7 +924,7 @@ n016=@@@
 The root
 @@@
 
-n017=673,1908
+n017=657,2331
 n018=100045
 
 [s004f]
@@ -945,7 +947,7 @@ n016=@@@
 The root
 @@@
 
-n017=1435,1912
+n017=1419,2335
 n018=100046
 
 [s0050]
@@ -983,7 +985,7 @@ n016=@@@
 The root
 @@@
 
-n017=884,1913
+n017=868,2336
 n018=100047
 
 [s0051]
@@ -1009,7 +1011,7 @@ n016=@@@
 The root
 @@@
 
-n017=1311,1486
+n017=1295,1909
 n018=100049
 
 [s0053]
@@ -1207,7 +1209,7 @@ n018=100058
 
 [s005b]
 n002=S_INIT
-n005=S_MENU
+n005=S_IS_RELEASE
 n009=@@@
 g.ClearAll()
 fontInit()
@@ -1252,7 +1254,7 @@ n016=@@@
 The root
 @@@
 
-n017=1091,1913
+n017=1075,2336
 n018=100063
 
 [s005f]
@@ -1285,7 +1287,7 @@ x[[v]] = 50
 y[[v]] = 100
 gdt = func() {
     x:=x[[v]]
-    y:=y[[v]]   
+    y:=y[[v]]
     textdrawBig(g.Screen, clamp(x,-1000,207), y,     "GOPHERS", color.White)
     textdrawBig(g.Screen, clamp(x-100,-1000,242), y+50,  " LOVE", color.White)
     textdrawBig(g.Screen, clamp(x-200,-1000,242), y+100, "EBITEN", color.White)
@@ -1369,7 +1371,10 @@ g.AddDrawStage(gdt)
 g.AddDrawStage(gds)
 @@@
 
-n00e=!ebiten.IsKeyPressed(ebiten.KeySpace)
+n00e=@@@
+!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+@@@
+
 n016=@@@
 /Game/
 (435,1486)
@@ -1470,7 +1475,10 @@ g.AddDrawStage(gdp)
 g.AddDrawStage(gds)
 @@@
 
-n00e=!ebiten.IsKeyPressed(ebiten.KeySpace)
+n00e=@@@
+!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+@@@
+
 n016=@@@
 /Game/
 (435,1486)
@@ -1486,7 +1494,7 @@ n005=S_FADEOUT2
 n009=g.ClearAll()
 n016=@@@
 /Game/
-(0,0)
+(435,1486)
 The root
 @@@
 
@@ -1499,12 +1507,50 @@ n005=S_WAIT13
 n009=createScore()
 n016=@@@
 /Game/
-(100,100)
-
+(435,1486)
+The root
 @@@
 
 n017=812,1506
 n018=100075
+
+[s006c]
+n002=S_IS_RELEASE
+n012=@@@
+brifc(S_SHOWMASCOT1);
+brelse(S_MENU);
+@@@
+
+n013=@@@
+?
+?
+@@@
+
+n014=@@@
+release
+?
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=47,247
+n018=100079
+
+[s006d]
+n002=E_0000
+n006=release:=true
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=365,4
+n018=100077
 
 
 
@@ -1513,7 +1559,7 @@ n018=100075
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/24 0:09:45
+; The setting was created automatically. 2020/11/26 23:35:05
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
@@ -1540,13 +1586,13 @@ state_location_list=@@@
 
 @@@
 nodegroup_comment_list=@@@
-[{"Key":"\/","Value":"The root"},{"Key":"\/Game\/","Value":null}]
+[{"Key":"\/","Value":"The root"},{"Key":"\/Game\/","Value":"The root"}]
 @@@
 nodegroup_pos_list=@@@
-[{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":0,"y":0}}]
+[{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":435,"y":1486}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2325,"y":1212}},{"Key":"S_TERMINAL","Value":{"x":497,"y":192}},{"Key":"S_WAIT","Value":{"x":992,"y":780}},{"Key":"S_WAIT1","Value":{"x":684,"y":193}},{"Key":"S_TERMINAL1","Value":{"x":871,"y":195}},{"Key":"S_WAIT2","Value":{"x":1055,"y":191}},{"Key":"S_WAIT3","Value":{"x":1853,"y":187}},{"Key":"S_COUNT","Value":{"x":1238,"y":188}},{"Key":"S_WAIT4","Value":{"x":1448,"y":188}},{"Key":"S_CLEARTERM","Value":{"x":1653,"y":189}},{"Key":"S_WAIT5","Value":{"x":614,"y":780}},{"Key":"S_1stRotation","Value":{"x":802,"y":780}},{"Key":"S_2ndRotation","Value":{"x":1185,"y":780}},{"Key":"S_WAIT6","Value":{"x":1373,"y":780}},{"Key":"S_3rdRotation","Value":{"x":1573,"y":780}},{"Key":"S_CHANGEBG","Value":{"x":440,"y":507}},{"Key":"S_WAIT7","Value":{"x":668,"y":507}},{"Key":"S_WAIT8","Value":{"x":1110,"y":507}},{"Key":"S_SETBGRED","Value":{"x":898,"y":507}},{"Key":"S_WAIT9","Value":{"x":1551,"y":507}},{"Key":"S_SETBGBLUE","Value":{"x":1339,"y":507}},{"Key":"S_WAIT10","Value":{"x":2004,"y":507}},{"Key":"S_SETBGGREEN","Value":{"x":1792,"y":507}},{"Key":"S_RotationOverRay","Value":{"x":430,"y":780}},{"Key":"S_MENU","Value":{"x":46,"y":221}},{"Key":"S_BACKTO_MENU","Value":{"x":328,"y":127}},{"Key":"S_CLEARALL","Value":{"x":408,"y":2343}},{"Key":"S_CLEARALL1","Value":{"x":1044,"y":1137}},{"Key":"S_SHOWMASCOT","Value":{"x":423,"y":1131}},{"Key":"S_WAIT11","Value":{"x":629,"y":1131}},{"Key":"S_LOP000","Value":{"x":1523,"y":1205}},{"Key":"S_SBS000","Value":{"x":1611,"y":1396}},{"Key":"S_RET000","Value":{"x":2166,"y":1348}},{"Key":"S_PAS000","Value":{"x":1917,"y":1176}},{"Key":"S_LOP001","Value":{"x":1727,"y":1396}},{"Key":"S_SBS001","Value":{"x":1821,"y":1497}},{"Key":"S_RET001","Value":{"x":2143,"y":1499}},{"Key":"S_DrawMascot","Value":{"x":1924,"y":1498}},{"Key":"S_SETBG","Value":{"x":1252,"y":1135}},{"Key":"S_FADEINTEST","Value":{"x":454,"y":1907}},{"Key":"S_PAS001","Value":{"x":1663,"y":1909}},{"Key":"S_FADEOUT","Value":{"x":673,"y":1908}},{"Key":"S_WAIT12","Value":{"x":1435,"y":1912}},{"Key":"S_FADEIN","Value":{"x":884,"y":1913}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1311,"y":1486}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":838,"y":1135}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1091,"y":1913}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":50,"y":100}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":26,"y":1504}},{"Key":"S_FADEOUT2","Value":{"x":2375,"y":1679}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1508,"y":1506}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":605,"y":1506}},{"Key":"S_SETBG1","Value":{"x":227,"y":1506}},{"Key":"S_WAIT13","Value":{"x":1110,"y":1506}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1728,"y":1719}},{"Key":"S_DISPLAY_BLK","Value":{"x":429,"y":1505}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_LOAD_GOPHER","Value":{"x":533.712158,"y":108.411995}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":49}},{"Key":"S_LOAD_BLK","Value":{"x":959.8334,"y":202}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}},{"Key":"S_WAIT14","Value":{"x":1939.70374,"y":1682.14819}},{"Key":"S_OPENING2","Value":{"x":1970,"y":1702}},{"Key":"S_GAMEOVER1","Value":{"x":1980,"y":1772}},{"Key":"S_CLEARALL2","Value":{"x":2156,"y":1724}},{"Key":"S_DISPLAY_SCORE","Value":{"x":812,"y":1506}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2309,"y":1635}},{"Key":"S_TERMINAL","Value":{"x":481,"y":615}},{"Key":"S_WAIT","Value":{"x":976,"y":1203}},{"Key":"S_WAIT1","Value":{"x":668,"y":616}},{"Key":"S_TERMINAL1","Value":{"x":855,"y":618}},{"Key":"S_WAIT2","Value":{"x":1039,"y":614}},{"Key":"S_WAIT3","Value":{"x":1837,"y":610}},{"Key":"S_COUNT","Value":{"x":1222,"y":611}},{"Key":"S_WAIT4","Value":{"x":1432,"y":611}},{"Key":"S_CLEARTERM","Value":{"x":1637,"y":612}},{"Key":"S_WAIT5","Value":{"x":598,"y":1203}},{"Key":"S_1stRotation","Value":{"x":786,"y":1203}},{"Key":"S_2ndRotation","Value":{"x":1169,"y":1203}},{"Key":"S_WAIT6","Value":{"x":1357,"y":1203}},{"Key":"S_3rdRotation","Value":{"x":1557,"y":1203}},{"Key":"S_CHANGEBG","Value":{"x":424,"y":930}},{"Key":"S_WAIT7","Value":{"x":652,"y":930}},{"Key":"S_WAIT8","Value":{"x":1094,"y":930}},{"Key":"S_SETBGRED","Value":{"x":882,"y":930}},{"Key":"S_WAIT9","Value":{"x":1535,"y":930}},{"Key":"S_SETBGBLUE","Value":{"x":1323,"y":930}},{"Key":"S_WAIT10","Value":{"x":1988,"y":930}},{"Key":"S_SETBGGREEN","Value":{"x":1776,"y":930}},{"Key":"S_RotationOverRay","Value":{"x":414,"y":1203}},{"Key":"S_MENU","Value":{"x":30,"y":644}},{"Key":"S_BACKTO_MENU","Value":{"x":482,"y":137}},{"Key":"S_CLEARALL","Value":{"x":392,"y":2766}},{"Key":"S_CLEARALL1","Value":{"x":1028,"y":1560}},{"Key":"S_SHOWMASCOT","Value":{"x":407,"y":1554}},{"Key":"S_WAIT11","Value":{"x":613,"y":1554}},{"Key":"S_LOP000","Value":{"x":1507,"y":1628}},{"Key":"S_SBS000","Value":{"x":1595,"y":1819}},{"Key":"S_RET000","Value":{"x":2150,"y":1771}},{"Key":"S_PAS000","Value":{"x":1901,"y":1599}},{"Key":"S_LOP001","Value":{"x":1711,"y":1819}},{"Key":"S_SBS001","Value":{"x":1805,"y":1920}},{"Key":"S_RET001","Value":{"x":2127,"y":1922}},{"Key":"S_DrawMascot","Value":{"x":1908,"y":1921}},{"Key":"S_SETBG","Value":{"x":1236,"y":1558}},{"Key":"S_FADEINTEST","Value":{"x":438,"y":2330}},{"Key":"S_PAS001","Value":{"x":1647,"y":2332}},{"Key":"S_FADEOUT","Value":{"x":657,"y":2331}},{"Key":"S_WAIT12","Value":{"x":1419,"y":2335}},{"Key":"S_FADEIN","Value":{"x":868,"y":2336}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1295,"y":1909}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":822,"y":1558}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1075,"y":2336}},{"Key":"E_0000","Value":{"x":365,"y":4}},{"Key":"S_IS_RELEASE","Value":{"x":47,"y":247}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":34.61538,"y":240}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":26,"y":1504}},{"Key":"S_FADEOUT2","Value":{"x":2375,"y":1679}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1508,"y":1506}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":605,"y":1506}},{"Key":"S_SETBG1","Value":{"x":227,"y":1506}},{"Key":"S_WAIT13","Value":{"x":1110,"y":1506}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1728,"y":1719}},{"Key":"S_DISPLAY_BLK","Value":{"x":429,"y":1505}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":49}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}},{"Key":"S_GAMEOVER1","Value":{"x":1980,"y":1772}},{"Key":"S_CLEARALL2","Value":{"x":2156,"y":1724}},{"Key":"S_DISPLAY_SCORE","Value":{"x":812,"y":1506}},{"Key":"S_IS_RELEASE","Value":{"x":46.95237,"y":0.09522629}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]

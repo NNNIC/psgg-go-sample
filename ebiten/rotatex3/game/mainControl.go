@@ -124,6 +124,8 @@ func mainControl() func(bool, *Game) bool {
     id++
     funcIdsINIT1 := id
     id++
+    funcIdsISRELEASE := id
+    id++
     funcIdsLOADEBITEN := id
     id++
     funcIdsLOADGOPHER := id
@@ -255,6 +257,10 @@ func mainControl() func(bool, *Game) bool {
 	// [STATEGO OUTPUT START] indent(4) $/^E_./$
     //             psggConverterLib.dll converted from psgg-file:mainControl.psgg
 
+    /*
+        E_0000
+    */
+    release:=true
     /*
         E_GAME_ETC
     */
@@ -398,7 +404,7 @@ func mainControl() func(bool, *Game) bool {
     */
     sBACKTOMENU := func( bFirst  bool ) {
         if !hasNextState() {
-            gotoState(funcIdsMENU)
+            gotoState(funcIdsISRELEASE)
         }
     }
     /*
@@ -709,7 +715,7 @@ func mainControl() func(bool, *Game) bool {
         }
         g.AddDrawStage(gdp)
         g.AddDrawStage(gds)
-        if !ebiten.IsKeyPressed(ebiten.KeySpace) {
+        if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
              return
         }
         if !hasNextState() {
@@ -725,7 +731,7 @@ func mainControl() func(bool, *Game) bool {
             fontInit()
         }
         if !hasNextState() {
-            gotoState(funcIdsMENU)
+            gotoState(funcIdsISRELEASE)
         }
     }
     /*
@@ -740,6 +746,16 @@ func mainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsLOADGOPHER)
+        }
+    }
+    /*
+        S_IS_RELEASE
+    */
+    sISRELEASE := func( bFirst  bool ) {
+        if release {
+            gotoState( funcIdsSHOWMASCOT1 )
+        } else {
+            gotoState( funcIdsMENU )
         }
     }
     /*
@@ -928,7 +944,7 @@ func mainControl() func(bool, *Game) bool {
         g.AddDrawStage(gde)
         g.AddDrawStage(gdt)
         g.AddDrawStage(gds)
-        if !ebiten.IsKeyPressed(ebiten.KeySpace) {
+        if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
              return
         }
         if !hasNextState() {
@@ -1390,6 +1406,7 @@ func mainControl() func(bool, *Game) bool {
         sGAMEOVER1,
         sINIT,
         sINIT1,
+        sISRELEASE,
         sLOADEBITEN,
         sLOADGOPHER,
         sLOADNIC,
