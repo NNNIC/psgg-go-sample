@@ -476,7 +476,9 @@ func gopherControl(d *GopherData, id int) func(bool, *Game) bool {
             textdrawBigWFrame(g.Screen, 175,   310  , "TO MOVE", color.White, red)
         }
         g.AddDrawStage(dt)
-        b := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+        bClicked := ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+        bTouched := ebiten.TouchIDs() != nil
+        b := bClicked || bTouched
         if !b {
              return
         }
