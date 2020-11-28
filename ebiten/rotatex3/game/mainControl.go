@@ -944,7 +944,7 @@ func mainControl() func(bool, *Game) bool {
         g.AddDrawStage(gde)
         g.AddDrawStage(gdt)
         g.AddDrawStage(gds)
-        if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
+        if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs()== nil {
              return
         }
         if !hasNextState() {

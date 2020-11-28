@@ -1372,7 +1372,7 @@ g.AddDrawStage(gds)
 @@@
 
 n00e=@@@
-!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs()== nil
 @@@
 
 n016=@@@
@@ -1559,7 +1559,7 @@ n018=100077
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/26 23:35:05
+; The setting was created automatically. 2020/11/28 9:47:02
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
