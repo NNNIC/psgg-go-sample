@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n012,n013,n014,,n016,n017,n018,,,,,
-stateid_list=,,,,s0001,s0002,s0004,s0003,s0015,s0016,s0017,s0018,s0019,s001a,s001b,s001c,s001d,s001e,s001f,s0020,s0021,s0022,s0014
+stateid_list=,,,,s0001,s0002,s0004,s0003,s0015,s0016,s0017,s0018,s0019,s001a,s001b,s001c,s001d,s001e,s001f,s0020,s0021,s0022,s0014,,s0023
 max_name_id=30
-max_state_id=34
+max_state_id=35
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -68,6 +68,7 @@ s001f=S_0006
 s0020=S_SBS001
 s0021=S_RET001
 s0022=S_0007
+s0023=E_0001
 
 
 [s0001]
@@ -106,16 +107,13 @@ n016=@@@
 The root
 @@@
 
-n017=78,150
+n017=65,152
 n018=100003
 
 [s0004]
 n002=S_NEWERA
 n005=S_0001
-n009=@@@
-fmt.Println("We are in the visual programming era.")
-@@@
-
+n009=fmt.Println(msg)
 n016=@@@
 /
 (100,100)
@@ -348,6 +346,21 @@ The root
 n017=558,342
 n018=100021
 
+[s0023]
+n002=E_0001
+n006=@@@
+msg := "We are in the visual program era."
+@@@
+
+n016=@@@
+/
+(100,100)
+
+@@@
+
+n017=267,13
+n018=100022
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -355,7 +368,7 @@ n018=100021
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/22 11:09:30
+; The setting was created automatically. 2020/11/28 12:29:23
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 testControl.psgg
@@ -373,7 +386,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-init,Initilized
+init,Saved
 @@@
 target_pathdir=@@@
 /
@@ -388,7 +401,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1349,"y":795}},{"Key":"S_HELLOWORLD","Value":{"x":78,"y":150}},{"Key":"S_NEWERA","Value":{"x":61,"y":269}},{"Key":"S_0001","Value":{"x":314,"y":192}},{"Key":"S_0004","Value":{"x":558,"y":121}},{"Key":"S_0002","Value":{"x":558,"y":188}},{"Key":"S_0003","Value":{"x":558,"y":266}},{"Key":"S_GSB000","Value":{"x":151,"y":552}},{"Key":"S_PAS000","Value":{"x":813,"y":384}},{"Key":"S_SBS000","Value":{"x":308,"y":608}},{"Key":"S_RET000","Value":{"x":765,"y":608}},{"Key":"S_0005","Value":{"x":466,"y":608}},{"Key":"S_PAS001","Value":{"x":1117,"y":554}},{"Key":"S_LOP000","Value":{"x":151,"y":951}},{"Key":"S_0006","Value":{"x":461,"y":1066}},{"Key":"S_SBS001","Value":{"x":338,"y":1067}},{"Key":"S_RET001","Value":{"x":795,"y":1063}},{"Key":"S_0007","Value":{"x":558,"y":342}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":32,"y":29}},{"Key":"S_END","Value":{"x":1349,"y":795}},{"Key":"S_HELLOWORLD","Value":{"x":65,"y":152}},{"Key":"S_NEWERA","Value":{"x":61,"y":269}},{"Key":"S_0001","Value":{"x":314,"y":192}},{"Key":"S_0004","Value":{"x":558,"y":121}},{"Key":"S_0002","Value":{"x":558,"y":188}},{"Key":"S_0003","Value":{"x":558,"y":266}},{"Key":"S_GSB000","Value":{"x":151,"y":552}},{"Key":"S_PAS000","Value":{"x":813,"y":384}},{"Key":"S_SBS000","Value":{"x":308,"y":608}},{"Key":"S_RET000","Value":{"x":765,"y":608}},{"Key":"S_0005","Value":{"x":466,"y":608}},{"Key":"S_PAS001","Value":{"x":1117,"y":554}},{"Key":"S_LOP000","Value":{"x":151,"y":951}},{"Key":"S_0006","Value":{"x":461,"y":1066}},{"Key":"S_SBS001","Value":{"x":338,"y":1067}},{"Key":"S_RET001","Value":{"x":795,"y":1063}},{"Key":"S_0007","Value":{"x":558,"y":342}},{"Key":"E_HELLOWORLD","Value":{"x":266.6667,"y":12.6666641}},{"Key":"E_0001","Value":{"x":267,"y":13}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
