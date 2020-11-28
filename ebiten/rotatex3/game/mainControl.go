@@ -190,6 +190,8 @@ func mainControl() func(bool, *Game) bool {
     id++
     funcIdsTIMEOUT := id
     id++
+    funcIdsVERSION := id
+    id++
     funcIdsWAIT := id
     id++
     funcIdsWAITCLRDRAW := id
@@ -269,6 +271,7 @@ func mainControl() func(bool, *Game) bool {
     var gdt func()
     var gds func()
     var gdp func()
+    var gdv func()
 
 
 	//[STATEGO OUTPUT END]
@@ -778,7 +781,7 @@ func mainControl() func(bool, *Game) bool {
             }
         }
         if !hasNextState() {
-            gotoState(funcIdsOPENING)
+            gotoState(funcIdsVERSION)
         }
         if hasNextState() {
             noWait()
@@ -924,6 +927,7 @@ func mainControl() func(bool, *Game) bool {
         g.AddDrawStage(gde)
         g.AddDrawStage(gdt)
         //fmt.Println(xsOPENING)
+        g.AddDrawStage(gdv)
         if xsOPENING < 450 {
              return
         }
@@ -944,6 +948,7 @@ func mainControl() func(bool, *Game) bool {
         g.AddDrawStage(gde)
         g.AddDrawStage(gdt)
         g.AddDrawStage(gds)
+        g.AddDrawStage(gdv)
         if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs()== nil {
              return
         }
@@ -1155,6 +1160,22 @@ func mainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsCLEARALL2)
+        }
+    }
+    /*
+        S_VERSION
+    */
+    sVERSION := func( bFirst  bool ) {
+        if bFirst {
+            gdv = func() {
+                textdraw(g.Screen, 0, 20, "R11281030", color.White)
+            }
+        }
+        if !hasNextState() {
+            gotoState(funcIdsOPENING)
+        }
+        if hasNextState() {
+            noWait()
         }
     }
     /*
@@ -1439,6 +1460,7 @@ func mainControl() func(bool, *Game) bool {
         sTERMINAL1,
         sTEXT,
         sTIMEOUT,
+        sVERSION,
         sWAIT,
         sWAITCLRDRAW,
         sWAIT1,

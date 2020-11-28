@@ -13,9 +13,9 @@ check_excel_writable=no
 
 sheet=state-chart
 nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n021,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,,,,
-stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068,s006a,s0069,s006b,s006d,s006c
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068,s006a,s0069,s006b,s006d,s006c,,,,,,s006e
 max_name_id=33
-max_state_id=109
+max_state_id=110
 [id_name_dic]
 n001=thumbnail
 n002=state
@@ -124,6 +124,7 @@ s006a=S_CLEARALL2
 s006b=S_DISPLAY_SCORE
 s006c=S_IS_RELEASE
 s006d=E_0000
+s006e=S_VERSION
 
 
 [s0001]
@@ -1303,6 +1304,7 @@ g.AddDrawStage(gdg)
 g.AddDrawStage(gde)
 g.AddDrawStage(gdt)
 //fmt.Println(x[[v]])
+g.AddDrawStage(gdv)
 @@@
 
 n00e=x[[v]] < 450
@@ -1369,6 +1371,7 @@ g.AddDrawStage(gdg)
 g.AddDrawStage(gde)
 g.AddDrawStage(gdt)
 g.AddDrawStage(gds)
+g.AddDrawStage(gdv)
 @@@
 
 n00e=@@@
@@ -1416,6 +1419,7 @@ var gde func()
 var gdt func()
 var gds func()
 var gdp func()
+var gdv func()
 @@@
 
 n016=@@@
@@ -1429,7 +1433,7 @@ n018=100071
 
 [s0068]
 n002=S_LOAD_EBITEN
-n005=S_OPENING
+n005=S_VERSION
 n009=@@@
 img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
 if err != nil {
@@ -1552,6 +1556,25 @@ The root
 n017=365,4
 n018=100077
 
+[s006e]
+n002=S_VERSION
+n005=S_OPENING
+n009=@@@
+gdv = func() {
+    textdraw(g.Screen, 0, 20, "R11281030", color.White)
+}
+@@@
+
+n01f=nowait
+n016=@@@
+/Game/
+(100,100)
+
+@@@
+
+n017=105,677
+n018=100080
+
 
 
 ------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
@@ -1559,7 +1582,7 @@ n018=100077
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/28 9:47:02
+; The setting was created automatically. 2020/11/28 10:38:52
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
@@ -1592,7 +1615,7 @@ nodegroup_pos_list=@@@
 [{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":435,"y":1486}}]
 @@@
 fillter_state_location_list=@@@
-[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2309,"y":1635}},{"Key":"S_TERMINAL","Value":{"x":481,"y":615}},{"Key":"S_WAIT","Value":{"x":976,"y":1203}},{"Key":"S_WAIT1","Value":{"x":668,"y":616}},{"Key":"S_TERMINAL1","Value":{"x":855,"y":618}},{"Key":"S_WAIT2","Value":{"x":1039,"y":614}},{"Key":"S_WAIT3","Value":{"x":1837,"y":610}},{"Key":"S_COUNT","Value":{"x":1222,"y":611}},{"Key":"S_WAIT4","Value":{"x":1432,"y":611}},{"Key":"S_CLEARTERM","Value":{"x":1637,"y":612}},{"Key":"S_WAIT5","Value":{"x":598,"y":1203}},{"Key":"S_1stRotation","Value":{"x":786,"y":1203}},{"Key":"S_2ndRotation","Value":{"x":1169,"y":1203}},{"Key":"S_WAIT6","Value":{"x":1357,"y":1203}},{"Key":"S_3rdRotation","Value":{"x":1557,"y":1203}},{"Key":"S_CHANGEBG","Value":{"x":424,"y":930}},{"Key":"S_WAIT7","Value":{"x":652,"y":930}},{"Key":"S_WAIT8","Value":{"x":1094,"y":930}},{"Key":"S_SETBGRED","Value":{"x":882,"y":930}},{"Key":"S_WAIT9","Value":{"x":1535,"y":930}},{"Key":"S_SETBGBLUE","Value":{"x":1323,"y":930}},{"Key":"S_WAIT10","Value":{"x":1988,"y":930}},{"Key":"S_SETBGGREEN","Value":{"x":1776,"y":930}},{"Key":"S_RotationOverRay","Value":{"x":414,"y":1203}},{"Key":"S_MENU","Value":{"x":30,"y":644}},{"Key":"S_BACKTO_MENU","Value":{"x":482,"y":137}},{"Key":"S_CLEARALL","Value":{"x":392,"y":2766}},{"Key":"S_CLEARALL1","Value":{"x":1028,"y":1560}},{"Key":"S_SHOWMASCOT","Value":{"x":407,"y":1554}},{"Key":"S_WAIT11","Value":{"x":613,"y":1554}},{"Key":"S_LOP000","Value":{"x":1507,"y":1628}},{"Key":"S_SBS000","Value":{"x":1595,"y":1819}},{"Key":"S_RET000","Value":{"x":2150,"y":1771}},{"Key":"S_PAS000","Value":{"x":1901,"y":1599}},{"Key":"S_LOP001","Value":{"x":1711,"y":1819}},{"Key":"S_SBS001","Value":{"x":1805,"y":1920}},{"Key":"S_RET001","Value":{"x":2127,"y":1922}},{"Key":"S_DrawMascot","Value":{"x":1908,"y":1921}},{"Key":"S_SETBG","Value":{"x":1236,"y":1558}},{"Key":"S_FADEINTEST","Value":{"x":438,"y":2330}},{"Key":"S_PAS001","Value":{"x":1647,"y":2332}},{"Key":"S_FADEOUT","Value":{"x":657,"y":2331}},{"Key":"S_WAIT12","Value":{"x":1419,"y":2335}},{"Key":"S_FADEIN","Value":{"x":868,"y":2336}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1295,"y":1909}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":822,"y":1558}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1075,"y":2336}},{"Key":"E_0000","Value":{"x":365,"y":4}},{"Key":"S_IS_RELEASE","Value":{"x":47,"y":247}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":34.61538,"y":240}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":26,"y":1504}},{"Key":"S_FADEOUT2","Value":{"x":2375,"y":1679}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1508,"y":1506}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":605,"y":1506}},{"Key":"S_SETBG1","Value":{"x":227,"y":1506}},{"Key":"S_WAIT13","Value":{"x":1110,"y":1506}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1728,"y":1719}},{"Key":"S_DISPLAY_BLK","Value":{"x":429,"y":1505}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":49}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}},{"Key":"S_GAMEOVER1","Value":{"x":1980,"y":1772}},{"Key":"S_CLEARALL2","Value":{"x":2156,"y":1724}},{"Key":"S_DISPLAY_SCORE","Value":{"x":812,"y":1506}},{"Key":"S_IS_RELEASE","Value":{"x":46.95237,"y":0.09522629}}]}]
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2309,"y":1635}},{"Key":"S_TERMINAL","Value":{"x":481,"y":615}},{"Key":"S_WAIT","Value":{"x":976,"y":1203}},{"Key":"S_WAIT1","Value":{"x":668,"y":616}},{"Key":"S_TERMINAL1","Value":{"x":855,"y":618}},{"Key":"S_WAIT2","Value":{"x":1039,"y":614}},{"Key":"S_WAIT3","Value":{"x":1837,"y":610}},{"Key":"S_COUNT","Value":{"x":1222,"y":611}},{"Key":"S_WAIT4","Value":{"x":1432,"y":611}},{"Key":"S_CLEARTERM","Value":{"x":1637,"y":612}},{"Key":"S_WAIT5","Value":{"x":598,"y":1203}},{"Key":"S_1stRotation","Value":{"x":786,"y":1203}},{"Key":"S_2ndRotation","Value":{"x":1169,"y":1203}},{"Key":"S_WAIT6","Value":{"x":1357,"y":1203}},{"Key":"S_3rdRotation","Value":{"x":1557,"y":1203}},{"Key":"S_CHANGEBG","Value":{"x":424,"y":930}},{"Key":"S_WAIT7","Value":{"x":652,"y":930}},{"Key":"S_WAIT8","Value":{"x":1094,"y":930}},{"Key":"S_SETBGRED","Value":{"x":882,"y":930}},{"Key":"S_WAIT9","Value":{"x":1535,"y":930}},{"Key":"S_SETBGBLUE","Value":{"x":1323,"y":930}},{"Key":"S_WAIT10","Value":{"x":1988,"y":930}},{"Key":"S_SETBGGREEN","Value":{"x":1776,"y":930}},{"Key":"S_RotationOverRay","Value":{"x":414,"y":1203}},{"Key":"S_MENU","Value":{"x":30,"y":644}},{"Key":"S_BACKTO_MENU","Value":{"x":482,"y":137}},{"Key":"S_CLEARALL","Value":{"x":392,"y":2766}},{"Key":"S_CLEARALL1","Value":{"x":1028,"y":1560}},{"Key":"S_SHOWMASCOT","Value":{"x":407,"y":1554}},{"Key":"S_WAIT11","Value":{"x":613,"y":1554}},{"Key":"S_LOP000","Value":{"x":1507,"y":1628}},{"Key":"S_SBS000","Value":{"x":1595,"y":1819}},{"Key":"S_RET000","Value":{"x":2150,"y":1771}},{"Key":"S_PAS000","Value":{"x":1901,"y":1599}},{"Key":"S_LOP001","Value":{"x":1711,"y":1819}},{"Key":"S_SBS001","Value":{"x":1805,"y":1920}},{"Key":"S_RET001","Value":{"x":2127,"y":1922}},{"Key":"S_DrawMascot","Value":{"x":1908,"y":1921}},{"Key":"S_SETBG","Value":{"x":1236,"y":1558}},{"Key":"S_FADEINTEST","Value":{"x":438,"y":2330}},{"Key":"S_PAS001","Value":{"x":1647,"y":2332}},{"Key":"S_FADEOUT","Value":{"x":657,"y":2331}},{"Key":"S_WAIT12","Value":{"x":1419,"y":2335}},{"Key":"S_FADEIN","Value":{"x":868,"y":2336}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1295,"y":1909}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":822,"y":1558}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1075,"y":2336}},{"Key":"E_0000","Value":{"x":365,"y":4}},{"Key":"S_IS_RELEASE","Value":{"x":47,"y":247}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":34.61538,"y":240}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":26,"y":1504}},{"Key":"S_FADEOUT2","Value":{"x":2375,"y":1679}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1508,"y":1506}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":605,"y":1506}},{"Key":"S_SETBG1","Value":{"x":227,"y":1506}},{"Key":"S_WAIT13","Value":{"x":1110,"y":1506}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1728,"y":1719}},{"Key":"S_DISPLAY_BLK","Value":{"x":429,"y":1505}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":49}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}},{"Key":"S_GAMEOVER1","Value":{"x":1980,"y":1772}},{"Key":"S_CLEARALL2","Value":{"x":2156,"y":1724}},{"Key":"S_DISPLAY_SCORE","Value":{"x":812,"y":1506}},{"Key":"S_IS_RELEASE","Value":{"x":46.95237,"y":0.09522629}},{"Key":"S_VERSION","Value":{"x":105,"y":677}}]}]
 @@@
 linecolor_data=@@@
 [{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
@@ -1642,7 +1665,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":398,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}},{"Key":"update","Value":{"height":592,"width":760}}]
 @@@
 decoimage_typ_name=@@@
 sym
