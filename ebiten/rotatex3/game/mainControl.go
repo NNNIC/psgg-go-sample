@@ -718,7 +718,7 @@ func mainControl() func(bool, *Game) bool {
         }
         g.AddDrawStage(gdp)
         g.AddDrawStage(gds)
-        if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) {
+        if !ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs() == nil {
              return
         }
         if !hasNextState() {
@@ -1168,7 +1168,7 @@ func mainControl() func(bool, *Game) bool {
     sVERSION := func( bFirst  bool ) {
         if bFirst {
             gdv = func() {
-                textdraw(g.Screen, 0, 20, "R11281046", color.White)
+                textdraw(g.Screen, 0, 20, "R11281054", color.White)
             }
         }
         if !hasNextState() {

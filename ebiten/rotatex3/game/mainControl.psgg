@@ -1480,7 +1480,7 @@ g.AddDrawStage(gds)
 @@@
 
 n00e=@@@
-!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft)
+!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs() == nil
 @@@
 
 n016=@@@
@@ -1561,7 +1561,7 @@ n002=S_VERSION
 n005=S_OPENING
 n009=@@@
 gdv = func() {
-    textdraw(g.Screen, 0, 20, "R11281046", color.White)
+    textdraw(g.Screen, 0, 20, "R11281054", color.White)
 }
 @@@
 
@@ -1582,7 +1582,7 @@ n018=100080
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/28 10:46:57
+; The setting was created automatically. 2020/11/28 11:27:36
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
@@ -1600,7 +1600,7 @@ c_thumbnail=1
 c_contents=1
 force_display_outpin=0
 last_action=@@@
-varied,Edited a state.
+init,Saved
 @@@
 target_pathdir=@@@
 /Game/
@@ -1665,7 +1665,7 @@ userbutton_command=@@@
 @@@
 userbutton_callafterconvert=0
 itemeditform_size_list=@@@
-[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}},{"Key":"update","Value":{"height":592,"width":760}}]
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}},{"Key":"update","Value":{"height":592,"width":760}},{"Key":"wait","Value":{"height":401,"width":1445}}]
 @@@
 decoimage_typ_name=@@@
 sym
