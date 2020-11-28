@@ -1168,7 +1168,7 @@ func mainControl() func(bool, *Game) bool {
     sVERSION := func( bFirst  bool ) {
         if bFirst {
             gdv = func() {
-                textdraw(g.Screen, 0, 20, "R11281030", color.White)
+                textdraw(g.Screen, 0, 20, "R11281046", color.White)
             }
         }
         if !hasNextState() {

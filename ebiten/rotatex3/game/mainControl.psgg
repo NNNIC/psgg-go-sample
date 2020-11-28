@@ -1561,7 +1561,7 @@ n002=S_VERSION
 n005=S_OPENING
 n009=@@@
 gdv = func() {
-    textdraw(g.Screen, 0, 20, "R11281030", color.White)
+    textdraw(g.Screen, 0, 20, "R11281046", color.White)
 }
 @@@
 
@@ -1582,7 +1582,7 @@ n018=100080
 sheet=config
 
 ###VARIOUS-CONTENTS-BEGIN###
-; The setting was created automatically. 2020/11/28 10:38:52
+; The setting was created automatically. 2020/11/28 10:46:57
 ; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
 psggfile=@@@
 mainControl.psgg
