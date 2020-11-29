@@ -113,11 +113,15 @@ func mainControl() func(bool, *Game) bool {
     id++
     funcIdsPAS000 := id
     id++
+    funcIdsPAS001 := id
+    id++
     funcIdsRET000 := id
     id++
     funcIdsRET001 := id
     id++
     funcIdsRotationOverRay := id
+    id++
+    funcIdsRUNTESTCONTROL := id
     id++
     funcIdsSBS000 := id
     id++
@@ -173,6 +177,7 @@ func mainControl() func(bool, *Game) bool {
     var cntsCOUNT int
     var loop1 = 0
     var loop2 = 0
+    var td *TestControlData
     var timesWAIT int64
     var timesWAIT1 int64
     var timesWAIT10 int64
@@ -464,6 +469,7 @@ func mainControl() func(bool, *Game) bool {
             g.TermPrint("Push 2 ... Background Color Change Test")
             g.TermPrint("Push 3 ... Ebiten Rotaion Overlay Demo")
             g.TermPrint("Push 4 ... StateGo Mascot Demo")
+            g.TermPrint("Push T ... Run StarterKit Test")
             g.TermPrint("")
             g.TermPrint("Push C ... Cear all");
             g.TermPrint("")
@@ -477,6 +483,8 @@ func mainControl() func(bool, *Game) bool {
             gotoState( funcIdsRotationOverRay )
         } else if ebiten.IsKeyPressed(ebiten.Key4) {
             gotoState( funcIdsSHOWMASCOT )
+        } else if ebiten.IsKeyPressed(ebiten.KeyT) {
+            gotoState( funcIdsRUNTESTCONTROL )
         } else if ebiten.IsKeyPressed(ebiten.KeyC) {
             gotoState( funcIdsCLEARALL )
         }
@@ -485,6 +493,13 @@ func mainControl() func(bool, *Game) bool {
         S_PAS000
     */
     sPAS000 := func( bFirst  bool ) {
+        gotoState(funcIdsBACKTOMENU)
+        noWait()
+    }
+    /*
+        S_PAS001
+    */
+    sPAS001 := func( bFirst  bool ) {
         gotoState(funcIdsBACKTOMENU)
         noWait()
     }
@@ -511,6 +526,22 @@ func mainControl() func(bool, *Game) bool {
         }
         if !hasNextState() {
             gotoState(funcIdsWAIT5)
+        }
+    }
+    /*
+        S_RUN_TESTCONTROL
+    */
+    sRUNTESTCONTROL := func( bFirst  bool ) {
+        if bFirst {
+            td = &TestControlData{}
+            updatefunc := TestControl(td)
+            g.AddUpdate(updatefunc)
+        }
+        if !td.bEnd {
+             return
+        }
+        if !hasNextState() {
+            gotoState(funcIdsPAS001)
         }
     }
     /*
@@ -822,9 +853,11 @@ func mainControl() func(bool, *Game) bool {
         sLOP001LoopNext,
         sMENU,
         sPAS000,
+        sPAS001,
         sRET000,
         sRET001,
         sRotationOverRay,
+        sRUNTESTCONTROL,
         sSBS000,
         sSBS001,
         sSETBG,

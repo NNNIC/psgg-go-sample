@@ -56,11 +56,7 @@ type Game struct {
 	MascotAImage *ebiten.Image
 	EbitenImage  *ebiten.Image
 
-	// Gopher vs Nic
-	BlkDataList    []*BlkData
-	GopherDataList []*GopherData
-	ScoreData0     *ScoreData
-	GameOver       bool
+	GameOver bool
 
 	ScoreMul        int
 	ScoreBase       int

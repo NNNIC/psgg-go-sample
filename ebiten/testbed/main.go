@@ -2,7 +2,7 @@
 package main
 
 import (
-	"github.com/NNNIC/psgg-go-sample/ebiten/gopherslove/game"
+	"github.com/NNNIC/psgg-go-sample/ebiten/testbed/game"
 )
 
 func main() {
