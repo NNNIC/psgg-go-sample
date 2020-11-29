@@ -1,6 +1,7 @@
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/NNNIC/psgg-go-sample v0.0.0-20201115012505-30de9584acb1 h1:jYKptxq0N5NjLlRd593UOtXbFwmcRZJX93nI6BZyREM=
+github.com/NNNIC/psgg-go-sample v0.0.0-20201129041656-15b8d4bb8bc3 h1:bFNe5h3r4xNnmX9Ghda6Uhgatod/SOpE+8obz9lkz94=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201115014927-d8ecfbde415a h1:R2y6FBc9Ad+YVHNS7LiMJPagGHiilmPxEyrBp0d73DU=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201115014927-d8ecfbde415a/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201121014942-c3a9be8903a7 h1:hqLpq33YK1rue149rqoS7dpVmoxo1yr6eNMSKpGS+qc=
@@ -13,6 +14,8 @@ github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122140928-8c7
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122140928-8c7f020ac33a/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122234530-86d715f8c42b h1:BvELUf3QLCf1IrPVLQByrS22XMhhir2oMZMmAnnSZzo=
 github.com/NNNIC/psgg-go-sample/ebiten/resources/sgimg v0.0.0-20201122234530-86d715f8c42b/go.mod h1:3XZZL+VIauKUsL0r+4E4FBbzoMbP4fT85waoBf4wAZI=
+github.com/NNNIC/psgg-go-sample/ebiten/rotatex3 v0.0.0-20201129041656-15b8d4bb8bc3 h1:jeVA75P5gYGj1vgSDV4AzMqkKMDHmOMVB+i1NLjS7Kw=
+github.com/NNNIC/psgg-go-sample/ebiten/rotatex3 v0.0.0-20201129041656-15b8d4bb8bc3/go.mod h1:zF6TvRxmcgWUr/JEi2I6PXUhs9yuL9SORoG5DwSoHKw=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200222043503-6f7a984d4dc4/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20200707082815-5321531c36a2/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20201108214237-06ea97f0c265/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
