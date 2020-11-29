@@ -1,0 +1,2163 @@
+﻿;PSGG Editor Backup File
+version=1.1
+file=mainControl.xlsx
+guid=ff885535-b673-49e2-b20c-baad63b8cd8a
+;set read_from  excel or psgg
+read_from=psgg
+;set savemode with_excel or psgg_only
+save_mode=psgg_only
+;set check_excel_writable yes or no
+check_excel_writable=no
+
+------#======*<Guid(D13821FE-FA27-4B04-834C-CEC1E5670F48)>*======#------
+
+sheet=state-chart
+nameid_list=,n001,n002,n003,n004,n019,n01e,n005,n01a,,n006,,n021,n007,,n01b,n01c,n01d,n008,n009,n00a,n00b,,n00c,n00d,,n00e,n00f,,n010,n011,,n01f,n012,n013,n014,,n016,n017,n018,,,,,,,,,
+stateid_list=,,,,s0001,s0002,s0025,s0026,s0027,s0028,s0029,s002b,s002c,s002d,s002e,s002f,s0030,s0031,s0032,s0033,s0034,s0035,s0036,s0037,s0038,s0024,s003a,s0039,s003b,s003d,s003c,s003e,s003f,s0040,s0041,s0042,s0043,s0044,s0045,s0046,s0047,s0048,s0049,s004a,s004b,s004c,s004e,s004d,s004f,s0050,s0052,s0051,s0053,s0054,s0056,s0057,s0059,s0055,s0058,s005c,s005b,s005f,s005d,s0060,s005a,s0064,s0062,s0063,s0066,s0065,s0067,s0068,s006a,s0069,s006b,s006d,s006c,,,,,,s006e
+max_name_id=33
+max_state_id=110
+[id_name_dic]
+n001=thumbnail
+n002=state
+n003=state-cmt
+n004=state-ref
+n005=nextstate
+n006=embed
+n007=members
+n008=vars
+n009=init
+n00a=init-cmt
+n00b=init-ref
+n00c=update
+n00d=update-cmt
+n00e=wait
+n00f=wait-cmt
+n010=post_wait
+n011=post_wait-cmt
+n012=branch
+n013=branch-cmt
+n014=brcond
+n016=!dir
+n017=!pos
+n018=!uuid
+n019=state-typ
+n01a=gosubstate
+n01b=loop_init
+n01c=loop_cond
+n01d=loop_next
+n01e=basestate
+n01f=nowait
+n021=v
+
+
+[id_state_dic]
+s0001=S_START
+s0002=S_END
+s0024=S_1stRotation
+s0025=S_COUNT
+s0026=S_2ndRotation
+s0027=S_3rdRotation
+s0028=S_WAIT
+s0029=S_WAIT6
+s002b=S_TERMINAL
+s002c=S_WAIT1
+s002d=S_TERMINAL1
+s002e=S_WAIT2
+s002f=S_WAIT3
+s0030=S_CLEARTERM
+s0031=S_WAIT4
+s0032=S_RotationOverRay
+s0033=S_WAIT5
+s0034=S_CHANGEBG
+s0035=S_WAIT7
+s0036=S_SETBGRED
+s0037=S_WAIT8
+s0038=S_WAIT9
+s0039=S_SETBGBLUE
+s003a=S_WAIT10
+s003b=S_SETBGGREEN
+s003c=S_MENU
+s003d=S_BACKTO_MENU
+s003e=S_CLEARALL
+s003f=S_SHOWMASCOT
+s0040=S_WAIT11
+s0041=S_LOAD_NIC
+s0042=S_FADEINTEST
+s0043=S_CLEARALL1
+s0044=S_LOP000
+s0045=S_SBS000
+s0046=S_RET000
+s0047=S_PAS000
+s0048=S_LOP001
+s0049=S_SBS001
+s004a=S_RET001
+s004b=S_DrawMascot
+s004c=S_SETBG
+s004d=S_PAS001
+s004e=S_FADEOUT
+s004f=S_WAIT12
+s0050=S_FADEIN
+s0051=S_SHOWMASCOT1
+s0052=S_PAS002
+s0053=S_FADEOUT1
+s0054=S_FADEOUT2
+s0055=C_MEMO
+s0056=S_FADEIN1
+s0057=S_DISPLAY_BLK
+s0058=S_WAIT_CLRDRAW
+s0059=S_DISPLAY_GOPHER
+s005a=S_SETBG1
+s005b=S_INIT
+s005c=S_WAIT13
+s005d=S_TEXT
+s005f=S_INIT1
+s0060=S_OPENING
+s0062=S_GAMEOVER
+s0063=S_ESC
+s0064=S_TIMEOUT
+s0065=S_OPENING1
+s0066=S_LOAD_GOPHER
+s0067=E_GAME_ETC
+s0068=S_LOAD_EBITEN
+s0069=S_GAMEOVER1
+s006a=S_CLEARALL2
+s006b=S_DISPLAY_SCORE
+s006c=S_IS_RELEASE
+s006d=E_0000
+s006e=S_VERSION
+
+
+[s0001]
+n002=S_START
+n019=start
+n005=S_INIT
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=30,12
+n018=100001
+
+[s0002]
+n002=S_END
+n019=end
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=2309,1635
+n018=100002
+
+[s0024]
+n002=S_1stRotation
+n005=S_WAIT
+n009=@@@
+if g.GophersImage == nil {
+    img, _, err := image.Decode(bytes.NewReader(g.Gophers_jpg()))
+    if err != nil {
+	log.Fatal(err)
+    }
+    g.GophersImage = ebiten.NewImageFromImage(img )
+}
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64(g.Count % 360) * 2 * math.Pi / 360 )
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=786,1203
+n018=100003
+
+[s0025]
+n001=(bitmap)
+n002=S_COUNT
+n005=S_WAIT4
+n007=var cnt[[state>>lc]] int
+n009=cnt[[state>>lc]] = 0
+n00c=@@@
+g.TermPrint("Count : " + strconv.Itoa(cnt[[state>>lc]]))
+cnt[[state>>lc]]++
+@@@
+
+n00e=cnt[[state>>lc]] < 100
+n010=
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1222,611
+n018=100004
+
+[s0026]
+n002=S_2ndRotation
+n005=S_WAIT6
+n009=@@@
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64((g.Count*3)%360) * 2 * math.Pi / 360)
+	op.GeoM.Scale(0.5, 0.5)
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1169,1203
+n018=100005
+
+[s0027]
+n002=S_3rdRotation
+n005=S_BACKTO_MENU
+n009=@@@
+drawfunc := func() {
+	w, h := g.GophersImage.Size()
+	op := &ebiten.DrawImageOptions{}
+	// Move the image's center to the screen's upper-left corner.
+	// This is a preparation for rotating. When geometry matrices are applied,
+	// the origin point is the upper-left corner.
+	op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+	// Rotate the image. As a result, the anchor point of this rotate is
+	// the center of the image.
+	op.GeoM.Rotate(float64((g.Count*6)%360) * 2 * math.Pi / 360)
+	op.GeoM.Scale(0.2, 0.2)
+	// Move the image to the screen's center.
+	op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+	g.Screen.DrawImage(g.GophersImage, op)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1557,1203
+n018=100006
+
+[s0028]
+n002=S_WAIT
+n005=S_2ndRotation
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1000
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=976,1203
+n018=100007
+
+[s0029]
+n002=S_WAIT6
+n005=S_3rdRotation
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1000
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1357,1203
+n018=100008
+
+[s002b]
+n001=(bitmap)
+n002=S_TERMINAL
+n005=S_WAIT1
+n009=g.TermPrint("= TERMAINAL TEST = ")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=481,615
+n018=100009
+
+[s002c]
+n001=(bitmap)
+n002=S_WAIT1
+n005=S_TERMINAL1
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=668,616
+n018=100010
+
+[s002d]
+n002=S_TERMINAL1
+n005=S_WAIT2
+n009=g.TermPrint("Count 0 to 99")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=855,618
+n018=100011
+
+[s002e]
+n002=S_WAIT2
+n005=S_COUNT
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1039,614
+n018=100012
+
+[s002f]
+n002=S_WAIT3
+n005=S_BACKTO_MENU
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1837,610
+n018=100013
+
+[s0030]
+n002=S_CLEARTERM
+n005=S_WAIT3
+n009=g.TermClear()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1637,612
+n018=100014
+
+[s0031]
+n002=S_WAIT4
+n005=S_CLEARTERM
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1000
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1432,611
+n018=100015
+
+[s0032]
+n002=S_RotationOverRay
+n005=S_WAIT5
+n009=g.TermPrint("= ROTAION OVERLAY = ")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=414,1203
+n018=100016
+
+[s0033]
+n002=S_WAIT5
+n005=S_1stRotation
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=598,1203
+n018=100017
+
+[s0034]
+n002=S_CHANGEBG
+n005=S_WAIT7
+n009=@@@
+g.TermPrint("= BACKGROUND COLOR CHANGE =");
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=424,930
+n018=100018
+
+[s0035]
+n002=S_WAIT7
+n005=S_SETBGRED
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=652,930
+n018=100019
+
+[s0036]
+n002=S_SETBGRED
+n005=S_WAIT8
+n009=@@@
+drawfunc := func() {
+    g.Screen.Fill(color.RGBA{0xff,0,0,0xff})
+}
+g.AddDrawBg(drawfunc)
+
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=882,930
+n018=100020
+
+[s0037]
+n002=S_WAIT8
+n005=S_SETBGBLUE
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1094,930
+n018=100021
+
+[s0038]
+n002=S_WAIT9
+n005=S_SETBGGREEN
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1535,930
+n018=100022
+
+[s0039]
+n002=S_SETBGBLUE
+n005=S_WAIT9
+n009=@@@
+drawfunc := func() {
+    g.Screen.Fill(color.RGBA{0x00,0xff,0,0xff})
+}
+g.AddDrawBg(drawfunc)
+
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1323,930
+n018=100023
+
+[s003a]
+n002=S_WAIT10
+n005=S_BACKTO_MENU
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1988,930
+n018=100024
+
+[s003b]
+n002=S_SETBGGREEN
+n005=S_WAIT10
+n009=@@@
+drawfunc := func() {
+    g.Screen.Fill(color.RGBA{0x00,0x00,0xff,0xff})
+}
+g.AddDrawBg(drawfunc)
+
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1776,930
+n018=100025
+
+[s003c]
+n002=S_MENU
+n009=@@@
+g.TermPrint("==== TEST =====")
+g.TermPrint("Push 1 ... Termainal Test")
+g.TermPrint("Push 2 ... Background Color Change Test")
+g.TermPrint("Push 3 ... Ebiten Rotaion Overlay Demo")
+g.TermPrint("Push 4 ... StateGo Mascot Demo")
+g.TermPrint("Push G ... Gopher vs Nic")
+g.TermPrint("Push T ... Try a new feature")
+g.TermPrint("")
+g.TermPrint("Push C ... Cear all");
+g.TermPrint("")
+g.TermPrint("PLEASE PUSH KEY!")
+@@@
+
+n00c=
+n00e=
+n012=@@@
+brifc(S_TERMINAL);
+brelseifc(S_CHANGEBG);
+brelseifc(S_RotationOverRay);
+brelseifc(S_SHOWMASCOT);
+brelseifc(S_SHOWMASCOT1);
+brelseifc(S_FADEINTEST);
+brelseif(S_CLEARALL);
+@@@
+
+n013=@@@
+1
+2
+3
+4
+G
+T
+C
+@@@
+
+n014=@@@
+ebiten.IsKeyPressed(ebiten.Key1)
+ebiten.IsKeyPressed(ebiten.Key2)
+ebiten.IsKeyPressed(ebiten.Key3)
+ebiten.IsKeyPressed(ebiten.Key4)
+ebiten.IsKeyPressed(ebiten.KeyG)
+ebiten.IsKeyPressed(ebiten.KeyT)
+ebiten.IsKeyPressed(ebiten.KeyC)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=30,644
+n018=100026
+
+[s003d]
+n002=S_BACKTO_MENU
+n005=S_IS_RELEASE
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=482,137
+n018=100027
+
+[s003e]
+n002=S_CLEARALL
+n005=S_BACKTO_MENU
+n009=g.ClearAll()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=392,2766
+n018=100028
+
+[s003f]
+n002=S_SHOWMASCOT
+n005=S_WAIT11
+n009=@@@
+g.TermPrint(" = STATE GO MASCOT DEMO = ")
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=407,1554
+n018=100029
+
+[s0040]
+n002=S_WAIT11
+n005=S_LOAD_NIC
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 1500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=613,1554
+n018=100030
+
+[s0041]
+n002=S_LOAD_NIC
+n005=S_CLEARALL1
+n009=@@@
+if g.MascotImage == nil {
+    img, _, err := image.Decode(bytes.NewReader(g.Mascot64_png()))
+    if err != nil {
+	log.Fatal(err)
+    }
+    g.MascotImage = ebiten.NewImageFromImage(img )
+}
+drawfunc := func() {
+	g.DrawImage(g.MascotImage,8,8,0,1)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=822,1558
+n018=100031
+
+[s0042]
+n001=(bitmap)
+n002=S_FADEINTEST
+n005=S_FADEOUT
+n009=g.TermPrint(" = FADE OUT -> IN = ")
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=438,2330
+n018=100043
+
+[s0043]
+n002=S_CLEARALL1
+n005=S_SETBG
+n009=g.ClearAll()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1028,1560
+n018=100033
+
+[s0044]
+n002=S_LOP000
+n019=loop
+n005=S_PAS000
+n01a=S_SBS000
+n007=var loop1 = 0
+n01b=loop1 = 0
+n01c=loop1 < (g.ScreenWidth / 64)
+n01d=loop1++
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1507,1628
+n018=100034
+
+[s0045]
+n002=S_SBS000
+n019=substart
+n005=S_LOP001
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1595,1819
+n018=100035
+
+[s0046]
+n002=S_RET000
+n019=subreturn
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=2150,1771
+n018=100036
+
+[s0047]
+n002=S_PAS000
+n019=pass
+n005=S_BACKTO_MENU
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1901,1599
+n018=100037
+
+[s0048]
+n002=S_LOP001
+n019=loop
+n005=S_RET000
+n01a=S_SBS001
+n007=var loop2 = 0
+n01b=loop2 = 0
+n01c=loop2 < (g.ScreenHeight / 64)
+n01d=loop2++
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1711,1819
+n018=100038
+
+[s0049]
+n002=S_SBS001
+n019=substart
+n005=S_DrawMascot
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1805,1920
+n018=100039
+
+[s004a]
+n002=S_RET001
+n019=subreturn
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=2127,1922
+n018=100040
+
+[s004b]
+n001=#8NwQzENG31mrQPGgETFhVg==
+n002=S_DrawMascot
+n005=S_RET001
+n009=@@@
+x := loop1
+y := loop2
+drawfunc := func() {
+    g.DrawImage(g.MascotImage, float64(x*64+32),float64(y*64+32),0,1)
+}
+g.AddDrawStage(drawfunc)
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1908,1921
+n018=100041
+
+[s004c]
+n001=(bitmap)
+n002=S_SETBG
+n005=S_LOP000
+n009=@@@
+drawfunc := func() {
+    g.Screen.Fill(color.RGBA{0,56,133,0xff})
+}
+g.AddDrawBg(drawfunc)
+
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1236,1558
+n018=100042
+
+[s004d]
+n002=S_PAS001
+n019=pass
+n005=S_BACKTO_MENU
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1647,2332
+n018=100044
+
+[s004e]
+n002=S_FADEOUT
+n005=S_FADEIN
+n007=var goal[[state>>lc]] float64
+n008=@@@
+fadestepnum := 60.0
+col := color.RGBA{255,255,255,255}
+@@@
+
+n009=@@@
+if g.FadeImage == nil {
+    img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
+    g.FadeImage = img
+}
+goal[[state>>lc]] = float64(g.Count) + fadestepnum
+drawfunc := func() {
+    alpha := (fadestepnum - (goal[[state>>lc]] - float64(g.Count))) / fadestepnum * 255.0
+    g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,clamp255(int(alpha))})
+    w, h := g.FadeImage.Size()
+    op := &ebiten.DrawImageOptions{}
+    op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+    op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+    g.Screen.DrawImage(g.FadeImage, op)
+}
+g.ClrDrawFe()
+g.AddDrawFe(drawfunc)
+@@@
+
+n00e=float64(g.Count) < goal[[state>>lc]]
+n010=
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=657,2331
+n018=100045
+
+[s004f]
+n002=S_WAIT12
+n005=S_PAS001
+n007=var time[[state>>lc]] int64
+n009=@@@
+time[[state>>lc]] = g.TimeNowMs() + 30*1000
+@@@
+
+n00c=@@@
+x,y := ebiten.CursorPosition()
+g.TermPrint(strconv.Itoa(x) + "," + strconv.Itoa(y))
+@@@
+
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1419,2335
+n018=100046
+
+[s0050]
+n002=S_FADEIN
+n005=S_TEXT
+n007=var goal[[state>>lc]] float64
+n008=@@@
+fadestepnum := 60.0
+col := color.RGBA{255,255,255,255}
+@@@
+
+n009=@@@
+if g.FadeImage == nil {
+    img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
+    g.FadeImage = img
+}
+goal[[state>>lc]] = float64(g.Count) + fadestepnum
+drawfunc := func() {
+    alpha := (goal[[state>>lc]] - float64(g.Count)) / fadestepnum * 255.0
+    g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(clamp255(int(alpha)))})
+    w, h := g.FadeImage.Size()
+    op := &ebiten.DrawImageOptions{}
+    op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+    op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+    g.Screen.DrawImage(g.FadeImage, op)
+}
+g.ClrDrawFe()
+g.AddDrawFe(drawfunc)
+@@@
+
+n00e=float64(g.Count) < goal[[state>>lc]]
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=868,2336
+n018=100047
+
+[s0051]
+n002=S_SHOWMASCOT1
+n005=S_INIT1
+n009=g.TermClear()
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=325,220
+n018=100048
+
+[s0052]
+n002=S_PAS002
+n019=pass
+n005=S_BACKTO_MENU
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1295,1909
+n018=100049
+
+[s0053]
+n002=S_FADEOUT1
+n005=S_SETBG1
+n007=var goal[[state>>lc]] float64
+n008=@@@
+fadestepnum := 60.0
+col := color.RGBA{255,255,255,255}
+@@@
+
+n009=@@@
+if g.FadeImage == nil {
+    img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
+    g.FadeImage = img
+}
+goal[[state>>lc]] = float64(g.Count) + fadestepnum
+drawfunc := func() {
+    alpha := (fadestepnum - (goal[[state>>lc]] - float64(g.Count))) / fadestepnum * 255.0
+    g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,clamp255(int(alpha))})
+    w, h := g.FadeImage.Size()
+    op := &ebiten.DrawImageOptions{}
+    op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+    op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+    g.Screen.DrawImage(g.FadeImage, op)
+}
+g.ClrDrawFe()
+g.AddDrawFe(drawfunc)
+@@@
+
+n00e=float64(g.Count) < goal[[state>>lc]]
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=26,1504
+n018=100050
+
+[s0054]
+n002=S_FADEOUT2
+n019=pass
+n005=S_PAS002
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=2375,1679
+n018=100051
+
+[s0055]
+n002=C_MEMO
+n003=Please go to link to view memo.
+n004=game-design-memo.txt
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=310,15
+n018=100052
+
+[s0056]
+n002=S_FADEIN1
+n005=S_WAIT_CLRDRAW
+n007=var goal[[state>>lc]] float64
+n008=@@@
+fadestepnum := 60.0
+col := color.RGBA{255,255,255,255}
+@@@
+
+n009=@@@
+if g.FadeImage == nil {
+    img := ebiten.NewImage(g.ScreenWidth, g.ScreenHeight)
+    g.FadeImage = img
+}
+goal[[state>>lc]] = float64(g.Count) + fadestepnum
+drawfunc := func() {
+    alpha := (goal[[state>>lc]] - float64(g.Count)) / fadestepnum * 255.0
+    g.FadeImage.Fill(color.RGBA{col.R,col.G,col.B,uint8(clamp255(int(alpha)))})
+    w, h := g.FadeImage.Size()
+    op := &ebiten.DrawImageOptions{}
+    op.GeoM.Translate(-float64(w)/2, -float64(h)/2)
+    op.GeoM.Translate(float64(g.ScreenWidth/2), float64(g.ScreenHeight/2))
+    g.Screen.DrawImage(g.FadeImage, op)
+}
+g.ClrDrawFe()
+g.AddDrawFe(drawfunc)
+@@@
+
+n00e=float64(g.Count) < goal[[state>>lc]]
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1297,1503
+n018=100053
+
+[s0057]
+n002=S_DISPLAY_BLK
+n005=S_DISPLAY_GOPHER
+n009=createBlk()
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=429,1505
+n018=100054
+
+[s0058]
+n002=S_WAIT_CLRDRAW
+n003=600秒待つ
+n005=
+n007=var time[[state>>lc]] int64
+n009=@@@
+time[[state>>lc]] = g.TimeNowMs() + 600*1000
+@@@
+
+n00c=
+n00e=
+n012=@@@
+brifc(S_ESC);
+brelseifc(S_TIMEOUT);
+brelseif(S_GAMEOVER);
+@@@
+
+n013=@@@
+ESC
+TIME OUT
+Game Over
+@@@
+
+n014=@@@
+ebiten.IsKeyPressed(ebiten.KeyEscape)
+time[[state>>lc]] < g.TimeNowMs()
+g.GameOver
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1508,1506
+n018=100056
+
+[s0059]
+n002=S_DISPLAY_GOPHER
+n005=S_DISPLAY_SCORE
+n009=@@@
+createGopher(0)
+createGopher(1)
+createGopher(2)
+createGopher(3)
+createGopher(4)
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=605,1506
+n018=100057
+
+[s005a]
+n002=S_SETBG1
+n005=S_DISPLAY_BLK
+n009=@@@
+drawfunc := func() {
+    g.Screen.Fill(color.RGBA{0,56,133,0xff})
+}
+g.AddDrawBg(drawfunc)
+
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=227,1506
+n018=100058
+
+[s005b]
+n002=S_INIT
+n005=S_IS_RELEASE
+n009=@@@
+g.ClearAll()
+fontInit()
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=147,12
+n018=100060
+
+[s005c]
+n002=S_WAIT13
+n005=S_FADEIN1
+n007=var time[[state>>lc]] int64
+n009=time[[state>>lc]] = g.TimeNowMs() + 500
+n00e=time[[state>>lc]] > g.TimeNowMs()
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1110,1506
+n018=100061
+
+[s005d]
+n002=S_TEXT
+n005=S_WAIT12
+n009=@@@
+g.AddDrawStage(func() {
+	textdraw(g.Screen, 10, 100, "TEST", color.White)
+})
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=1075,2336
+n018=100063
+
+[s005f]
+n002=S_INIT1
+n005=S_LOAD_GOPHER
+n009=@@@
+g.ClrDrawStageListOnUpdate = true
+g.GameOver = false
+g.ScoreMul = 1
+g.ScoreBase = 1000
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=533,209
+n018=100064
+
+[s0060]
+n002=S_OPENING
+n005=S_OPENING1
+n021=[[state>>lc]]
+n007=var x[[v]], y[[v]] int
+n008=
+n009=@@@
+x[[v]] = 50
+y[[v]] = 100
+gdt = func() {
+    x:=x[[v]]
+    y:=y[[v]]
+    textdrawBig(g.Screen, clamp(x,-1000,207), y,     "GOPHERS", color.White)
+    textdrawBig(g.Screen, clamp(x-100,-1000,242), y+50,  " LOVE", color.White)
+    textdrawBig(g.Screen, clamp(x-200,-1000,242), y+100, "EBITEN", color.White)
+}
+@@@
+
+n00c=@@@
+//if !ebiten.IsKeyPressed(ebiten.KeyT) {
+//    x[[v]]++
+//}
+x[[v]]+=2
+g.AddDrawStage(gdg)
+g.AddDrawStage(gde)
+g.AddDrawStage(gdt)
+//fmt.Println(x[[v]])
+g.AddDrawStage(gdv)
+@@@
+
+n00e=x[[v]] < 450
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=290,677
+n018=100065
+
+[s0062]
+n002=S_GAMEOVER
+n005=S_GAMEOVER1
+n009=fmt.Println("[[state]]")
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1728,1719
+n018=100068
+
+[s0063]
+n002=S_ESC
+n005=S_CLEARALL2
+n009=fmt.Println("[[state]]")
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1744,1432
+n018=100066
+
+[s0064]
+n002=S_TIMEOUT
+n005=S_CLEARALL2
+n009=fmt.Println("[[state]]")
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1742,1553
+n018=100067
+
+[s0065]
+n002=S_OPENING1
+n005=S_FADEOUT1
+n009=@@@
+gds = func() {
+    textdraw(g.Screen, 200, 400, "PUSH SPACE TO START", color.White)
+}
+
+@@@
+
+n00c=@@@
+g.AddDrawStage(gdg)
+g.AddDrawStage(gde)
+g.AddDrawStage(gdt)
+g.AddDrawStage(gds)
+g.AddDrawStage(gdv)
+@@@
+
+n00e=@@@
+!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs()== nil
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=495,679
+n018=100069
+
+[s0066]
+n002=S_LOAD_GOPHER
+n005=S_LOAD_EBITEN
+n009=@@@
+img, _, err := image.Decode(bytes.NewReader(g.Gophers128_png()))
+if err != nil {
+    log.Fatal(err)
+}
+g.GophersImage2 = ebiten.NewImageFromImage(img)
+gdg = func() {
+    g.DrawImage(g.GophersImage2, 315, 290, 0,1)
+}
+@@@
+
+n01f=nowait
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=746,205
+n018=100070
+
+[s0067]
+n002=E_GAME_ETC
+n006=@@@
+var gdg func()
+var gde func()
+var gdt func()
+var gds func()
+var gdp func()
+var gdv func()
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=534,49
+n018=100071
+
+[s0068]
+n002=S_LOAD_EBITEN
+n005=S_VERSION
+n009=@@@
+img, _, err := image.Decode(bytes.NewReader(g.Ebiten32_png()))
+if err != nil {
+    log.Fatal(err)
+}
+g.EbitenImage = ebiten.NewImageFromImage(img)
+
+gde = func() {
+	g.DrawImage(g.EbitenImage,400,250,0,1)
+	g.DrawImage(g.EbitenImage,400,290,0,1)
+	g.DrawImage(g.EbitenImage,400,330,0,1)
+	g.DrawImage(g.EbitenImage,450,250,0,1)
+	g.DrawImage(g.EbitenImage,450,290,0,1)
+	g.DrawImage(g.EbitenImage,450,330,0,1)
+}
+
+@@@
+
+n01f=nowait
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=960,202
+n018=100072
+
+[s0069]
+n002=S_GAMEOVER1
+n005=S_CLEARALL2
+n009=@@@
+gdp = func() {
+    textdrawBigWFrame(g.Screen, 220, 220, "PERFECT", color.White, color.White)
+}
+gds = func() {
+    textdraw(g.Screen, 200, 400, "PUSH SPACE TO END", color.White)
+}
+@@@
+
+n00c=@@@
+g.AddDrawStage(gdp)
+g.AddDrawStage(gds)
+@@@
+
+n00e=@@@
+!ebiten.IsKeyPressed(ebiten.KeySpace) && !ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) && ebiten.TouchIDs() == nil
+@@@
+
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=1980,1772
+n018=100073
+
+[s006a]
+n002=S_CLEARALL2
+n005=S_FADEOUT2
+n009=g.ClearAll()
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=2156,1724
+n018=100074
+
+[s006b]
+n002=S_DISPLAY_SCORE
+n005=S_WAIT13
+n009=createScore()
+n016=@@@
+/Game/
+(435,1486)
+The root
+@@@
+
+n017=812,1506
+n018=100075
+
+[s006c]
+n002=S_IS_RELEASE
+n012=@@@
+brifc(S_SHOWMASCOT1);
+brelse(S_MENU);
+@@@
+
+n013=@@@
+?
+?
+@@@
+
+n014=@@@
+release
+?
+@@@
+
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=47,247
+n018=100079
+
+[s006d]
+n002=E_0000
+n006=release:=true
+n016=@@@
+/
+(100,100)
+The root
+@@@
+
+n017=365,4
+n018=100077
+
+[s006e]
+n002=S_VERSION
+n005=S_OPENING
+n009=@@@
+gdv = func() {
+    textdraw(g.Screen, 0, 20, "R11281054", color.White)
+}
+@@@
+
+n01f=nowait
+n016=@@@
+/Game/
+(100,100)
+
+@@@
+
+n017=105,677
+n018=100080
+
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=config
+
+###VARIOUS-CONTENTS-BEGIN###
+; The setting was created automatically. 2020/11/28 11:27:36
+; * pssgEditor version : 0.67.30231.03ea53bc5e4838b3cc470c0151bdb388841c75c2
+psggfile=@@@
+mainControl.psgg
+@@@
+xlsfile=@@@
+mainControl.xlsx
+@@@
+guid=@@@
+ff885535-b673-49e2-b20c-baad63b8cd8a
+@@@
+bitmap_width=2500
+bitmap_height=4000
+c_statec_cmt=1
+c_thumbnail=1
+c_contents=1
+force_display_outpin=0
+last_action=@@@
+init,Saved
+@@@
+target_pathdir=@@@
+/Game/
+@@@
+state_location_list=@@@
+
+@@@
+nodegroup_comment_list=@@@
+[{"Key":"\/","Value":"The root"},{"Key":"\/Game\/","Value":"The root"}]
+@@@
+nodegroup_pos_list=@@@
+[{"Key":"\/","Value":{"x":100,"y":100}},{"Key":"\/Game\/","Value":{"x":435,"y":1486}}]
+@@@
+fillter_state_location_list=@@@
+[{"Key":"\/","Value":[{"Key":"S_START","Value":{"x":30,"y":12}},{"Key":"S_END","Value":{"x":2309,"y":1635}},{"Key":"S_TERMINAL","Value":{"x":481,"y":615}},{"Key":"S_WAIT","Value":{"x":976,"y":1203}},{"Key":"S_WAIT1","Value":{"x":668,"y":616}},{"Key":"S_TERMINAL1","Value":{"x":855,"y":618}},{"Key":"S_WAIT2","Value":{"x":1039,"y":614}},{"Key":"S_WAIT3","Value":{"x":1837,"y":610}},{"Key":"S_COUNT","Value":{"x":1222,"y":611}},{"Key":"S_WAIT4","Value":{"x":1432,"y":611}},{"Key":"S_CLEARTERM","Value":{"x":1637,"y":612}},{"Key":"S_WAIT5","Value":{"x":598,"y":1203}},{"Key":"S_1stRotation","Value":{"x":786,"y":1203}},{"Key":"S_2ndRotation","Value":{"x":1169,"y":1203}},{"Key":"S_WAIT6","Value":{"x":1357,"y":1203}},{"Key":"S_3rdRotation","Value":{"x":1557,"y":1203}},{"Key":"S_CHANGEBG","Value":{"x":424,"y":930}},{"Key":"S_WAIT7","Value":{"x":652,"y":930}},{"Key":"S_WAIT8","Value":{"x":1094,"y":930}},{"Key":"S_SETBGRED","Value":{"x":882,"y":930}},{"Key":"S_WAIT9","Value":{"x":1535,"y":930}},{"Key":"S_SETBGBLUE","Value":{"x":1323,"y":930}},{"Key":"S_WAIT10","Value":{"x":1988,"y":930}},{"Key":"S_SETBGGREEN","Value":{"x":1776,"y":930}},{"Key":"S_RotationOverRay","Value":{"x":414,"y":1203}},{"Key":"S_MENU","Value":{"x":30,"y":644}},{"Key":"S_BACKTO_MENU","Value":{"x":482,"y":137}},{"Key":"S_CLEARALL","Value":{"x":392,"y":2766}},{"Key":"S_CLEARALL1","Value":{"x":1028,"y":1560}},{"Key":"S_SHOWMASCOT","Value":{"x":407,"y":1554}},{"Key":"S_WAIT11","Value":{"x":613,"y":1554}},{"Key":"S_LOP000","Value":{"x":1507,"y":1628}},{"Key":"S_SBS000","Value":{"x":1595,"y":1819}},{"Key":"S_RET000","Value":{"x":2150,"y":1771}},{"Key":"S_PAS000","Value":{"x":1901,"y":1599}},{"Key":"S_LOP001","Value":{"x":1711,"y":1819}},{"Key":"S_SBS001","Value":{"x":1805,"y":1920}},{"Key":"S_RET001","Value":{"x":2127,"y":1922}},{"Key":"S_DrawMascot","Value":{"x":1908,"y":1921}},{"Key":"S_SETBG","Value":{"x":1236,"y":1558}},{"Key":"S_FADEINTEST","Value":{"x":438,"y":2330}},{"Key":"S_PAS001","Value":{"x":1647,"y":2332}},{"Key":"S_FADEOUT","Value":{"x":657,"y":2331}},{"Key":"S_WAIT12","Value":{"x":1419,"y":2335}},{"Key":"S_FADEIN","Value":{"x":868,"y":2336}},{"Key":"S_SHOWMASCOT1","Value":{"x":440,"y":1490}},{"Key":"S_PAS002","Value":{"x":1295,"y":1909}},{"Key":"S_FADEOUT1","Value":{"x":673,"y":1491.6665}},{"Key":"S_FADEOUT2","Value":{"x":1077.33337,"y":1487.66675}},{"Key":"S_LOAD_NIC","Value":{"x":822,"y":1558}},{"Key":"S_INIT","Value":{"x":147,"y":12}},{"Key":"S_TEXT","Value":{"x":1075,"y":2336}},{"Key":"E_0000","Value":{"x":365,"y":4}},{"Key":"S_IS_RELEASE","Value":{"x":47,"y":247}},{"Key":"____altnative_state____Game","Value":{"x":435,"y":1486}}]},{"Key":"\/Game\/","Value":[{"Key":"S_MENU","Value":{"x":34.61538,"y":240}},{"Key":"S_SHOWMASCOT1","Value":{"x":325,"y":220}},{"Key":"S_PAS002","Value":{"x":2353,"y":105}},{"Key":"S_FADEOUT1","Value":{"x":26,"y":1504}},{"Key":"S_FADEOUT2","Value":{"x":2375,"y":1679}},{"Key":"C_MEMO","Value":{"x":310,"y":15}},{"Key":"S_FADEIN1","Value":{"x":1297,"y":1503}},{"Key":"S_WAIT_CLRDRAW","Value":{"x":1508,"y":1506}},{"Key":"S_DISPLAY_GOPHER","Value":{"x":605,"y":1506}},{"Key":"S_SETBG1","Value":{"x":227,"y":1506}},{"Key":"S_WAIT13","Value":{"x":1110,"y":1506}},{"Key":"S_INIT1","Value":{"x":533,"y":209}},{"Key":"S_OPENING","Value":{"x":290,"y":677}},{"Key":"S_ESC","Value":{"x":1744,"y":1432}},{"Key":"S_TIMEOUT","Value":{"x":1742,"y":1553}},{"Key":"S_GAMEOVER","Value":{"x":1728,"y":1719}},{"Key":"S_DISPLAY_BLK","Value":{"x":429,"y":1505}},{"Key":"S_OPENING1","Value":{"x":495,"y":679}},{"Key":"S_LOAD_GOPHER","Value":{"x":746,"y":205}},{"Key":"E_GAME_ETC","Value":{"x":534,"y":49}},{"Key":"S_LOAD_EBITEN","Value":{"x":960,"y":202}},{"Key":"S_GAMEOVER1","Value":{"x":1980,"y":1772}},{"Key":"S_CLEARALL2","Value":{"x":2156,"y":1724}},{"Key":"S_DISPLAY_SCORE","Value":{"x":812,"y":1506}},{"Key":"S_IS_RELEASE","Value":{"x":46.95237,"y":0.09522629}},{"Key":"S_VERSION","Value":{"x":105,"y":677}}]}]
+@@@
+linecolor_data=@@@
+[{"color":{"knownColor":0,"name":null,"state":2,"value":4285493103},"pattern":"BACKTO_"}]
+@@@
+use_external_command=0
+external_command=@@@
+
+@@@
+source_editor_set=@@@
+
+@@@
+label_show=0
+label_text=@@@
+test
+@@@
+option_delete_thisstring=1
+option_delete_br_string=1
+option_delete_bracket_string=1
+option_delete_s_state_string=1
+option_copy_output_to_clipboard=0
+option_convert_with_confirm=0
+option_ignore_case_of_state=0
+option_editbranch_automode=1
+option_use_custom_prefix=0
+option_omit_basestate_string=0
+option_hide_basestate_contents=1
+option_hide_branchcmt_onbranchbox=0
+font_name=@@@
+MS UI Gothic
+@@@
+font_size=11
+comment_font_size=0
+contents_font_size=0
+state_width=140
+state_height=20
+state_short_width=50
+state_short_height=20
+comment_block_height=20
+content_max_height=200
+comment_block_fixed=0
+line_space=-1
+userbutton_title=@@@
+
+@@@
+userbutton_command=@@@
+
+@@@
+userbutton_callafterconvert=0
+itemeditform_size_list=@@@
+[{"Key":"init","Value":{"height":656,"width":760}},{"Key":"nowait","Value":{"height":401,"width":330}},{"Key":"post_wait","Value":{"height":398,"width":760}},{"Key":"update","Value":{"height":592,"width":760}},{"Key":"wait","Value":{"height":401,"width":1445}}]
+@@@
+decoimage_typ_name=@@@
+sym
+@@@
+
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=template-source
+
+###VARIOUS-CONTENTS-BEGIN###
+
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=template-statefunc
+
+###VARIOUS-CONTENTS-BEGIN###
+<<<?state/^C_/
+eof>>>
+
+/*
+    [[state]]
+    [[state-cmt]]
+*/
+<<<?state/^E_/
+[[embed]]
+eof>>>
+
+<<<?state-typ/^start$/
+[[state>>lc]] := func( bFirst  bool ) {
+    gotoState(funcId[[nextstate>>lc]])
+}
+eof>>>
+
+<<<?state-typ/^pass$/
+[[state>>lc]] := func( bFirst  bool ) {
+    gotoState(funcId[[nextstate>>lc]])
+    noWait()
+}
+eof>>>
+
+<<<?state-typ/^end$/
+[[state>>lc]] := func ( bFirst  bool ) {
+     // end of state machine
+}
+eof>>>
+
+<<<?state-typ/^gosub$/
+[[state>>lc]] := func ( bFirst bool ) {
+    gosubState(funcId[[gosubstate>>lc]], funcId[[nextstate>>lc]])
+    noWait()
+}
+eof>>>
+
+<<<?state-typ/^subreturn$/
+[[state>>lc]] := func ( bFirst bool ) {
+    returnState()
+    noWait()
+}
+eof>>>
+
+<<<?state-typ/^loop$/
+[[state>>lc]] := func ( bFirst bool ) {
+    [[loop_init]]
+    gotoState(funcId[[state>>lc]]LoopCheck)
+    noWait()
+}
+[[state>>lc]]LoopCheck := func ( bFirst bool ) {
+    if [[loop_cond]] {
+        gosubState(funcId[[gosubstate>>lc]], funcId[[state>>lc]]LoopNext)
+    } else {
+        gotoState(funcId[[nextstate>>lc]])
+    }
+    noWait()
+}
+[[state>>lc]]LoopNext := func(bFirst bool ) {
+    [[loop_next]]
+    gotoState(funcId[[state>>lc]]LoopCheck)
+    noWait()
+}
+eof>>>
+
+[[state>>lc]] := func( bFirst  bool ) {
+
+    [[vars]]
+
+    <<<?init
+    if bFirst {
+        [[init]]
+    }
+    >>>
+
+    [[update]]
+
+    <<<?wait
+    if [[wait]] {
+         return
+    }
+    >>>
+
+    [[post_wait]]
+
+    [[branch]]
+
+    <<<?nextstate
+    if !hasNextState() {
+        gotoState(funcId[[nextstate>>lc]])
+    }
+    >>>
+    <<<?nowait
+    if hasNextState() {
+        noWait()
+    }
+    >>>
+}
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=setting.ini
+
+###VARIOUS-CONTENTS-BEGIN###
+[setting]
+
+psgg=mainControl.psgg
+xls=mainControl.xlsx
+sub_src=
+gen_src=mainControl.go
+
+manager_src=
+manager_dir=
+
+template_src=
+template_func=template-statefunc.txt
+
+help=help.ini
+helpweb=@@@
+psgg-starter-kit\starterkit2\go\helpweb.html
+@@@
+
+
+
+
+
+kitpath=psgg-starter-kit\starterkit2\go
+
+
+[setupinfo]
+
+starterkit=@@@
+https://github.com/NNNIC/psgg-starter-kit.git 06b417a6f220200aa8489d982802935e37bc35b6
+@@@
+
+
+
+
+
+lang=go
+framework=
+
+statemachine=mainControl
+prefix=__PREFIX__
+xlsdir=@@@
+g:\statego\samples\psgg-go-sample\test-ebiten\test9\sm
+@@@
+
+gendir=@@@
+g:\statego\samples\psgg-go-sample\test-ebiten\test9\sm
+@@@
+
+genrdir=.
+incrdir=.
+
+code_output_start=[STATEGO OUTPUT START]
+code_output_end=[STATEGO OUTPUT END]
+
+; This section has macro defines for converting.
+
+
+
+
+; commentline format  {%0} will be replaced to a comment.
+
+
+
+
+
+
+
+[jpn]
+
+title=GO スタートキット 2020/11/08
+
+detail=@@@
+Go 用のステートマシンを作成します。
+
+※サンプルプロジェクトを次のＵＲＬより入手可能。
+https://github.com/NNNIC/psgg-go-sample
+
+
+# ドキュメント用フォルダ
+   ステート図ファイルとエディタ起動用ショートカットを格納
+
+      G:\statego\samples\psgg-go-sample\sample
+
+  以下のファイルを作成します。
+
+      mainControl.pssg   --- エディタで次のエクセルファイルを開く。
+      mainControl.xlsx   --- ステート図格納用Excelファイル。エディタが編集。
+
+# ソース用フォルダ
+　エディタが生成ソースファイル`格納
+
+      G:\statego\samples\psgg-go-sample\sample
+
+  以下のファイルが作成されます。
+
+      mainControl.go  --- Excelファイルからの変換ソースを挿入。
+
+
+注意 : 既に同名のファイルがある場合は生成されません。
+　　　 削除してから生成してください。
+
+@@@
+
+
+
+
+
+
+
+[en]
+
+title=GO STARTER KIT 2020/11/08
+
+detail=@@@
+This dialog will create files for a state machine.
+
+* You may get the sample project from the below url.
+https://github.com/NNNIC/psgg-go-sample
+
+# Document Folder
+　This folder will contain a state chart file and the shortcut of the editor.
+
+      G:\statego\samples\psgg-go-sample\sample
+
+  File:
+
+      mainControl.pssg  --- The editor opens the below excel file.
+      mainControl.xlsx  --- Excel File that has a state chart. The editor edits this file.
+
+# Source Folder
+   This folder will contain a source file generated by the editor.
+
+      G:\statego\samples\psgg-go-sample\sample
+
+　File:
+      mainControl.go   -- the editor will convert from the excel file into this file.
+
+NOTE : If the same name files exists, the file will not be created.
+       Please delete the same name files ahead of the creation.
+
+
+@@@
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=help
+
+###VARIOUS-CONTENTS-BEGIN###
+[nextstate]
+
+jpn=次に実行するステートを指定する。
+en=Specify the next state to be executed.
+[branch]
+
+jpn=@@@
+分岐処理を指定する。
+１行に一つの分岐命令を書く。
+GUIにより上書きされるため引数は適当に指定する。
+例）
+br_YES(?);
+br_NO(?);
+br_UNKNOWN(?);
+@@@
+
+en=@@@
+Specify branch functions.
+Each line has a branch function.
+Specify a tentavie parameter for each branch function because GUI overwrites the parameter.
+i.e)
+br_YES(?);
+br_NO(?);
+br_UNKNOWN(?);
+@@@
+
+[update]
+
+jpn=更新処理を指定する。
+en=Specify a update process.
+[wait]
+
+jpn=@@@
+待ち条件を指定する。
+true時にループを解除する。
+@@@
+
+en=@@@
+Specify a waiting condition.
+Release the loop if the condition is true.
+@@@
+
+[gosubstate]
+
+en=Call Subroutine
+jpn=サブルーチン呼出し
+[loop_next]
+
+en=Loop increment.
+jpn=ループ用インクリメント
+[state]
+
+jpn=@@@
+ステート名を指定する。
+英文字、数字、アンダーバーで構成される。
+先頭は英文字およびアンダーバー。
+@@@
+
+en=@@@
+Specify a state name.
+The state name consits of alphabet, number and underbar except that the head characther should be alphabet or a underbar.
+@@@
+
+[init]
+
+jpn=初期化用処理を指定する。
+en=Specify a initial process.
+[post_wait]
+
+jpn='wait'後の処理を指定する。
+en=Specify the post process after 'wait'.
+[vars]
+
+en=Specify variable definitions.
+jpn=変数宣言を指定する。
+[nowait]
+
+en=
+jpn=
+[embed]
+
+en=@@@
+For embedding code.
+Enable this section if state name starts with "I_".
+Disabled state features.
+@@@
+
+jpn=@@@
+コード埋め込み用。
+ステート名がI_時に利用可能。
+ステート機能は利用できない。
+@@@
+
+[basestate]
+
+en=Set base state
+jpn=ベースステートのセット
+[!uuid]
+
+jpn=システムがステートのuuid指定に使用。
+en=@@@
+System uses this for the uuid of the state.
+@@@
+
+[state-typ]
+
+en=ステートタイプを指定
+[members]
+
+en=@@@
+Specify members, variables, classes,  etc.
+@@@
+
+jpn=メンバ変数及び関数等を指定する。
+[!dir]
+
+jpn=システムがステートのディレクトリ指定に使用。
+en=@@@
+System uses this for the directory path of the state.
+@@@
+
+[loop_init]
+
+en=Loop Initialization
+jpn=ループ初期化
+[thumbnail]
+
+jpn=説明用のイメージを指定する。
+en=@@@
+Specify a image for explanation of this state.
+@@@
+
+[loop_cond]
+
+en=Loop if the condition is true
+jpn=@@@
+ループ条件
+true時にループする。
+@@@
+###VARIOUS-CONTENTS-END###
+
+
+------#======*<Guid(70C5A739-223A-457D-8AEE-1A0E2050D5AE)>*======#------
+
+sheet=itemsinfo
+
+###VARIOUS-CONTENTS-BEGIN###
+[inpmethod]
+
+init=
+branch-cmt=
+state-ref=
+wait=
+wait-cmt=
+embed=
+v=
+gosubstate=
+loop_cond=
+branch=
+!dir=
+post_wait-cmt=
+nowait=@@@
+*select
+nowait
+@@@
+
+members=
+thumbnail=
+update-cmt=
+post_wait=
+state-cmt=
+state-typ=
+!pos=
+!uuid=
+nextstate=
+state=
+S_=
+brcond=
+stlc=
+update=
+init-cmt=
+basestate=
+loop_next=
+vars=
+C_=
+E_=
+init-ref=
+loop_init=
+[stateloc]
+
+E_=S1
+S_=S0
+C_=S2
+[itemcond]
+
+thumbnail=read_only,share,S.+
+branch=read_only,exclusion,S0
+state=read_only,share,S.+
+nextstate=read_only,exclusion,S0
+return=read_only,exclusion,S0
+brcond=read_only,exclusion,S0
+embed=read_only,exclusion,S1
+basestate=read_only,exclusion,(S0)
+state-typ=read_only,exclusion,(S0)
+###VARIOUS-CONTENTS-END###
+
+
+
+------#======*<Guid(4DC98CBA-6257-4E26-A454-A53F85BC234C)>*======#------
+
+hash=#8NwQzENG31mrQPGgETFhVg==
+
+###BITMAP-DATA-BEGIN###
+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
+###BITMAP-DATA-END###
+
+
