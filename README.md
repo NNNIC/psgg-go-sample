@@ -1,4 +1,4 @@
-wait to read because now writing.
+Wait a while till StateGo Beta 13 release ready.
 
 # psgg-go-sample
 
