@@ -7,7 +7,40 @@ I'd like to introduce how to use StateGo with Go programming language.
 Windows10  
 [StateGo](https://statego.programanic.com)
 
+## Folder Tree
 
+<pre>
+--/  
+  |   
+  +- ebiten  : StateGo samples for 2D Framework Ebiten   
+  |   
+  +- general : a StateGo sample for general purposes.   
+  |  
+  +- test    : "try and error" tests to research.  
+  |  
+  +- test-ebiten : "try and error" ebiten tests to research.  
+  |  
+  +- wiki    :  etc.  
+ </pre>
+ 
+## A sample for general purposes.
+
+Folder ``/general``  
+Open ``testControl.psgg`` using StateGo.
+
+Without or with any framework, you may use this state machine as the template.
+
+# State Chart
+
+![]()
+
+
+
+
+
+
+ 
+ 
 statego golang 
 
 Now developing.
