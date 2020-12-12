@@ -64,40 +64,34 @@ One feature is for calling general StateGo Control introduced above this section
 
 #### Run
 
+![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1.gif)
+
+### Sample #2
+
+This sample only differs testControl from ''sample #1''
+
+#### State Chart
+
+``testControl`` 
+<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es2test.png" width=400px/>
+
+### Playground
+Folder ``/ebiten/playground``
+
+This sample does not have ``testControl``.   
+You may create and put ``testControl`` into this sample.  
+
+### Gophers love ebiten
+Folder ``/ebiten/gopherslove``
+
+This a sample game using ebiten and StateGo.  
+
+![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/rotatex3-2.gif)
+
+### Webasembly version
+
+[You can play it.](https://nnnic.github.io/psgg-go-sampleweb/)
 
 
 
 
-
-
-
-
-
-
-
-
-
- 
- 
-statego golang 
-
-Now developing.
-
-referece
-https://www.spinute.org/go-by-example/random-numbers.html
-
-## ebiten with StateGo
-
-developing at ./ebiten
-
-### How to compile
-
-<pre>
-cd ebiten/rotatex3
-go run main.go 
-</pre>  
-
-To view StateGo file (*.psgg) download and install ./statego/StateGo_0.67.20953.exe 
-
-Play by clicking  
-<a href="https://github.com/NNNIC/psgg-go-sample/blob/main/wiki/rotatex3.gif"><img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/rotatex3.png" /></a>
