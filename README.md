@@ -57,10 +57,10 @@ One feature is for calling general StateGo Control introduced above this section
 #### State Chart
 
 ``mainControl``  
-<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1main.png" width=600px/>
+<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1main.png" width=400px/>
 
 ``testControl`` (as is genaral's one)  
-<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1test.png" width=600px/>
+<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1test.png" width=400px/>
 
 #### Run
 
