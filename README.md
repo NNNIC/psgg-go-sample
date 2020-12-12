@@ -25,15 +25,16 @@ Windows10
  
 ## A sample for general purposes.
 Folder ``/general``  
-Open ``testControl.psgg`` using StateGo.  
+Open ``testControl.psgg`` using StateGo.    
 Without or with any framework, you may use this state machine as the template.
 ### State Chart
 <img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1.png" width=400px/>
-### Run
-Open cmd.exe then type ...
-```
+
+### Run  
+Open cmd.exe then type ...  
+``
 go run testControl.go
-```
+``  
 ![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1run.png)
 
 ## ebiten samples
@@ -61,7 +62,7 @@ developing at ./ebiten
 <pre>
 cd ebiten/rotatex3
 go run main.go 
-</pre>
+</pre>  
 
 To view StateGo file (*.psgg) download and install ./statego/StateGo_0.67.20953.exe 
 
