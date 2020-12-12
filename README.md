@@ -1,3 +1,5 @@
+wait to read because now writing.
+
 # psgg-go-sample
 
 I'd like to introduce how to use StateGo with Go programming language.
