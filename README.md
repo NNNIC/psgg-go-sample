@@ -6,7 +6,7 @@ I'd like to introduce how to use StateGo with Go programming language.
 
 Windows10  
 [StateGo](https://statego.programanic.com)  
->> Use StateGo Beta 13 Candidate at  ``./stategob13candidate`` in this repository because the current version can't handle Go language.
+>> Use StateGo Beta 13 Candidate at [ ``./stategob13candidate``](https://github.com/NNNIC/psgg-go-sample/tree/main/stategob13candidate) in this repository because the current version can't handle Go language.
 
 [Golang environment](https://golang.org/doc/install)  
 [ebiten](https://ebiten.org/) (if you use ebiten framework.)
