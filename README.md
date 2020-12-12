@@ -88,6 +88,8 @@ This a sample game using ebiten and StateGo.
 
 ![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/rotatex3-2.gif)
 
+>Go Gopher by Renee French is licensed under the Creative Commons Attribution 3.0 License.
+
 ### Webasembly version
 
 [You can play it.](https://nnnic.github.io/psgg-go-sampleweb/)
