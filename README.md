@@ -32,7 +32,7 @@ Without or with any framework, you may use this state machine as the template.
 
 # State Chart
 
-![]()
+![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1.png)
 
 
 
