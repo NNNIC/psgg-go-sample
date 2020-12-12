@@ -25,7 +25,7 @@ Windows10
  
 ## A sample for general purposes.
 Folder ``/general``  
-Open ``testControl.psgg`` using StateGo.
+Open ``testControl.psgg`` using StateGo.  
 Without or with any framework, you may use this state machine as the template.
 ### State Chart
 <img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1.png" width=400px/>
@@ -36,7 +36,8 @@ go run testControl.go
 ```
 ![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1run.png)
 
-## ebiten
+## ebiten samples
+Folder ``/ebiten``  
 
 
 
