@@ -50,14 +50,20 @@ Draw apis must be called at draw function in "ebiten framework". So, I prepared 
 ### sample #1
 Folder ``/ebiten/sample1``
 
+``mainCtonrol`` has a menu and five features. 
+Four features are implementing simple features and ebiten's example.  
+One feature is for calling general StateGo Control introduced above this section.
+
 #### State Chart
+
+``mainControl``  
+<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1main.png" width=600px/>
+
+``testControl`` (as is genaral's one)  
+<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/es1test.png" width=600px/>
 
 #### Run
 
-
-
-The sample has the following menu.  
-![]()
 
 
 
