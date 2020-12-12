@@ -1,4 +1,13 @@
 # psgg-go-sample
+
+I'd like to introduce how to use StateGo with Go programming language.
+
+## Environment
+
+Windows10  
+[StateGo](https://statego.programanic.com)
+
+
 statego golang 
 
 Now developing.
