@@ -24,16 +24,19 @@ Windows10
  </pre>
  
 ## A sample for general purposes.
-
 Folder ``/general``  
 Open ``testControl.psgg`` using StateGo.
-
 Without or with any framework, you may use this state machine as the template.
+### State Chart
+<img src="https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1.png" width=400px/>
+### Run
+Open cmd.exe then type ...
+```
+go run testControl.go
+```
+![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1run.png)
 
-# State Chart
-
-![](https://raw.githubusercontent.com/NNNIC/psgg-go-sample/main/wiki/g1.png)
-
+## ebiten
 
 
 
