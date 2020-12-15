@@ -53,7 +53,7 @@ Folder ``/ebiten/sample1``
 
 ``mainCtonrol`` has a menu and five features. 
 Four features are implementing simple features and ebiten's example.  
-One feature is for calling general StateGo Control introduced above this section.
+The one feature is for calling general StateGo Control introduced above this section.
 
 #### State Chart
 
